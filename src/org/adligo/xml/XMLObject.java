@@ -48,7 +48,7 @@ public class XMLObject {
     s = s.substring(iaObjectHeader[1], s.length()); //strip off object header tag
     try {
       Class c = Class.forName(sClass);
-      Constructor ct = c.getConstructor(null);
+      Constructor ct = c.getConstructor(new Class[] {});
       o = ct.newInstance(null);
       if (! ((I_XML_Serilizable) o ).getClassVersion().equals(sVersion)) {
         log.fatal("The version of the class in your JVM is different than \n the version saved " +

@@ -31,7 +31,7 @@ public class Param implements I_TemplateParams {
   * Constructors
   */
 
-  protected Param() {}
+  public Param() {}
 
   public Param(String pName, String [] pValues, I_TemplateParams pParams) {
     name = pName;
