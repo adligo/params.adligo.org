@@ -173,14 +173,14 @@ public class Params implements  I_MultipleParamsObject {
       sb.append(s);
       sb.append("\" ");
     }
-    sb.append(">\n");
+    sb.append(">\r\n");
 
     sb.append("   ");
     sb.append(XMLObject.OBJECT_HEADER);
     sb.append(" ");
     sb.append(XMLObject.NAME);
     sb.append("=\"vParams\" ");
-    sb.append(">\n");
+    sb.append(">\r\n");
     for (int i = 0; i < vParams.size(); i++) {
        sb.append(Parser.tab( ((I_XML_Serilizable) vParams.elementAt(i)).writeXML(),"      "));
        if (log.isDebugEnabled()) {
@@ -189,9 +189,9 @@ public class Params implements  I_MultipleParamsObject {
     }
     sb.append("   ");
     sb.append(XMLObject.OBJECT_ENDER);
-    sb.append("\n");
+    sb.append("\r\n");
     sb.append(XMLObject.OBJECT_ENDER);
-    sb.append("\n");
+    sb.append("\r\n");
     if (log.isDebugEnabled()) {
       log.debug(sb.toString());
     }

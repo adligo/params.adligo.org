@@ -116,7 +116,7 @@ public class Param implements I_TemplateParams {
       sb.append("\"");
     }
 
-    sb.append(">\n");
+    sb.append(">\r\n");
     sb.append("   ");
     sb.append(XMLObject.OBJECT_HEADER);
     sb.append(" ");
@@ -124,25 +124,25 @@ public class Param implements I_TemplateParams {
     sb.append("=\"name\">");
     sb.append(this.getName());
     sb.append(XMLObject.OBJECT_ENDER);
-    sb.append("\n");
+    sb.append("\r\n");
 
     if (iaOptions != null) {
       sb.append("   ");
       sb.append(XMLObject.OBJECT_HEADER);
       sb.append(" ");
       sb.append(XMLObject.NAME);
-      sb.append("=\"iaOptions\">\n");
+      sb.append("=\"iaOptions\">\r\n");
       for (int i = 0; i < iaOptions.length; i++) {
           sb.append("      ");
           sb.append(XMLObject.ELEMENT_HEADER);
           sb.append(">");
           sb.append(iaOptions[i]);
           sb.append(XMLObject.ELEMENT_ENDER);
-          sb.append("\n");
+          sb.append("\r\n");
       }
       sb.append("   ");
       sb.append(XMLObject.OBJECT_ENDER);
-      sb.append("\n");
+      sb.append("\r\n");
     }
     if (values != null) {
       sb.append("    ");
@@ -150,24 +150,24 @@ public class Param implements I_TemplateParams {
       sb.append(" ");
       sb.append(XMLObject.NAME);
       sb.append("=\"values\" ");
-      sb.append(">\n");
+      sb.append(">\r\n");
       for (int i = 0; i < values.length; i++) {
           sb.append("      ");
           sb.append(XMLObject.ELEMENT_HEADER);
           sb.append(">");
           sb.append((String) values[i]);
           sb.append(XMLObject.ELEMENT_ENDER);
-          sb.append("\n");
+          sb.append("\r\n");
       }
       sb.append("   ");
       sb.append(XMLObject.OBJECT_ENDER);
-      sb.append("\n");
+      sb.append("\r\n");
     }
     if (params != null) {
       sb.append(Parser.tab(params.writeXML("params"),"   "));
     }
     sb.append(XMLObject.OBJECT_ENDER);
-    sb.append("\n");
+    sb.append("\r\n");
     if (log.isDebugEnabled()) {
       log.debug(sb.toString());
     }
