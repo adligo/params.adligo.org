@@ -245,4 +245,56 @@ public class Params implements  I_MultipleParamsObject {
 
   public String getClassVersion() { return CLASS_VERSION; }
   /*************************************** END I_XML_Serilizable ***************************************************/
+  
+
+  /**
+   * This is a utility method for manipulateing I_TemplateParams object
+   * this method encapsulates the ability to add a param to another param
+   * object with out adding duplicate (named getName()) params 
+   * @return 
+   *    the pAddTo object if not null 
+   *    the p object if pAddTo is null and p is not null
+   * 
+   * @param pAddTo the param to add the other param to
+   * @param p the param to add
+   * so pAddTo.add(p);
+   * @param bAddDuplicate if it should add a pram if there is already one 
+   * with the same name
+   */
+  public static I_TemplateParams addParam(I_TemplateParams pAddTo, 
+  I_TemplateParams p, boolean bAddDuplicate) {
+    if ( pAddTo == null) {
+      return p;
+    } else {
+      pAddTo.First();
+      // if there isn't a param already
+      if (!pAddTo.getNextParam(p.getName())) {
+        return addParamToParam(pAddTo, p);
+      } else if (bAddDuplicate) {
+        return addParamToParam(pAddTo, p);
+      }  else {
+        // didn't add anything so we return the same thing
+        return pAddTo;
+      }
+    }
+  }
+  
+  /**
+   * Adds param p to pAddTo with out looking for dups
+   * @param pAddTo
+   * @param p
+   * @return pAddTo
+   */
+  private static I_TemplateParams addParamToParam(I_TemplateParams pAddTo,
+  I_TemplateParams p) {
+    if (pAddTo instanceof I_MultipleParamsObject) {
+      ((I_MultipleParamsObject) pAddTo).addParam(p);
+      return pAddTo;
+    } else {
+      Params params = new Params();
+      params.addParam(pAddTo);
+      params.addParam(p);
+      return params;
+    }
+  }
 }
