@@ -29,8 +29,8 @@ public class Params implements  I_MultipleParamsObject {
    * only if the format changes
    */
   public static final String CLASS_VERSION = new String("1.4");
-  public List theParams = new ArrayList();// holds TemplateParam objects
-  public int iParam = 0; // the current starting point for searching through theParams
+  public List paramsList = new ArrayList();// holds TemplateParam objects
+  public int iParam = 0; // the current starting point for searching through paramsList
   public int iTimesForThisParam = 0;
   public I_TemplateParams param; // the current param that was selected by
                        //getNextParam(String s)
@@ -56,7 +56,7 @@ public class Params implements  I_MultipleParamsObject {
    * Adds a I_TemplateParams to the vector of params
    */
   public void addParam(I_TemplateParams p) {
-    theParams.add(p);
+    paramsList.add(p);
     try {
       ((Param) p).setParent((I_TemplateParams) this);
     } catch (ClassCastException x) {}
@@ -65,7 +65,7 @@ public class Params implements  I_MultipleParamsObject {
    * This removes the TemplateParam parameter to
    * the Vector of TemplateParam objects.
    */
-  public void removeParam(I_TemplateParams p) { theParams.remove(p); }
+  public void removeParam(I_TemplateParams p) { paramsList.remove(p); }
 
   /**
    *  Implementation of I_TemplateParams see the interfaces documentation.
@@ -118,9 +118,9 @@ public class Params implements  I_MultipleParamsObject {
       log.debug("getNextParamFool =" + s);
       log.debug("starting at index =" + iParam);
     }
-    int iSize = theParams.size();
+    int iSize = paramsList.size();
     for (int i = iParam; iSize > i; i++) {
-        sName = ((I_TemplateParams) theParams.get(i)).getName();
+        sName = ((I_TemplateParams) paramsList.get(i)).getName();
         if (log.isDebugEnabled()) {
             log.debug(sName);
         }
@@ -128,7 +128,7 @@ public class Params implements  I_MultipleParamsObject {
           return false;
         }
         if ( sName.equals(s) ) {
-          param = (I_TemplateParams) theParams.get(i);
+          param = (I_TemplateParams) paramsList.get(i);
           try {
             I_MultipleParamsObject i_mpo = (I_MultipleParamsObject) param;
             param.getNextParam(s);
@@ -148,8 +148,8 @@ public class Params implements  I_MultipleParamsObject {
 
   public String toString() {
     String s = "Params to String \n";
-    for (int i = 0; i < theParams.size(); i++) {
-      s = s + theParams.get(i).toString();
+    for (int i = 0; i < paramsList.size(); i++) {
+      s = s + paramsList.get(i).toString();
     }
     return s;
   }
@@ -180,10 +180,10 @@ public class Params implements  I_MultipleParamsObject {
     sb.append(XMLObject.OBJECT_HEADER);
     sb.append(" ");
     sb.append(XMLObject.NAME);
-    sb.append("=\"theParams\" ");
+    sb.append("=\"paramsList\" ");
     sb.append(">\r\n");
-    for (int i = 0; i < theParams.size(); i++) {
-       sb.append(Parser.tab( ((I_XML_Serilizable) theParams.get(i)).writeXML(),"      "));
+    for (int i = 0; i < paramsList.size(); i++) {
+       sb.append(Parser.tab( ((I_XML_Serilizable) paramsList.get(i)).writeXML(),"      "));
        if (log.isDebugEnabled()) {
         log.debug(sb.toString());
        }
@@ -207,11 +207,11 @@ public class Params implements  I_MultipleParamsObject {
     s = s.substring(iaVectorTags[0], iaVectorTags[1]);
     int [] iaVectorHeader = Parser.getTagIndexs(s,XMLObject.OBJECT_HEADER, ">" ); // get vector header
     String sVectorHeader = s.substring(iaVectorHeader[0], iaVectorHeader[1]);
-    //Make sure this is the theParams Vector object
-    if (Parser.getAttributeValue(sVectorHeader, XMLObject.NAME).equals("theParams") ) {
+    //Make sure this is the paramsList Vector object
+    if (Parser.getAttributeValue(sVectorHeader, XMLObject.NAME).equals("paramsList") ) {
       int [] iaObject = Parser.getTagIndexs(s, XMLObject.OBJECT_HEADER, ">" );
       s = s.substring(iaObject[1] + 1, s.length()); // remove object header name=vParmas
-      String sVectorObject = s.substring(iaObject[0], iaObject[1]);//get first object in theParams vector
+      String sVectorObject = s.substring(iaObject[0], iaObject[1]);//get first object in paramsList vector
       iaObject = Parser.getTagIndexs(s, XMLObject.OBJECT_HEADER, XMLObject.OBJECT_ENDER );
 
       while (iaObject[1] > 10 && iaObject[0] >= 0) {
