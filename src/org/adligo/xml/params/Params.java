@@ -152,7 +152,7 @@ public class Params implements  I_MultipleParamsObject {
     return s;
   }
   /*************************************** I_XML_Serilizable ***************************************************/
-  public String writeXML() { return writeXML(null); }
+  public String writeXML() { return writeXML(""); }
 
   public String writeXML(String s) {
     StringBuffer sb = new StringBuffer();
