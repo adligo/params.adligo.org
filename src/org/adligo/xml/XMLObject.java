@@ -57,20 +57,15 @@ public class XMLObject {
         ((I_XML_Serilizable) o ).readXML(s);
       }
     } catch (ClassNotFoundException f) {
-      System.out.print(f.toString());
-      f.printStackTrace();
+      log.error(f.getMessage(), f);
     } catch (NoSuchMethodException n) {
-      System.out.print(n.toString());
-      n.printStackTrace();
+      log.error(n.getMessage(), n);
     } catch (java.lang.reflect.InvocationTargetException i) {
-      System.out.print(i.toString());
-      i.printStackTrace();
+      log.error(i.getMessage(), i);
     } catch (IllegalAccessException a) {
-      System.out.print(a.toString());
-      a.printStackTrace();
+      log.error(a.getMessage(), a);
     }  catch (InstantiationException ie) {
-      System.out.print(ie.toString());
-      ie.printStackTrace();
+      log.error(ie.getMessage(), ie);
     }
     return o;
   }
