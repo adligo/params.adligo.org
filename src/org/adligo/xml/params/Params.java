@@ -36,14 +36,7 @@ public class Params implements  I_MultipleParamsObject {
 
   /** Constructors */
   public Params() {}
-  public Params(String name, String[] values, I_TemplateParams params) {
-    addParam(new Param(name,values, params));
-  }
-  public Params(String name, String[] values, I_TemplateParams params, int [] iaOptions) {
-    Param p = new Param(name,values, params);
-    p.setOptions(iaOptions);
-  	addParam(p);
-  }
+
   /**
    * This creates a Param object using the parameters and adds it to
    * the Vector of Param objects.

@@ -33,12 +33,12 @@ public class Param implements I_TemplateParams {
 
   protected Param() {}
 
-  protected Param(String pName, String [] pValues, I_TemplateParams pParams) {
+  public Param(String pName, String [] pValues, I_TemplateParams pParams) {
     name = pName;
     values = pValues;
     params = pParams;
   }
-  protected Param(String pName, String [] pValues, I_TemplateParams pParams, int [] pOptions) {
+  public Param(String pName, String [] pValues, I_TemplateParams pParams, int [] pOptions) {
     name = pName;
     values = pValues;
     params = pParams;
