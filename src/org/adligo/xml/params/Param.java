@@ -8,7 +8,6 @@ package org.adligo.xml.params;
  * @author       scott@adligo.com
  * @version 1.3
  */
-import java.util.Vector;
 import org.adligo.xml.XMLObject;
 import org.adligo.xml.Parser;
 import org.adligo.i.persistence.I_TemplateParams;

@@ -8,7 +8,6 @@ package org.adligo.xml;
  * @version 1.3
  */
 import java.lang.reflect.*;
-import java.util.Vector;
 import org.adligo.xml.Parser;
 import org.adligo.i.persistence.I_XML_Serilizable;
 

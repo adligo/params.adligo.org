@@ -11,7 +11,8 @@ package org.adligo.xml.params;
  * @version 1.3
  */
 
-import java.util.Vector;
+import java.util.List;
+import java.util.ArrayList;
 import org.adligo.xml.XMLObject;
 import org.adligo.xml.Parser;
 import java.lang.reflect.*;
@@ -28,8 +29,8 @@ public class Params implements  I_MultipleParamsObject {
    * only if the format changes
    */
   public static final String CLASS_VERSION = new String("1.4");
-  public Vector vParams = new Vector();// holds TemplateParam objects
-  public int iParam = 0; // the current starting point for searching through vParams
+  public List theParams = new ArrayList();// holds TemplateParam objects
+  public int iParam = 0; // the current starting point for searching through theParams
   public int iTimesForThisParam = 0;
   public I_TemplateParams param; // the current param that was selected by
                        //getNextParam(String s)
@@ -55,7 +56,7 @@ public class Params implements  I_MultipleParamsObject {
    * Adds a I_TemplateParams to the vector of params
    */
   public void addParam(I_TemplateParams p) {
-    vParams.add(p);
+    theParams.add(p);
     try {
       ((Param) p).setParent((I_TemplateParams) this);
     } catch (ClassCastException x) {}
@@ -64,7 +65,7 @@ public class Params implements  I_MultipleParamsObject {
    * This removes the TemplateParam parameter to
    * the Vector of TemplateParam objects.
    */
-  public void removeParam(I_TemplateParams p) { vParams.remove(p); }
+  public void removeParam(I_TemplateParams p) { theParams.remove(p); }
 
   /**
    *  Implementation of I_TemplateParams see the interfaces documentation.
@@ -117,9 +118,9 @@ public class Params implements  I_MultipleParamsObject {
       log.debug("getNextParamFool =" + s);
       log.debug("starting at index =" + iParam);
     }
-    int iSize = vParams.size();
+    int iSize = theParams.size();
     for (int i = iParam; iSize > i; i++) {
-        sName = ((I_TemplateParams) vParams.elementAt(i)).getName();
+        sName = ((I_TemplateParams) theParams.get(i)).getName();
         if (log.isDebugEnabled()) {
             log.debug(sName);
         }
@@ -127,7 +128,7 @@ public class Params implements  I_MultipleParamsObject {
           return false;
         }
         if ( sName.equals(s) ) {
-          param = (I_TemplateParams) vParams.elementAt(i);
+          param = (I_TemplateParams) theParams.get(i);
           try {
             I_MultipleParamsObject i_mpo = (I_MultipleParamsObject) param;
             param.getNextParam(s);
@@ -147,8 +148,8 @@ public class Params implements  I_MultipleParamsObject {
 
   public String toString() {
     String s = "Params to String \n";
-    for (int i = 0; i < vParams.size(); i++) {
-      s = s + vParams.get(i).toString();
+    for (int i = 0; i < theParams.size(); i++) {
+      s = s + theParams.get(i).toString();
     }
     return s;
   }
@@ -179,10 +180,10 @@ public class Params implements  I_MultipleParamsObject {
     sb.append(XMLObject.OBJECT_HEADER);
     sb.append(" ");
     sb.append(XMLObject.NAME);
-    sb.append("=\"vParams\" ");
+    sb.append("=\"theParams\" ");
     sb.append(">\r\n");
-    for (int i = 0; i < vParams.size(); i++) {
-       sb.append(Parser.tab( ((I_XML_Serilizable) vParams.elementAt(i)).writeXML(),"      "));
+    for (int i = 0; i < theParams.size(); i++) {
+       sb.append(Parser.tab( ((I_XML_Serilizable) theParams.get(i)).writeXML(),"      "));
        if (log.isDebugEnabled()) {
         log.debug(sb.toString());
        }
@@ -206,11 +207,11 @@ public class Params implements  I_MultipleParamsObject {
     s = s.substring(iaVectorTags[0], iaVectorTags[1]);
     int [] iaVectorHeader = Parser.getTagIndexs(s,XMLObject.OBJECT_HEADER, ">" ); // get vector header
     String sVectorHeader = s.substring(iaVectorHeader[0], iaVectorHeader[1]);
-    //Make sure this is the vParams Vector object
-    if (Parser.getAttributeValue(sVectorHeader, XMLObject.NAME).equals("vParams") ) {
+    //Make sure this is the theParams Vector object
+    if (Parser.getAttributeValue(sVectorHeader, XMLObject.NAME).equals("theParams") ) {
       int [] iaObject = Parser.getTagIndexs(s, XMLObject.OBJECT_HEADER, ">" );
       s = s.substring(iaObject[1] + 1, s.length()); // remove object header name=vParmas
-      String sVectorObject = s.substring(iaObject[0], iaObject[1]);//get first object in vParams vector
+      String sVectorObject = s.substring(iaObject[0], iaObject[1]);//get first object in theParams vector
       iaObject = Parser.getTagIndexs(s, XMLObject.OBJECT_HEADER, XMLObject.OBJECT_ENDER );
 
       while (iaObject[1] > 10 && iaObject[0] >= 0) {
