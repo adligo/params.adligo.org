@@ -31,14 +31,14 @@ public class Param implements I_TemplateParams {
   * Constructors
   */
 
-  public Param() {}
+  protected Param() {}
 
-  public Param(String pName, String [] pValues, I_TemplateParams pParams) {
+  protected Param(String pName, String [] pValues, I_TemplateParams pParams) {
     name = pName;
     values = pValues;
     params = pParams;
   }
-  public Param(String pName, String [] pValues, I_TemplateParams pParams, int [] pOptions) {
+  protected Param(String pName, String [] pValues, I_TemplateParams pParams, int [] pOptions) {
     name = pName;
     values = pValues;
     params = pParams;
