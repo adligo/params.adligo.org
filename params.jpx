@@ -36,9 +36,9 @@
   <property category="sys" name="Version" value="1.0" />
   <property category="sys" name="VersionLabel" value="@version" />
   <property category="sys" name="WorkingDirectory" value="." />
-  <node type="Archive" name="xmlt">
+  <node type="Archive" name="params">
     <property category="archiving" name="targetCompressed" value="1" />
-    <property category="archiving" name="targetPath" value="C%|/cygwin/home/scott/Adligo_Jars/relese_canidates/xmlt.jar" />
+    <property category="archiving" name="targetPath" value="C%|/cygwin/home/scott/release_canidates/params.jar" />
   </node>
   <file path="build.properties" />
   <file path="build.xml" />
