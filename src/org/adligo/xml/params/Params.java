@@ -13,6 +13,8 @@ package org.adligo.xml.params;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Iterator;
+
 import org.adligo.xml.XMLObject;
 import org.adligo.xml.Parser;
 import java.lang.reflect.*;
@@ -61,10 +63,7 @@ public class Params implements  I_MultipleParamsObject {
       ((Param) p).setParent((I_TemplateParams) this);
     } catch (ClassCastException x) {}
   }
-  /**
-   * This removes the TemplateParam parameter to
-   * the Vector of TemplateParam objects.
-   */
+
   public void removeParam(I_TemplateParams p) { paramsList.remove(p); }
 
   /**
@@ -105,6 +104,27 @@ public class Params implements  I_MultipleParamsObject {
       return param.getNestedParams();
     }
     return null;
+  }
+  
+  public I_TemplateParams getCurrentParam() { return param; }
+  public void removeAllParams(String name) {
+    if (name == null) {
+	    Iterator it = paramsList.iterator();
+	    while (it.hasNext()) {
+	      I_TemplateParams my_ps = (I_TemplateParams) it.next();
+	      if (my_ps.getName() == null) {
+	        it.remove();
+	      } 
+	    }
+    } else {
+      	Iterator it = paramsList.iterator();
+	    while (it.hasNext()) {
+	      I_TemplateParams my_ps = (I_TemplateParams) it.next();
+	      if (name.equals(my_ps.getName())) {
+	           it.remove();
+	      }
+	    }
+    }
   }
   /**
    *  Implementation of I_TemplateParams see the interfaces documentation.
