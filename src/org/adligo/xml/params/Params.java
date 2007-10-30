@@ -10,10 +10,12 @@ package org.adligo.xml.params;
  * @author       scott@adligo.com
  * @version 1.3
  */
-
+import java.util.Map;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.adligo.xml.XMLObject;
 import org.adligo.xml.Parser;
@@ -31,10 +33,10 @@ public class Params implements  I_MultipleParamsObject {
    * only if the format changes
    */
   public static final String CLASS_VERSION = new String("1.4");
-  public List paramsList = new ArrayList();// holds TemplateParam objects
-  public int iParam = 0; // the current starting point for searching through paramsList
-  public int iTimesForThisParam = 0;
-  public I_TemplateParams param; // the current param that was selected by
+  private Map <String, I_OneOrN> paramsMap = new HashMap();// holds TemplateParam objects
+  private I_OneOrN m_currentGroup = null;
+  private int counntForThisName = 0;
+  private I_TemplateParams param; // the current param that was selected by
                        //getNextParam(String s)
 
   /** Constructors */
@@ -42,14 +44,22 @@ public class Params implements  I_MultipleParamsObject {
 
   /**
    * This creates a Param object using the parameters and adds it to
-   * the Vector of Param objects.
+   * the Collection of Param objects.
    */
   public void addParam(String name, String[] values, I_TemplateParams params) {
     addParam(new Param(name,values, params));
   }
+
+  public void addParam(String name, String[] values) {
+	    addParam(new Param(name,values, null));
+  }
+
+  public void addParam(String name, String value) {
+	    addParam(new Param(name,new String[] {value}, null));
+  }
   /**
    * This creates a Param object using the parameters and adds it to
-   * the Vector of Param objects.
+   * the Collection of Param objects.
    */
   public void addParam(String name, String[] values, I_TemplateParams params, int [] pOptions) {
     addParam(new Param(name,values, params, pOptions));
@@ -58,18 +68,57 @@ public class Params implements  I_MultipleParamsObject {
    * Adds a I_TemplateParams to the vector of params
    */
   public void addParam(I_TemplateParams p) {
-    paramsList.add(p);
+	  if (p == null) {
+		  throw new NullPointerException("Can't contain a null item");
+	  }
+	  if (p.getName() == null) {
+		  throw new NullPointerException("Can't contain a param " +
+		  		"with a null name");
+	  }
+	  I_OneOrN container = paramsMap.get(p.getName());  
+	  if (container == null) {
+		  SingleParamContainer toAdd = new SingleParamContainer();
+		  toAdd.setItem(p);
+		  paramsMap.put(p.getName(), toAdd);
+	  } else if (container.size() == 1) {
+		  NParamContainer newGroup = new NParamContainer();
+		  newGroup.addItem(container.get(0));
+		  newGroup.addItem(p);
+		  paramsMap.put(p.getName(), newGroup);
+	  } else {
+		  NParamContainer currentGroup = (NParamContainer) container;
+		  currentGroup.addItem(p);
+	  }
+	  
     try {
       ((Param) p).setParent((I_TemplateParams) this);
     } catch (ClassCastException x) {}
   }
 
-  public void removeParam(I_TemplateParams p) { paramsList.remove(p); }
+  public void removeParam(I_TemplateParams p) { 
+	  if (p == null) {
+		  throw new NullPointerException("Can't contain a null item");
+	  }
+	  if (p.getName() == null) {
+		  throw new NullPointerException("Can't contain a param " +
+		  		"with a null name");
+	  }
+	  I_OneOrN container = paramsMap.get(p.getName()); 
+	  if (container.size() == 1) {
+		  paramsMap.remove(p.getName());
+	  } else {
+		  NParamContainer currentGroup = (NParamContainer) container;
+		  currentGroup.removeItem(p);
+	  }
+  }
 
   /**
    *  Implementation of I_TemplateParams see the interfaces documentation.
    */
-  public void First() { iParam = 0; }
+  public void First() { 
+	  m_currentGroup = null;
+	  counntForThisName = 0;
+  }
   /**
    *  Implementation of I_TemplateParams see the interfaces documentation.
    */
@@ -108,23 +157,7 @@ public class Params implements  I_MultipleParamsObject {
   
   public I_TemplateParams getCurrentParam() { return param; }
   public void removeAllParams(String name) {
-    if (name == null) {
-	    Iterator it = paramsList.iterator();
-	    while (it.hasNext()) {
-	      I_TemplateParams my_ps = (I_TemplateParams) it.next();
-	      if (my_ps.getName() == null) {
-	        it.remove();
-	      } 
-	    }
-    } else {
-      	Iterator it = paramsList.iterator();
-	    while (it.hasNext()) {
-	      I_TemplateParams my_ps = (I_TemplateParams) it.next();
-	      if (name.equals(my_ps.getName())) {
-	           it.remove();
-	      }
-	    }
-    }
+	  paramsMap.remove(name);
   }
   /**
    *  Implementation of I_TemplateParams see the interfaces documentation.
@@ -133,45 +166,57 @@ public class Params implements  I_MultipleParamsObject {
     if (s == null) {
       return false;
     }
-    String sName = new String();
-    if (log.isDebugEnabled()) {
-      log.debug("getNextParamFool =" + s);
-      log.debug("starting at index =" + iParam);
-    }
-    int iSize = paramsList.size();
-    for (int i = iParam; iSize > i; i++) {
-        sName = ((I_TemplateParams) paramsList.get(i)).getName();
-        if (log.isDebugEnabled()) {
-            log.debug(sName);
-        }
-        if (sName == null) {
-          return false;
-        }
-        if ( sName.equals(s) ) {
-          param = (I_TemplateParams) paramsList.get(i);
-          try {
-            I_MultipleParamsObject i_mpo = (I_MultipleParamsObject) param;
-            param.getNextParam(s);
-          } catch (ClassCastException e) {}
-          if (log.isDebugEnabled()) {
-            log.debug("returned " + i);
-          }
-          iParam = i + 1;
-          return true;
-        }
-    }
     if (log.isDebugEnabled()) {
       log.debug("getNextParamFool =" + s);
     }
-    return false;
+    I_OneOrN currentGroup = this.paramsMap.get(s);
+    
+    if (currentGroup == null) {
+    	if (log.isDebugEnabled()) {
+	      log.debug("got null I_OneOrN returning");
+	    }
+    	param = null;
+    	return false;
+    } 
+    if (m_currentGroup != null) {
+    	//yes make sure their the same instace
+    	if (m_currentGroup == currentGroup) {
+    		counntForThisName++;
+    		if (log.isDebugEnabled()) {
+    		      log.debug("got same I_OneOrN count is now " +
+    		    		  counntForThisName);
+    		}
+    		param = m_currentGroup.get(counntForThisName);
+    		if (param == null) {
+    			return false;
+    		} else {
+    			return true;
+    		}
+    	}
+    }
+    m_currentGroup = currentGroup;
+    
+    param = m_currentGroup.get(0);
+    if (param == null) {
+		return false;
+	} else {
+		return true;
+	}
   }
 
   public String toString() {
-    String s = "Params to String \n";
-    for (int i = 0; i < paramsList.size(); i++) {
-      s = s + paramsList.get(i).toString();
+	StringBuilder sb = new StringBuilder();
+    sb.append("Params to String \n");
+    Set <String> keys = this.paramsMap.keySet();
+    boolean first = true;
+    Iterator it = keys.iterator();
+    while (it.hasNext()) {
+    	if (!first) {
+    		sb.append(",");
+    	}
+    	sb.append(it.next());
     }
-    return s;
+    return sb.toString();
   }
   /*************************************** I_XML_Serilizable ***************************************************/
   public String writeXML() { return writeXML(""); }
@@ -202,12 +247,19 @@ public class Params implements  I_MultipleParamsObject {
     sb.append(XMLObject.NAME);
     sb.append("=\"paramsList\" ");
     sb.append(">\r\n");
-    for (int i = 0; i < paramsList.size(); i++) {
-       sb.append(Parser.tab( ((I_XML_Serilizable) paramsList.get(i)).writeXML(),"      "));
-       if (log.isDebugEnabled()) {
-        log.debug(sb.toString());
-       }
+    
+    Set <String> keys = this.paramsMap.keySet();
+    Iterator it = keys.iterator();
+    while (it.hasNext()) {
+    	I_OneOrN items = paramsMap.get(it.next());
+    	for (int i = 0; i < items.size(); i++) {
+	       sb.append(Parser.tab( ((I_XML_Serilizable) items.get(i)).writeXML(),"      "));
+	       if (log.isDebugEnabled()) {
+	        log.debug(sb.toString());
+	       }
+	    }
     }
+    
     sb.append("   ");
     sb.append(XMLObject.OBJECT_ENDER);
     sb.append("\r\n");
