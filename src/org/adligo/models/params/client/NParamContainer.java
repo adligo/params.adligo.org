@@ -1,11 +1,9 @@
-package org.adligo.xml.params;
+package org.adligo.models.params.client;
 
-import org.adligo.i.persistence.I_TemplateParams;
-import java.util.List;
-import java.util.ArrayList;
+import org.adligo.i.util.client.ArrayCollection;
 
 public class NParamContainer implements I_OneOrN {
-   private List <I_TemplateParams> items = new ArrayList();
+   private ArrayCollection items = new ArrayCollection();
    
     public int size() { return items.size(); }
 
@@ -13,7 +11,7 @@ public class NParamContainer implements I_OneOrN {
 		if (counter >= items.size()) {
 			return null;
 		}
-		return items.get(counter);
+		return (I_TemplateParams) items.get(counter);
 	}
 	
 	public void addItem(I_TemplateParams item) {

@@ -1,4 +1,7 @@
-package org.adligo.xml.params;
+package org.adligo.models.params.client;
+
+import org.adligo.i.log.client.Log;
+import org.adligo.i.log.client.LogFactory;
 
 /**
  * Description:  This class is simply used to hold information in a logical
@@ -8,10 +11,7 @@ package org.adligo.xml.params;
  * @author       scott@adligo.com
  * @version 1.3
  */
-import org.adligo.xml.XMLObject;
-import org.adligo.xml.Parser;
-import org.adligo.i.persistence.I_TemplateParams;
-import org.apache.commons.logging.*;
+
 
 public class Param implements I_TemplateParams {
   static final Log log = LogFactory.getLog(Param.class);

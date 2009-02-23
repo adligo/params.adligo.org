@@ -1,6 +1,5 @@
-package org.adligo.xml.params;
+package org.adligo.models.params.client;
 
-import org.adligo.i.persistence.I_TemplateParams;
 
 public class SingleParamContainer implements I_OneOrN {
    private I_TemplateParams item = null;

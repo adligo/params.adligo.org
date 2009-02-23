@@ -1,4 +1,4 @@
-package org.adligo.xml;
+package org.adligo.models.params.client;
 
 /**
  * Description:  A generic object that can write itself to a xml file
@@ -7,14 +7,16 @@ package org.adligo.xml;
  * @author       scott@adligo.com
  * @version 1.3
  */
-import java.lang.reflect.*;
-import org.adligo.xml.Parser;
-import org.adligo.i.persistence.I_XML_Serilizable;
+//import java.lang.reflect.*;
 
-import org.apache.commons.logging.*;
+import org.adligo.i.log.client.Log;
+import org.adligo.i.log.client.LogFactory;
+import org.adligo.i.util.client.I_InstanceFactory;
 
 public class XMLObject {
   private static final Log log = LogFactory.getLog(XMLObject.class);
+  private static I_InstanceFactory instanceFactory = new ClassForNameMap();
+  
   public static final String XML_OBJECT_VERSION = new String("1.0");
   public static final String OBJECT_HEADER = new String("<object");
   public static final String OBJECT_ENDER = new String("</object>");
@@ -45,28 +47,29 @@ public class XMLObject {
 
     iaObjectHeader = Parser.getTagIndexs(s,OBJECT_HEADER, ">" );
     s = s.substring(iaObjectHeader[1], s.length()); //strip off object header tag
-    try {
-      Class c = Class.forName(sClass);
-      Constructor ct = c.getConstructor(new Class[] {});
-      o = ct.newInstance(null);
-      if (! ((I_XML_Serilizable) o ).getClassVersion().equals(sVersion)) {
-        log.fatal("The version of the class in your JVM is different than \n the version saved " +
-                        "in your xml!  The object can't be instantiated!");
-        return null;
-      } else {
-        ((I_XML_Serilizable) o ).readXML(s);
-      }
-    } catch (ClassNotFoundException f) {
-      log.error(f.getMessage(), f);
-    } catch (NoSuchMethodException n) {
-      log.error(n.getMessage(), n);
-    } catch (java.lang.reflect.InvocationTargetException i) {
-      log.error(i.getMessage(), i);
-    } catch (IllegalAccessException a) {
-      log.error(a.getMessage(), a);
-    }  catch (InstantiationException ie) {
-      log.error(ie.getMessage(), ie);
-    }
+    
+	  o = instanceFactory.createInstance(sClass);
+	  if (o == null) {
+		  throw new RuntimeException("A dynamic instance of " + sClass + 
+				  " could not be created, please create a I_InstanceFactory " +
+				  " and use the static setter in this class!");
+	  }
+	  if (! ((I_XML_Serilizable) o ).getClassVersion().equals(sVersion)) {
+	    log.fatal("The version of the class in your JVM is different than \n the version saved " +
+	                    "in your xml!  The object can't be instantiated!");
+	    return null;
+	  } else {
+	    ((I_XML_Serilizable) o ).readXML(s);
+	  }
+   
     return o;
   }
+
+	public static I_InstanceFactory getInstanceFactory() {
+		return instanceFactory;
+	}
+	
+	public static void setInstanceFactory(I_InstanceFactory instanceFactory) {
+		XMLObject.instanceFactory = instanceFactory;
+	}
 }

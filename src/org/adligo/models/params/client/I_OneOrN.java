@@ -1,6 +1,4 @@
-package org.adligo.xml.params;
-
-import org.adligo.i.persistence.I_TemplateParams;
+package org.adligo.models.params.client;
 
 public interface I_OneOrN {
   public int size();

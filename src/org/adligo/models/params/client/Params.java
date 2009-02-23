@@ -1,4 +1,4 @@
-package org.adligo.xml.params;
+package org.adligo.models.params.client;
 
 /**
  * Title:
@@ -10,21 +10,13 @@ package org.adligo.xml.params;
  * @author       scott@adligo.com
  * @version 1.3
  */
-import java.util.Map;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Set;
 
-import org.adligo.xml.XMLObject;
-import org.adligo.xml.Parser;
-import java.lang.reflect.*;
-import org.adligo.i.persistence.I_TemplateParams;
-import org.adligo.i.persistence.I_MultipleParamsObject;
-import org.adligo.i.persistence.I_XML_Serilizable;
 
-import org.apache.commons.logging.*;
+import org.adligo.i.log.client.Log;
+import org.adligo.i.log.client.LogFactory;
+import org.adligo.i.util.client.I_Iterator;
+import org.adligo.i.util.client.I_Map;
+import org.adligo.i.util.client.MapFactory;
 
 public class Params implements  I_MultipleParamsObject {
   static final Log log = LogFactory.getLog(Params.class);
@@ -33,7 +25,8 @@ public class Params implements  I_MultipleParamsObject {
    * only if the format changes
    */
   public static final String CLASS_VERSION = new String("1.4");
-  private Map <String, I_OneOrN> paramsMap = new HashMap();// holds TemplateParam objects
+  private I_Map //String, I_OneOrN
+  			paramsMap = MapFactory.create();// holds TemplateParam objects
   private I_OneOrN m_currentGroup = null;
   private int counntForThisName = 0;
   private I_TemplateParams param; // the current param that was selected by
@@ -75,7 +68,7 @@ public class Params implements  I_MultipleParamsObject {
 		  throw new NullPointerException("Can't contain a param " +
 		  		"with a null name");
 	  }
-	  I_OneOrN container = paramsMap.get(p.getName());  
+	  I_OneOrN container = (I_OneOrN) paramsMap.get(p.getName());  
 	  if (container == null) {
 		  SingleParamContainer toAdd = new SingleParamContainer();
 		  toAdd.setItem(p);
@@ -103,7 +96,7 @@ public class Params implements  I_MultipleParamsObject {
 		  throw new NullPointerException("Can't contain a param " +
 		  		"with a null name");
 	  }
-	  I_OneOrN container = paramsMap.get(p.getName()); 
+	  I_OneOrN container = (I_OneOrN) paramsMap.get(p.getName()); 
 	  if (container.size() == 1) {
 		  paramsMap.remove(p.getName());
 	  } else {
@@ -169,7 +162,7 @@ public class Params implements  I_MultipleParamsObject {
     if (log.isDebugEnabled()) {
       log.debug("getNextParamFool =" + s);
     }
-    I_OneOrN currentGroup = this.paramsMap.get(s);
+    I_OneOrN currentGroup = (I_OneOrN) this.paramsMap.get(s);
     
     if (currentGroup == null) {
     	if (log.isDebugEnabled()) {
@@ -207,9 +200,9 @@ public class Params implements  I_MultipleParamsObject {
   public String toString() {
 	StringBuilder sb = new StringBuilder();
     sb.append("Params to String \n");
-    Set <String> keys = this.paramsMap.keySet();
+    
+    I_Iterator it = paramsMap.getIterator();
     boolean first = true;
-    Iterator it = keys.iterator();
     while (it.hasNext()) {
     	if (!first) {
     		sb.append(",");
@@ -248,10 +241,9 @@ public class Params implements  I_MultipleParamsObject {
     sb.append("=\"paramsList\" ");
     sb.append(">\r\n");
     
-    Set <String> keys = this.paramsMap.keySet();
-    Iterator it = keys.iterator();
+    I_Iterator it = paramsMap.getIterator();
     while (it.hasNext()) {
-    	I_OneOrN items = paramsMap.get(it.next());
+    	I_OneOrN items = (I_OneOrN) paramsMap.get(it.next());
     	for (int i = 0; i < items.size(); i++) {
 	       sb.append(Parser.tab( ((I_XML_Serilizable) items.get(i)).writeXML(),"      "));
 	       if (log.isDebugEnabled()) {

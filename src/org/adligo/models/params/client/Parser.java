@@ -1,4 +1,4 @@
-package org.adligo.xml;
+package org.adligo.models.params.client;
 
 /**
  * Description:  This is a utility class that holds static methods used for
@@ -8,7 +8,8 @@ package org.adligo.xml;
  * @author       scott@adligo.com
  * @version 1.3
  */
-import org.apache.commons.logging.*;
+import org.adligo.i.log.client.Log;
+import org.adligo.i.log.client.LogFactory;
 
 public class Parser {
   private Parser() {}
