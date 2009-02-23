@@ -2,14 +2,15 @@ package org.adligo.models.params.client;
 
 /**
  * Description:  Provides a method of saving objects and restoring them just like Serilizable
- *               However, Serilization is a java pertiatary format and XML is not
- *               And Actually this was written due to problems I was having
+ *               Actually this was written due to problems I was having
  *               saving objects to the PostgresSQL database
  *               This interface is included in this package because
  *               eventually I think it would be nice to send the actual data objects back and forth
  *               in xml format instead of serialized java objects
  *               in this way it would be easy to write clients and servers
- *               in other languages although I am going GWT RPC with all java servers
+ *               in other languages although I am going mostly
+ *               GWT RPC with all java servers.  The exception is
+ *               when I need a external api.
  *               
  * Copyright:    GPL http://www.adligo.com/gpl.html
  * Company:      Adligo
