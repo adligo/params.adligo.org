@@ -45,7 +45,13 @@ public class Param implements I_TemplateParams {
 
 	public Param() {
 	}
-
+	public Param(String pName) {
+		name = pName;
+	}
+	public Param(String pName, String [] pOperators) {
+		name = pName;
+		operators = pOperators;
+	}
 	public Param(String pName, I_TemplateParams pParams) {
 		name = pName;
 		params = pParams;
@@ -61,40 +67,68 @@ public class Param implements I_TemplateParams {
 	 * @param value
 	 * @param pParams
 	 */
-	Param(String pName, Object value, I_TemplateParams pParams) {
+	Param(String pName, Object value, I_TemplateParams pParams, String [] pOperators) {
 		name = pName;
 		values.add(value);
 		params = pParams;
+		operators = pOperators;
 	}
 
 	public Param(String pName, String value, I_TemplateParams pParams) {
-		this(pName, (Object) value, pParams);
+		this(pName, (Object) value, pParams, null);
 	}
 
 	public Param(String pName, Integer value, I_TemplateParams pParams) {
-		this(pName, (Object) value, pParams);
+		this(pName, (Object) value, pParams, null);
 	}
 
 	public Param(String pName, Short value, I_TemplateParams pParams) {
-		this(pName, (Object) value, pParams);
+		this(pName, (Object) value, pParams, null);
 	}
 
 	public Param(String pName, Long value, I_TemplateParams pParams) {
-		this(pName, (Object) value, pParams);
+		this(pName, (Object) value, pParams, null);
 	}
 
 	public Param(String pName, Double value, I_TemplateParams pParams) {
-		this(pName, (Object) value, pParams);
+		this(pName, (Object) value, pParams, null);
 	}
 
 	public Param(String pName, Float value, I_TemplateParams pParams) {
-		this(pName, (Object) value, pParams);
+		this(pName, (Object) value, pParams, null);
 	}
 
 	public Param(String pName, Date value, I_TemplateParams pParams) {
-		this(pName, (Object) value, pParams);
+		this(pName, (Object) value, pParams, null);
 	}
 
+	public Param(String pName, String operator, String value) {
+		this(pName, (Object) value, null, new String[] {operator});
+	}
+
+	public Param(String pName, String operator, Integer value) {
+		this(pName, (Object) value, null, new String[] {operator});
+	}
+	
+	public Param(String pName, String operator, Short value) {
+		this(pName, (Object) value, null, new String[] {operator});
+	}
+	
+	public Param(String pName, String operator, Long value) {
+		this(pName, (Object) value, null, new String[] {operator});
+	}
+	
+	public Param(String pName, String operator, Double value) {
+		this(pName, (Object) value, null, new String[] {operator});
+	}
+	
+	public Param(String pName, String operator, Float value) {
+		this(pName, (Object) value, null, new String[] {operator});
+	}
+	
+	public Param(String pName, String operator, Date value) {
+		this(pName, (Object) value, null, new String[] {operator});
+	}
 	public void setParent(I_TemplateParams p) {
 		parent = p;
 	}
