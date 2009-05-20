@@ -94,5 +94,11 @@ public class ParamDecorator implements I_TemplateParams {
 	public String writeXML(XMLBuilder builder) {
 		return delegate.writeXML(builder);
 	}
+	protected synchronized I_TemplateParams getDelegate() {
+		return delegate;
+	}
+	protected synchronized void setDelegate(I_TemplateParams delegate) {
+		this.delegate = delegate;
+	}
 
 }
