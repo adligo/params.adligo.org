@@ -87,34 +87,20 @@ public class Params implements I_MultipleParamsObject {
 		addParam(parm);
 		return parm;
 	}
-	public Param addParam(String name, String value) {
-		return createAndAddParam(name, value, null);
+
+	Param createAndAddParamOperator(String name, Object values, String [] operators) {
+		Param parm = new Param(name, values, null, operators);
+		addParam(parm);
+		return parm;
 	}
 
-	public Param addParam(String name, Integer value) {
-		return createAndAddParam(name, value, null);
+	public Param addParam(String name) {
+		return createAndAddParam(name, null, null);
 	}
 
-	public Param addParam(String name, Short value) {
-		return createAndAddParam(name, value, null);
+	public Param addParam(String name, I_TemplateParams params) {
+		return createAndAddParam(name, null, params);
 	}
-
-	public Param addParam(String name, Long value) {
-		return createAndAddParam(name, value, null);
-	}
-
-	public Param addParam(String name, Double value) {
-		return createAndAddParam(name, value, null);
-	}
-
-	public Param addParam(String name, Float value) {
-		return createAndAddParam(name, value, null);
-	}
-
-	public Param addParam(String name, Date value) {
-		return createAndAddParam(name, value, null);
-	}
-
 	public Param addParam(String name, String operator, String value ) {
 		return createAndAddParamOperator(name, value, operator);
 	}
@@ -141,6 +127,37 @@ public class Params implements I_MultipleParamsObject {
 	
 	public Param addParam(String name, String operator, Date value ) {
 		return createAndAddParamOperator(name, value, operator);
+	}
+	
+	public Param addParam(String name, String [] operators, String value ) {
+		return createAndAddParamOperator(name, value, operators);
+	}
+	
+	public Param addParam(String name, String [] operators) {
+		return createAndAddParamOperator(name, null, operators);
+	}
+	public Param addParam(String name, String [] operators, Integer value ) {
+		return createAndAddParamOperator(name, value, operators);
+	}
+
+	public Param addParam(String name, String [] operators, Short value ) {
+		return createAndAddParamOperator(name, value, operators);
+	}
+	
+	public Param addParam(String name, String [] operators, Long value ) {
+		return createAndAddParamOperator(name, value, operators);
+	}
+	
+	public Param addParam(String name, String [] operators, Double value ) {
+		return createAndAddParamOperator(name, value, operators);
+	}
+	
+	public Param addParam(String name, String [] operators, Float value ) {
+		return createAndAddParamOperator(name, value, operators);
+	}
+	
+	public Param addParam(String name, String [] operators, Date value ) {
+		return createAndAddParamOperator(name, value, operators);
 	}
 	/**
 	 * Adds a I_TemplateParams to the vector of params
