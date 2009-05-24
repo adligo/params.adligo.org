@@ -58,29 +58,42 @@ public class Parser {
 		// say("Stuff = " + stuff + "\n" + header + "\n" + ender);
 		int iStart, iEnd;
 
+		int [] toRet = new int[] {-1,-1};
 		iStart = stuff.indexOf(header);
 		iEnd = stuff.indexOf(ender, iStart);
-		if (iStart != -1 && iEnd != -1) {
-			while (!couple(iStart, iEnd, stuff, header, ender)) {
-				iEnd = stuff.indexOf(ender, iEnd + 1);
+		
+		try {
+			if (iStart != -1 && iEnd != -1) {
+				if ("/>".equals(ender)) {
+					// there is NOT another tag to couple with
+				} else {
+					// there is another tag need to find it
+					while (!couple(iStart, iEnd, stuff, header, ender)) {
+						iEnd = stuff.indexOf(ender, iEnd + 1);
+					}
+				}
+			} else if (iStart == -1 && iEnd == -1) {
+				return new int[] { -1, -1 };
 			}
-		} else if (iStart == -1 && iEnd == -1) {
-			return new int[] { -1, -1 };
-		}
-		int[] toRet =  null;
-		if (iEnd < 0) {
-			// the ender tag wans't found
-			iEnd = stuff.indexOf("/>", iStart);
-			toRet = new int[] {iStart, iEnd + 2};
-		} else {
-			toRet = new int[] { iStart, iEnd + ender.length() };
-		}
-		//prevent out of bounds exceptions
-		if (toRet[1] > stuff.length()) {
-			toRet[1] = stuff.length();
-		}
-		if (log.isDebugEnabled()) {
-			log.debug("param returned = " + toRet[0] + "," + toRet[1]);
+			if (iEnd < 0) {
+				// the ender tag wans't found
+				iEnd = stuff.indexOf("/>", iStart);
+				toRet = new int[] {iStart, iEnd + 2};
+			} else {
+				toRet = new int[] { iStart, iEnd + ender.length() };
+			}
+			//prevent out of bounds exceptions
+			if (toRet[1] > stuff.length()) {
+				toRet[1] = stuff.length();
+			}
+			if (log.isDebugEnabled()) {
+				log.debug("param returned = " + toRet[0] + "," + toRet[1]);
+			}
+		} catch (StringIndexOutOfBoundsException g) {
+			log.error("problem in getTagIndexes stuff = " + stuff + " \n\n header =" +
+					header + "\n\nender=" + ender + "  \n\n original=" + g.getMessage()
+					+ "   ");
+			throw g;
 		}
 		return toRet;
 	}
@@ -104,37 +117,45 @@ public class Parser {
 		int iLastHeader = 0;
 		int iLastEnder = 0;
 
-		String xmlTag = s.substring(p, p2 + ender.length());
-		if (log.isDebugEnabled()) {
-			log.debug("trying = " + xmlTag);
-		}
-
-		while (xmlTag.indexOf(header, iLastHeader) != -1) {
-			int nextEnderInHeader = xmlTag.indexOf("/>", iLastHeader);
-			int headerEnd = xmlTag.indexOf(">", iLastHeader);
-			if (headerEnd < nextEnderInHeader || nextEnderInHeader == -1) {
-				iNestedHeaderTags++;
-			}
-			if (log.isDebugEnabled()) {
-				log.debug("iNestedHeaderTags = " + iNestedHeaderTags);
-			}
-			iLastHeader++;
-			iLastHeader = xmlTag.indexOf(header, iLastHeader);
-			if (iLastHeader == -1) {
-				break;
-			}
-		}
-		while (xmlTag.indexOf(ender, iLastEnder) != -1) {
-			iNestedEnderTags++;
-			if (log.isDebugEnabled()) {
-				log.debug("iNestedEnderTags = " + iNestedEnderTags);
-			}
-			iLastEnder = xmlTag.indexOf(ender, iLastEnder);
-			iLastEnder++;
-		}
+		int endTag = p2 + ender.length();
 		boolean b = false;
-		if (iNestedEnderTags == iNestedHeaderTags) {
-			b = true;
+		try {
+			String xmlTag = s.substring(p, endTag);
+		
+			if (log.isDebugEnabled()) {
+				log.debug("trying = " + xmlTag);
+			}
+	
+			while (xmlTag.indexOf(header, iLastHeader) != -1) {
+				int nextEnderInHeader = xmlTag.indexOf("/>", iLastHeader);
+				int headerEnd = xmlTag.indexOf(">", iLastHeader);
+				if (headerEnd < nextEnderInHeader || nextEnderInHeader == -1) {
+					iNestedHeaderTags++;
+				}
+				if (log.isDebugEnabled()) {
+					log.debug("iNestedHeaderTags = " + iNestedHeaderTags);
+				}
+				iLastHeader++;
+				iLastHeader = xmlTag.indexOf(header, iLastHeader);
+				if (iLastHeader == -1) {
+					break;
+				}
+			}
+			while (xmlTag.indexOf(ender, iLastEnder) != -1) {
+				iNestedEnderTags++;
+				if (log.isDebugEnabled()) {
+					log.debug("iNestedEnderTags = " + iNestedEnderTags);
+				}
+				iLastEnder = xmlTag.indexOf(ender, iLastEnder);
+				iLastEnder++;
+			}
+			
+			if (iNestedEnderTags == iNestedHeaderTags) {
+				b = true;
+			}
+		} catch (StringIndexOutOfBoundsException z) {
+			log.error("Trying to parse " + p + "," + endTag + " " + s);
+			throw z;
 		}
 		return b;
 	}
