@@ -7,6 +7,7 @@ import org.adligo.i.log.client.Log;
 import org.adligo.i.log.client.LogFactory;
 import org.adligo.i.util.client.ArrayCollection;
 import org.adligo.i.util.client.I_Factory;
+import org.adligo.i.util.client.I_Iterator;
 
 /**
  * Description: This class is simply used to hold information in a logical
@@ -19,6 +20,8 @@ import org.adligo.i.util.client.I_Factory;
 public class Param implements I_TemplateParams {
 	static final Log log = LogFactory.getLog(Param.class);
 	private static I_Factory CLASS_FOR_NAME_VALUE_MAP = new ClassForNameValueMap();
+	private static I_Factory CLASS_SHORT_NAME_VALUE_MAP = new ClassShortNameValueMap();
+	
 	/**
 	 * 
 	 */
@@ -34,6 +37,8 @@ public class Param implements I_TemplateParams {
 	public static final String CLASS_VERSION = new String("1.5");
 	private String name;
 	private ArrayCollection values = new ArrayCollection(5);
+	private ArrayCollection valueTypes = new ArrayCollection(5);
+	
 	private I_TemplateParams params;
 	private boolean bAlreadyGotMe = false;
 	private String[] operators;
@@ -69,9 +74,47 @@ public class Param implements I_TemplateParams {
 	 */
 	Param(String pName, Object value, I_TemplateParams pParams, String [] pOperators) {
 		name = pName;
-		values.add(value);
+		addValue(value);
 		params = pParams;
 		operators = pOperators;
+	}
+	
+	void addValue(Object p) {
+		if (p instanceof String) {
+			values.add(p);
+			valueTypes.add(ValueTypes.STRING);
+			return;
+		}
+		if (p instanceof Integer) {
+			values.add(p);
+			valueTypes.add(ValueTypes.INTEGER);
+			return;
+		}
+		if (p instanceof Long) {
+			values.add(p);
+			valueTypes.add(ValueTypes.LONG);
+			return;
+		}
+		if (p instanceof Short) {
+			values.add(p);
+			valueTypes.add(ValueTypes.SHORT);
+			return;
+		}
+		if (p instanceof Double) {
+			values.add(p);
+			valueTypes.add(ValueTypes.DOUBLE);
+			return;
+		}
+		if (p instanceof Float) {
+			values.add(p);
+			valueTypes.add(ValueTypes.FLOAT);
+			return;
+		}
+		if (p instanceof Date) {
+			values.add(p);
+			valueTypes.add(ValueTypes.DATE);
+			return;
+		}
 	}
 
 	public Param(String pName, String value, I_TemplateParams pParams) {
@@ -141,67 +184,65 @@ public class Param implements I_TemplateParams {
 		name = s;
 	}
 
-	public void setValue(String p) {
+	void setValue(Object p) {
 		values.clear();
-		values.add(p);
+		valueTypes.clear();
+		addValue(p);
+	}
+	public void setValue(String p) {
+		setValue((Object) p);
 	}
 
 	public void setValue(Integer p) {
-		values.clear();
-		values.add(p);
+		setValue((Object) p);
 	}
 
 	public void setValue(Short p) {
-		values.clear();
-		values.add(p);
+		setValue((Object) p);
 	}
 
 	public void setValue(Long p) {
-		values.clear();
-		values.add(p);
+		setValue((Object) p);
 	}
 
 	public void setValue(Double p) {
-		values.clear();
-		values.add(p);
+		setValue((Object) p);
 	}
 
 	public void setValue(Float p) {
-		values.clear();
-		values.add(p);
+		setValue((Object) p);
 	}
 
 	public void setValue(Date p) {
-		values.clear();
-		values.add(p);
+		setValue((Object) p);
 	}
 
 	public void addValue(String p) {
-		values.add(p);
+		addValue((Object) p);
 	}
 
 	public void addValue(Integer p) {
-		values.add(p);
+		addValue((Object) p);
 	}
 
 	public void addValue(Short p) {
-		values.add(p);
+		addValue((Object) p);
 	}
 
 	public void addValue(Long p) {
-		values.add(p);
+		addValue((Object) p);
 	}
 
 	public void addValue(Double p) {
-		values.add(p);
+		addValue((Object) p);
 	}
 
 	public void addValue(Float p) {
-		values.add(p);
+		addValue((Object) p);
 	}
 
 	public void addValue(Date p) {
-		values.add(p);
+		addValue((Object) p);
 	}
 
 	public void setParams(I_TemplateParams pParams) {
@@ -279,7 +320,7 @@ public class Param implements I_TemplateParams {
 		sb.append(" ");
 		sb.append(XMLObject.CLASS);
 		sb.append("=\"");
-		sb.append(this.getClass().getName());
+		sb.append(ClassForNameMap.PARAM_SHORT_NAME);
 		sb.append("\" ");
 		sb.append(XMLObject.VERSION);
 		sb.append("=\"");
@@ -295,21 +336,25 @@ public class Param implements I_TemplateParams {
 
 		sb.append("\"");
 
-		sb.append(">");
-		sb.lineFeed();
-
-		sb.addIndentLevel();
-
-		writeOperators(sb);
-		writeValues(sb);
-		if (params != null) {
-			params.writeXML(sb, PARAMS);
+		if (hasNestedContent()) {
+			sb.append(">");
+			sb.lineFeed();
+	
+			sb.addIndentLevel();
+	
+			writeOperators(sb);
+			writeValues(sb);
+			if (params != null) {
+				params.writeXML(sb, PARAMS);
+			}
+	
+			sb.removeIndentLevel();
+	
+			sb.indent();
+			sb.append(XMLObject.OBJECT_ENDER);
+		} else {
+			sb.append(" />");
 		}
-
-		sb.removeIndentLevel();
-
-		sb.indent();
-		sb.append(XMLObject.OBJECT_ENDER);
 		sb.lineFeed();
 
 		if (log.isDebugEnabled()) {
@@ -317,6 +362,25 @@ public class Param implements I_TemplateParams {
 		}
 	}
 
+	public boolean hasNestedContent() {
+		if (operators == null) {
+			if (values.size() == 0) {
+				if (params == null) {
+					return false;
+				}
+			}
+		} else {
+			if (operators.length == 0) {
+				if (values.size() == 0) {
+					if (params == null) {
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
+	
 	private void writeOperators(XMLBuilder sb) {
 		if (operators == null) {
 			return;
@@ -378,14 +442,17 @@ public class Param implements I_TemplateParams {
 			sb.append(" ");
 			sb.append(XMLObject.CLASS);
 			sb.append("=\"");
-			Class c = o.getClass();
-			sb.append(c.getName());
+			sb.append((String) CLASS_SHORT_NAME_VALUE_MAP.createNew(o));
 			sb.append("\">");
 			// implicit to string or null
 			if (o == null) {
 				sb.append("null");
 			} else {
-				sb.append(Parser.escapeForXml(o.toString()));
+				if (o instanceof Date) {
+					sb.append("" + ((Date) o).getTime());
+				} else {
+					sb.append(Parser.escapeForXml(o.toString()));
+				}
 			}
 			sb.append(XMLObject.OBJECT_ENDER);
 			sb.lineFeed();
@@ -411,7 +478,15 @@ public class Param implements I_TemplateParams {
 																				// tag
 		int[] iaObject = Parser.getTagIndexs(s, XMLObject.OBJECT_HEADER,
 				XMLObject.OBJECT_ENDER); // get first object tag
-		String body = s.substring(iaHeader[1] + 1, getStartOfEndTag(iaObject));
+		
+		int start = iaHeader[1] + 1;
+		int end = getStartOfEndTag(iaObject);
+		if (start >= end) {
+			start = iaObject[0];
+			end = iaObject[1];
+		}
+		
+		String body = s.substring(start, end);
 		if (log.isDebugEnabled()) {
 			log.debug("body\n" + body);
 		}
@@ -429,16 +504,22 @@ public class Param implements I_TemplateParams {
 
 			String sName = Parser.getAttribute(iaHeader, body, XMLObject.NAME);
 			int startOfEndTag = getStartOfEndTag(iaObject);
-			String content = body.substring(iaHeader[1] + 1, startOfEndTag);
-			if (sName.equals(VALUES)) {
-				parseValues(content);
-			} else if (sName.equals(OPERATORS)) {
-				operators = parseOperators(content);
-			} else if (sName.equals(PARAMS)) {
-				parseParams(body);
+			
+			int startContent = iaHeader[1] + 1;
+			int endContent = startOfEndTag;
+			if (startContent <= endContent) {
+				//deal with nested content
+				String content = body.substring(startContent, endContent);
+				if (sName.equals(VALUES)) {
+					parseValues(content);
+				} else if (sName.equals(OPERATORS)) {
+					operators = parseOperators(content);
+				} else if (sName.equals(PARAMS)) {
+					parseParams(body);
+				}
 			}
 			// pull out the object we just parsed
-			int start = startOfEndTag + XMLObject.OBJECT_ENDER.length();
+			start = startOfEndTag + XMLObject.OBJECT_ENDER.length();
 			if (log.isDebugEnabled()) {
 				log.debug("trying to parse " + start + "," + body.length()
 						+ "\n" + body);
@@ -452,7 +533,11 @@ public class Param implements I_TemplateParams {
 	}
 
 	private int getStartOfEndTag(int[] iaObject) {
-		return iaObject[1] - XMLObject.OBJECT_ENDER.length();
+		int toRet = iaObject[1] - XMLObject.OBJECT_ENDER.length();
+		if (toRet < 0) {
+			toRet = iaObject[1];
+		}
+		return toRet;
 	}
 
 	private String[] parseOperators(String operatorList) {
@@ -588,6 +673,21 @@ public class Param implements I_TemplateParams {
 		if (values.equals(other.values))
 			return false;
 		return true;
+	}
+	public static synchronized I_Factory getCLASS_SHORT_NAME_VALUE_MAP() {
+		return CLASS_SHORT_NAME_VALUE_MAP;
+	}
+	public static synchronized void setCLASS_SHORT_NAME_VALUE_MAP(
+			I_Factory class_short_name_value_map) {
+		CLASS_SHORT_NAME_VALUE_MAP = class_short_name_value_map;
+	}
+	@Override
+	public short[] getValueTypes() {
+		short [] toRet = new short[valueTypes.size()];
+		for (int i = 0; i < toRet.length; i++) {
+			toRet[i] = (Short) valueTypes.get(i);
+		}
+		return toRet;
 	}
 
 }

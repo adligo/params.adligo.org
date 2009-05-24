@@ -34,6 +34,16 @@ public interface I_TemplateParams extends Serializable, I_XML_Serilizable {
 	public Object[] getValues();
 
 	/**
+	 * this is just a optimization for
+	 * determining the types of the values
+	 * see ValueTypes.  This is so the
+	 * parser (server) doesn't need
+	 * to determine the various types
+	 * by calling instance of
+	 * @return
+	 */
+	public short[] getValueTypes();
+	/**
 	 * This should return the I_TemplateParams nested inside the current param.
 	 * This should return null if there are no nested I_TemplateParams
 	 */

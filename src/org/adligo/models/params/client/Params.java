@@ -341,7 +341,7 @@ public class Params implements I_MultipleParamsObject {
 		sb.append(" ");
 		sb.append(XMLObject.CLASS);
 		sb.append("=\"");
-		sb.append(this.getClass().getName());
+		sb.append(ClassForNameMap.PARAMS_SHORT_NAME);
 		sb.append("\" ");
 		sb.append(XMLObject.VERSION);
 		sb.append("=\"");
@@ -500,5 +500,10 @@ public class Params implements I_MultipleParamsObject {
 		} else if (!paramsMap.equals(other.paramsMap))
 			return false;
 		return true;
+	}
+
+	@Override
+	public short[] getValueTypes() {
+		return this.param.getValueTypes();
 	}
 }

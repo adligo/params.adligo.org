@@ -67,7 +67,18 @@ public class Parser {
 		} else if (iStart == -1 && iEnd == -1) {
 			return new int[] { -1, -1 };
 		}
-		int[] toRet = new int[] { iStart, iEnd + ender.length() };
+		int[] toRet =  null;
+		if (iEnd < 0) {
+			// the ender tag wans't found
+			iEnd = stuff.indexOf("/>", iStart);
+			toRet = new int[] {iStart, iEnd + 2};
+		} else {
+			toRet = new int[] { iStart, iEnd + ender.length() };
+		}
+		//prevent out of bounds exceptions
+		if (toRet[1] > stuff.length()) {
+			toRet[1] = stuff.length();
+		}
 		if (log.isDebugEnabled()) {
 			log.debug("param returned = " + toRet[0] + "," + toRet[1]);
 		}
@@ -87,6 +98,7 @@ public class Parser {
 	 */
 	static public boolean couple(int p, int p2, String s, String header,
 			String ender) {
+		
 		int iNestedHeaderTags = 0;
 		int iNestedEnderTags = 0;
 		int iLastHeader = 0;
@@ -98,12 +110,19 @@ public class Parser {
 		}
 
 		while (xmlTag.indexOf(header, iLastHeader) != -1) {
-			iNestedHeaderTags++;
+			int nextEnderInHeader = xmlTag.indexOf("/>", iLastHeader);
+			int headerEnd = xmlTag.indexOf(">", iLastHeader);
+			if (headerEnd < nextEnderInHeader || nextEnderInHeader == -1) {
+				iNestedHeaderTags++;
+			}
 			if (log.isDebugEnabled()) {
 				log.debug("iNestedHeaderTags = " + iNestedHeaderTags);
 			}
-			iLastHeader = xmlTag.indexOf(header, iLastHeader);
 			iLastHeader++;
+			iLastHeader = xmlTag.indexOf(header, iLastHeader);
+			if (iLastHeader == -1) {
+				break;
+			}
 		}
 		while (xmlTag.indexOf(ender, iLastEnder) != -1) {
 			iNestedEnderTags++;

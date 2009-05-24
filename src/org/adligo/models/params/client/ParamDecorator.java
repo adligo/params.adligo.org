@@ -100,5 +100,9 @@ public class ParamDecorator implements I_TemplateParams {
 	protected synchronized void setDelegate(I_TemplateParams delegate) {
 		this.delegate = delegate;
 	}
+	@Override
+	public short[] getValueTypes() {
+		return delegate.getValueTypes();
+	}
 
 }
