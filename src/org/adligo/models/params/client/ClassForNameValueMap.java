@@ -18,6 +18,7 @@ public class ClassForNameValueMap implements I_Factory {
 	public static final String LONG_SHORT_NAME = "Long";
 	public static final String DATE_SHORT_NAME = "Date";
 	public static final String STRING_SHORT_NAME = "String";
+	public static final String BOOLEAN_SHORT_NAME = "Boolean";
 	
 	@SuppressWarnings("deprecation")
 	@Override
@@ -55,6 +56,8 @@ public class ClassForNameValueMap implements I_Factory {
 			// a geologist
 			Long timestamp = new Long(content);
 			toRet = new Date(timestamp);
+		} else if (BOOLEAN_SHORT_NAME.equals(clazz)){
+			toRet = new Boolean(content);
 		} else {
 			// defaults to String
 			toRet = content;

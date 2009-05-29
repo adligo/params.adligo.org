@@ -17,17 +17,19 @@ public class ClassShortNameValueMap implements I_Factory {
 			if (ClassUtils.getClassName(Integer.class).equals(clazz)) {
 				return ClassForNameValueMap.INTEGER_SHORT_NAME;
 			} else if (ClassUtils.getClassName(Short.class).equals(clazz)) {
-				return ClassForNameValueMap.DOUBLE_SHORT_NAME;
+				return ClassForNameValueMap.SHORT_SHORT_NAME;
 			} else if (ClassUtils.getClassName(Float.class).equals(clazz)) {
 				return ClassForNameValueMap.FLOAT_SHORT_NAME;
-			} else if (ClassUtils.getClassName(Short.class).equals(clazz)) {
-				return ClassForNameValueMap.SHORT_SHORT_NAME;
+			} else if (ClassUtils.getClassName(Double.class).equals(clazz)) {
+				return ClassForNameValueMap.DOUBLE_SHORT_NAME;
 			} else if (ClassUtils.getClassName(Long.class).equals(clazz)) {
 				return ClassForNameValueMap.LONG_SHORT_NAME;
 			} else if (ClassUtils.getClassName(Date.class).equals(clazz)) {
 				return ClassForNameValueMap.DATE_SHORT_NAME;
 			} else if (ClassUtils.getClassName(String.class).equals(clazz)) {
 				return ClassForNameValueMap.STRING_SHORT_NAME;
+			} else if (ClassUtils.getClassName(Boolean.class).equals(clazz)) {
+				return ClassForNameValueMap.BOOLEAN_SHORT_NAME;
 			} 
 			// allow for sub classing to create new types
 			return null;

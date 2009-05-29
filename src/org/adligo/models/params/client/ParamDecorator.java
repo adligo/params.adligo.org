@@ -56,7 +56,7 @@ public class ParamDecorator implements I_TemplateParams {
 	}
 
 	@Override
-	public String[] getOperators() {
+	public I_Operators getOperators() {
 		return delegate.getOperators();
 	}
 

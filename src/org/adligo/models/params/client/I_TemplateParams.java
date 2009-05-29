@@ -57,5 +57,5 @@ public interface I_TemplateParams extends Serializable, I_XML_Serilizable {
 
 	public String getName();
 
-	public String[] getOperators();
+	public I_Operators getOperators();
 }

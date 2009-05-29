@@ -1,13 +1,11 @@
 package org.adligo.models.params.client;
 
-import java.util.Arrays;
 import java.util.Date;
 
 import org.adligo.i.log.client.Log;
 import org.adligo.i.log.client.LogFactory;
 import org.adligo.i.util.client.ArrayCollection;
 import org.adligo.i.util.client.I_Factory;
-import org.adligo.i.util.client.I_Iterator;
 
 /**
  * Description: This class is simply used to hold information in a logical
@@ -22,6 +20,12 @@ public class Param implements I_TemplateParams {
 	private static I_Factory CLASS_FOR_NAME_VALUE_MAP = new ClassForNameValueMap();
 	private static I_Factory CLASS_SHORT_NAME_VALUE_MAP = new ClassShortNameValueMap();
 	
+	/**
+	 * standard name of where clause 
+	 * parameter, which shows up in lots of query languages
+	 * sql, mdx, fast exc
+	 */
+	public static final String WHERE = "where";
 	/**
 	 * 
 	 */
@@ -41,7 +45,7 @@ public class Param implements I_TemplateParams {
 	
 	private I_TemplateParams params;
 	private boolean bAlreadyGotMe = false;
-	private String[] operators;
+	private I_Operators operators;
 	private I_TemplateParams parent;
 
 	/**
@@ -53,9 +57,13 @@ public class Param implements I_TemplateParams {
 	public Param(String pName) {
 		name = pName;
 	}
-	public Param(String pName, String [] pOperators) {
+	public Param(String pName, I_Operators pOperators) {
 		name = pName;
 		operators = pOperators;
+	}
+	public Param(String pName, String [] pOperators) {
+		name = pName;
+		operators = new Operators(pOperators);
 	}
 	public Param(String pName, I_TemplateParams pParams) {
 		name = pName;
@@ -72,7 +80,7 @@ public class Param implements I_TemplateParams {
 	 * @param value
 	 * @param pParams
 	 */
-	Param(String pName, Object value, I_TemplateParams pParams, String [] pOperators) {
+	private Param(String pName, Object value, I_TemplateParams pParams, I_Operators pOperators) {
 		name = pName;
 		values.add(value);
 		params = pParams;
@@ -120,41 +128,41 @@ public class Param implements I_TemplateParams {
 	}
 	
 	public Param(String pName, String operator, String value) {
-		this(pName, (Object) value, null, new String[] {operator});
+		this(pName, (Object) value, null,new Operators(operator));
 		valueTypes.add(ValueTypes.STRING);
 	}
 
 	public Param(String pName, String operator, Integer value) {
-		this(pName, (Object) value, null, new String[] {operator});
+		this(pName, (Object) value, null, new Operators(operator));
 		valueTypes.add(ValueTypes.INTEGER);
 	}
 	
 	public Param(String pName, String operator, Short value) {
-		this(pName, (Object) value, null, new String[] {operator});
+		this(pName, (Object) value, null, new Operators(operator));
 		valueTypes.add(ValueTypes.SHORT);
 	}
 	
 	public Param(String pName, String operator, Long value) {
-		this(pName, (Object) value, null, new String[] {operator});
+		this(pName, (Object) value, null, new Operators(operator));
 		valueTypes.add(ValueTypes.LONG);
 	}
 	
 	public Param(String pName, String operator, Double value) {
-		this(pName, (Object) value, null, new String[] {operator});
+		this(pName, (Object) value, null, new Operators(operator));
 		valueTypes.add(ValueTypes.DOUBLE);
 	}
 	
 	public Param(String pName, String operator, Float value) {
-		this(pName, (Object) value, null, new String[] {operator});
+		this(pName, (Object) value, null, new Operators(operator));
 		valueTypes.add(ValueTypes.FLOAT);
 	}
 	
 	public Param(String pName, String operator, Date value) {
-		this(pName, (Object) value, null, new String[] {operator});
+		this(pName, (Object) value, null, new Operators(operator));
 		valueTypes.add(ValueTypes.DATE);
 	}
 	public Param(String pName, String operator, Boolean value) {
-		this(pName, (Object) value, null, new String[] {operator});
+		this(pName, (Object) value, null, new Operators(operator));
 		valueTypes.add(ValueTypes.BOOLEAN);
 	}
 	
@@ -284,16 +292,20 @@ public class Param implements I_TemplateParams {
 		return false;
 	}
 
-	public String[] getOperators() {
+	public I_Operators getOperators() {
 		return operators;
 	}
 
+	public void setOperators(I_Operators p) {
+		this.operators = p;
+	}
+	
 	public void setOperators(String[] operators) {
-		this.operators = operators;
+		this.operators = new Operators(operators);
 	}
 
 	public void setOperator(String operator) {
-		this.operators = new String[] { operator };
+		this.operators = new Operators(operator);
 	}
 
 	@Override
@@ -380,10 +392,15 @@ public class Param implements I_TemplateParams {
 				}
 			}
 		} else {
-			if (operators.length == 0) {
-				if (values.size() == 0) {
-					if (params == null) {
-						return false;
+			if (operators != null) {
+				String [] vals = operators.getValues();
+				if (vals != null) {
+					if (vals.length == 0) {
+						if (values.size() == 0) {
+							if (params == null) {
+								return false;
+							}
+						}
 					}
 				}
 			}
@@ -395,7 +412,11 @@ public class Param implements I_TemplateParams {
 		if (operators == null) {
 			return;
 		}
-		if (operators.length == 0) {
+		String [] vals = operators.getValues();
+		if (vals == null) {
+			return;
+		}
+		if (vals.length == 0) {
 			return;
 		}
 		sb.indent();
@@ -407,13 +428,13 @@ public class Param implements I_TemplateParams {
 		sb.lineFeed();
 		sb.addIndentLevel();
 
-		for (int i = 0; i < operators.length; i++) {
+		for (int i = 0; i < vals.length; i++) {
 			sb.indent();
 
 			sb.append(XMLObject.OBJECT_HEADER);
 			sb.append(">");
 
-			String operator = operators[i];
+			String operator = vals[i];
 			if (operator == null) {
 				sb.append("null");
 			} else {
@@ -550,7 +571,7 @@ public class Param implements I_TemplateParams {
 		return toRet;
 	}
 
-	private String[] parseOperators(String operatorList) {
+	private I_Operators parseOperators(String operatorList) {
 		if (log.isDebugEnabled()) {
 			log.debug("parseOperators:\n" + operatorList
 					+ "\nEnd parseOperators:");
@@ -579,7 +600,7 @@ public class Param implements I_TemplateParams {
 		if (log.isDebugEnabled()) {
 			log.debug("operators:" + toRet);
 		}
-		return toRet;
+		return new Operators(toRet);
 	}
 
 	private void parseValues(String valueList) {
@@ -617,6 +638,30 @@ public class Param implements I_TemplateParams {
 			valueList = valueList.substring(iItemEnder
 					+ XMLObject.OBJECT_ENDER.length(), valueList.length());
 			values.add(toAdd);
+			if (toAdd instanceof String) {
+				valueTypes.add(ValueTypes.STRING);
+			}
+			if (toAdd instanceof Integer) {
+				valueTypes.add(ValueTypes.INTEGER);
+			}
+			if (toAdd instanceof Long) {
+				valueTypes.add(ValueTypes.LONG);
+			}
+			if (toAdd instanceof Short) {
+				valueTypes.add(ValueTypes.SHORT);
+			}
+			if (toAdd instanceof Double) {
+				valueTypes.add(ValueTypes.DOUBLE);
+			}
+			if (toAdd instanceof Float) {
+				valueTypes.add(ValueTypes.FLOAT);
+			}
+			if (toAdd instanceof Date) {
+				valueTypes.add(ValueTypes.DATE);
+			}
+			if (toAdd instanceof Boolean) {
+				valueTypes.add(ValueTypes.BOOLEAN);
+			}
 		}
 	}
 
@@ -648,42 +693,7 @@ public class Param implements I_TemplateParams {
 		CLASS_FOR_NAME_VALUE_MAP = class_for_name_value_map;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + Arrays.hashCode(operators);
-		result = prime * result + ((params == null) ? 0 : params.hashCode());
-		result = prime * result + values.hashCode();
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Param other = (Param) obj;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (!Arrays.equals(operators, other.operators))
-			return false;
-		if (params == null) {
-			if (other.params != null)
-				return false;
-		} else if (!params.equals(other.params))
-			return false;
-		if (values.equals(other.values))
-			return false;
-		return true;
-	}
+	
 	public static synchronized I_Factory getCLASS_SHORT_NAME_VALUE_MAP() {
 		return CLASS_SHORT_NAME_VALUE_MAP;
 	}
@@ -698,6 +708,55 @@ public class Param implements I_TemplateParams {
 			toRet[i] = (Short) valueTypes.get(i);
 		}
 		return toRet;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result
+				+ ((operators == null) ? 0 : operators.hashCode());
+		result = prime * result + ((params == null) ? 0 : params.hashCode());
+		result = prime * result
+				+ ((valueTypes == null) ? 0 : valueTypes.hashCode());
+		result = prime * result + ((values == null) ? 0 : values.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Param other = (Param) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (operators == null) {
+			if (other.operators != null)
+				return false;
+		} else if (!operators.equals(other.operators))
+			return false;
+		if (params == null) {
+			if (other.params != null)
+				return false;
+		} else if (!params.equals(other.params))
+			return false;
+		if (valueTypes == null) {
+			if (other.valueTypes != null)
+				return false;
+		} else if (!valueTypes.equals(other.valueTypes))
+			return false;
+		if (values == null) {
+			if (other.values != null)
+				return false;
+		} else if (!values.equals(other.values))
+			return false;
+		return true;
 	}
 
 }

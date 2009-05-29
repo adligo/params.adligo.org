@@ -49,126 +49,201 @@ public class Params implements I_MultipleParamsObject {
 	 * Collection of Param objects.
 	 */
 	public Param addParam(String name, String value, I_TemplateParams params) {
-		return createAndAddParam(name, value, params);
+		Param parm = new Param(name,params);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
 	}
 
 	public Param addParam(String name, Integer value, I_TemplateParams params) {
-		return createAndAddParam(name, value, params);
+		Param parm = new Param(name,params);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
 	}
 
 	public Param addParam(String name, Short value, I_TemplateParams params) {
-		return createAndAddParam(name, value, params);
+		Param parm = new Param(name,params);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
 	}
 
 	public Param addParam(String name, Long value, I_TemplateParams params) {
-		return createAndAddParam(name, value, params);
+		Param parm = new Param(name,params);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
 	}
 
 	public Param addParam(String name, Double value, I_TemplateParams params) {
-		return createAndAddParam(name, value, params);
+		Param parm = new Param(name,params);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
 	}
 
 	public Param addParam(String name, Float value, I_TemplateParams params) {
-		return createAndAddParam(name, value, params);
+		Param parm = new Param(name,params);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
 	}
 
 	public Param addParam(String name, Date value, I_TemplateParams params) {
-		return createAndAddParam(name, value, params);
+		Param parm = new Param(name,params);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
 	}
 
 	public Param addParam(String name, Boolean value, I_TemplateParams params) {
-		return createAndAddParam(name, value, params);
+		Param parm = new Param(name,params);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
 	}
 	
-	Param createAndAddParam(String name, Object values, I_TemplateParams params) {
-		Param parm = new Param(name, values, params, null);
-		addParam(parm);
-		return parm;
-	}
+	
 
-	Param createAndAddParamOperator(String name, Object values, String operator) {
-		Param parm = new Param(name, values, null, new String[] {operator});
-		addParam(parm);
-		return parm;
-	}
-
-	Param createAndAddParamOperator(String name, Object values, String [] operators) {
-		Param parm = new Param(name, values, null, operators);
-		addParam(parm);
-		return parm;
-	}
-
+	/**
+	 * returns the parameter created
+	 * @param name
+	 * @return
+	 */
 	public Param addParam(String name) {
-		return createAndAddParam(name, null, null);
+		Param parm = new Param(name);
+		addParam(parm);
+		return parm;
 	}
-
+	
+	/**
+	 * returns the children of the parameter created
+	 * @param name
+	 * @return
+	 */
+	public Params addParams(String name) {
+		Params toRet = new Params();
+		Param parm = new Param(name,toRet);
+		addParam(parm);
+		return toRet;
+	}
+	
+	public Params addWhereParams() {
+		return this.addParams(Param.WHERE);
+	}
+	
 	public Param addParam(String name, I_TemplateParams params) {
-		return createAndAddParam(name, null, params);
+		Param parm = new Param(name,params);
+		addParam(parm);
+		return parm;
 	}
 	public Param addParam(String name, String operator, String value ) {
-		return createAndAddParamOperator(name, value, operator);
+		Param parm = new Param(name,operator, value);
+		addParam(parm);
+		return parm;
 	}
 	
 	public Param addParam(String name, String operator, Integer value ) {
-		return createAndAddParamOperator(name, value, operator);
+		Param parm = new Param(name,operator, value);
+		addParam(parm);
+		return parm;
 	}
 
 	public Param addParam(String name, String operator, Short value ) {
-		return createAndAddParamOperator(name, value, operator);
+		Param parm = new Param(name,operator, value);
+		addParam(parm);
+		return parm;
 	}
 	
 	public Param addParam(String name, String operator, Long value ) {
-		return createAndAddParamOperator(name, value, operator);
+		Param parm = new Param(name,operator, value);
+		addParam(parm);
+		return parm;
 	}
 	
 	public Param addParam(String name, String operator, Double value ) {
-		return createAndAddParamOperator(name, value, operator);
+		Param parm = new Param(name,operator, value);
+		addParam(parm);
+		return parm;
 	}
 	
 	public Param addParam(String name, String operator, Float value ) {
-		return createAndAddParamOperator(name, value, operator);
+		Param parm = new Param(name,operator, value);
+		addParam(parm);
+		return parm;
 	}
 	
 	public Param addParam(String name, String operator, Date value ) {
-		return createAndAddParamOperator(name, value, operator);
+		Param parm = new Param(name,operator, value);
+		addParam(parm);
+		return parm;
 	}
 	
 	public Param addParam(String name, String operator, Boolean value ) {
-		return createAndAddParamOperator(name, value, operator);
+		Param parm = new Param(name,operator, value);
+		addParam(parm);
+		return parm;
 	}
 	
 	public Param addParam(String name, String [] operators, String value ) {
-		return createAndAddParamOperator(name, value, operators);
+		Param parm = new Param(name,new Operators(operators));
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
 	}
 	
 	public Param addParam(String name, String [] operators) {
-		return createAndAddParamOperator(name, null, operators);
+		Param parm = new Param(name,operators);
+		addParam(parm);
+		return parm;
 	}
 	public Param addParam(String name, String [] operators, Integer value ) {
-		return createAndAddParamOperator(name, value, operators);
+		Param parm = new Param(name,new Operators(operators));
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
 	}
 
 	public Param addParam(String name, String [] operators, Short value ) {
-		return createAndAddParamOperator(name, value, operators);
+		Param parm = new Param(name,new Operators(operators));
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
 	}
 	
 	public Param addParam(String name, String [] operators, Long value ) {
-		return createAndAddParamOperator(name, value, operators);
+		Param parm = new Param(name,new Operators(operators));
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
 	}
 	
 	public Param addParam(String name, String [] operators, Double value ) {
-		return createAndAddParamOperator(name, value, operators);
+		Param parm = new Param(name,new Operators(operators));
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
 	}
 	
 	public Param addParam(String name, String [] operators, Float value ) {
-		return createAndAddParamOperator(name, value, operators);
+		Param parm = new Param(name,new Operators(operators));
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
 	}
 	
 	public Param addParam(String name, String [] operators, Date value ) {
-		return createAndAddParamOperator(name, value, operators);
+		Param parm = new Param(name,new Operators(operators));
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
 	}
 	public Param addParam(String name, String [] operators, Boolean value ) {
-		return createAndAddParamOperator(name, value, operators);
+		Param parm = new Param(name,new Operators(operators));
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
 	}
 	/**
 	 * Adds a I_TemplateParams to the vector of params
@@ -240,7 +315,7 @@ public class Params implements I_MultipleParamsObject {
 	/**
 	 * Implementation of I_TemplateParams see the interfaces documentation.
 	 */
-	public String[] getOperators() {
+	public I_Operators getOperators() {
 		if (param != null) {
 			return param.getOperators();
 		}
