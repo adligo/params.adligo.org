@@ -74,104 +74,90 @@ public class Param implements I_TemplateParams {
 	 */
 	Param(String pName, Object value, I_TemplateParams pParams, String [] pOperators) {
 		name = pName;
-		addValue(value);
+		values.add(value);
 		params = pParams;
 		operators = pOperators;
 	}
 	
-	void addValue(Object p) {
-		if (p instanceof String) {
-			values.add(p);
-			valueTypes.add(ValueTypes.STRING);
-			return;
-		}
-		if (p instanceof Integer) {
-			values.add(p);
-			valueTypes.add(ValueTypes.INTEGER);
-			return;
-		}
-		if (p instanceof Long) {
-			values.add(p);
-			valueTypes.add(ValueTypes.LONG);
-			return;
-		}
-		if (p instanceof Short) {
-			values.add(p);
-			valueTypes.add(ValueTypes.SHORT);
-			return;
-		}
-		if (p instanceof Double) {
-			values.add(p);
-			valueTypes.add(ValueTypes.DOUBLE);
-			return;
-		}
-		if (p instanceof Float) {
-			values.add(p);
-			valueTypes.add(ValueTypes.FLOAT);
-			return;
-		}
-		if (p instanceof Date) {
-			values.add(p);
-			valueTypes.add(ValueTypes.DATE);
-			return;
-		}
-	}
-
 	public Param(String pName, String value, I_TemplateParams pParams) {
 		this(pName, (Object) value, pParams, null);
+		valueTypes.add(ValueTypes.STRING);
 	}
 
 	public Param(String pName, Integer value, I_TemplateParams pParams) {
 		this(pName, (Object) value, pParams, null);
+		valueTypes.add(ValueTypes.INTEGER);
 	}
 
 	public Param(String pName, Short value, I_TemplateParams pParams) {
 		this(pName, (Object) value, pParams, null);
+		valueTypes.add(ValueTypes.SHORT);
 	}
 
 	public Param(String pName, Long value, I_TemplateParams pParams) {
 		this(pName, (Object) value, pParams, null);
+		valueTypes.add(ValueTypes.LONG);
 	}
 
 	public Param(String pName, Double value, I_TemplateParams pParams) {
 		this(pName, (Object) value, pParams, null);
+		valueTypes.add(ValueTypes.DOUBLE);
 	}
 
 	public Param(String pName, Float value, I_TemplateParams pParams) {
 		this(pName, (Object) value, pParams, null);
+		valueTypes.add(ValueTypes.FLOAT);
 	}
 
 	public Param(String pName, Date value, I_TemplateParams pParams) {
 		this(pName, (Object) value, pParams, null);
+		valueTypes.add(ValueTypes.DATE);
 	}
 
+	public Param(String pName, Boolean value, I_TemplateParams pParams) {
+		this(pName, (Object) value, pParams, null);
+		valueTypes.add(ValueTypes.BOOLEAN);
+	}
+	
 	public Param(String pName, String operator, String value) {
 		this(pName, (Object) value, null, new String[] {operator});
+		valueTypes.add(ValueTypes.STRING);
 	}
 
 	public Param(String pName, String operator, Integer value) {
 		this(pName, (Object) value, null, new String[] {operator});
+		valueTypes.add(ValueTypes.INTEGER);
 	}
 	
 	public Param(String pName, String operator, Short value) {
 		this(pName, (Object) value, null, new String[] {operator});
+		valueTypes.add(ValueTypes.SHORT);
 	}
 	
 	public Param(String pName, String operator, Long value) {
 		this(pName, (Object) value, null, new String[] {operator});
+		valueTypes.add(ValueTypes.LONG);
 	}
 	
 	public Param(String pName, String operator, Double value) {
 		this(pName, (Object) value, null, new String[] {operator});
+		valueTypes.add(ValueTypes.DOUBLE);
 	}
 	
 	public Param(String pName, String operator, Float value) {
 		this(pName, (Object) value, null, new String[] {operator});
+		valueTypes.add(ValueTypes.FLOAT);
 	}
 	
 	public Param(String pName, String operator, Date value) {
 		this(pName, (Object) value, null, new String[] {operator});
+		valueTypes.add(ValueTypes.DATE);
 	}
+	public Param(String pName, String operator, Boolean value) {
+		this(pName, (Object) value, null, new String[] {operator});
+		valueTypes.add(ValueTypes.BOOLEAN);
+	}
+	
 	public void setParent(I_TemplateParams p) {
 		parent = p;
 	}
@@ -187,64 +173,88 @@ public class Param implements I_TemplateParams {
 	void setValue(Object p) {
 		values.clear();
 		valueTypes.clear();
-		addValue(p);
+		values.add(p);
 	}
 	public void setValue(String p) {
 		setValue((Object) p);
+		valueTypes.add(ValueTypes.STRING);
 	}
 
 	public void setValue(Integer p) {
 		setValue((Object) p);
+		valueTypes.add(ValueTypes.INTEGER);
 	}
 
 	public void setValue(Short p) {
 		setValue((Object) p);
+		valueTypes.add(ValueTypes.SHORT);
 	}
 
 	public void setValue(Long p) {
 		setValue((Object) p);
+		valueTypes.add(ValueTypes.LONG);
 	}
 
 	public void setValue(Double p) {
 		setValue((Object) p);
+		valueTypes.add(ValueTypes.DOUBLE);
 	}
 
 	public void setValue(Float p) {
 		setValue((Object) p);
+		valueTypes.add(ValueTypes.FLOAT);
 	}
 
 	public void setValue(Date p) {
 		setValue((Object) p);
+		valueTypes.add(ValueTypes.DATE);
 	}
 
+	public void setValue(Boolean p) {
+		setValue((Object) p);
+		valueTypes.add(ValueTypes.BOOLEAN);
+	}
+	
 	public void addValue(String p) {
-		addValue((Object) p);
+		values.add(p);
+		valueTypes.add(ValueTypes.STRING);
 	}
 
 	public void addValue(Integer p) {
-		addValue((Object) p);
+		values.add(p);
+		valueTypes.add(ValueTypes.INTEGER);
 	}
 
 	public void addValue(Short p) {
-		addValue((Object) p);
+		values.add(p);
+		valueTypes.add(ValueTypes.SHORT);
 	}
 
 	public void addValue(Long p) {
-		addValue((Object) p);
+		values.add(p);
+		valueTypes.add(ValueTypes.LONG);
 	}
 
 	public void addValue(Double p) {
-		addValue((Object) p);
+		values.add(p);
+		valueTypes.add(ValueTypes.DOUBLE);
 	}
 
 	public void addValue(Float p) {
-		addValue((Object) p);
+		values.add(p);
+		valueTypes.add(ValueTypes.FLOAT);
 	}
 
 	public void addValue(Date p) {
-		addValue((Object) p);
+		values.add(p);
+		valueTypes.add(ValueTypes.DATE);
 	}
 
+	public void addValue(Boolean p) {
+		values.add(p);
+		valueTypes.add(ValueTypes.BOOLEAN);
+	}
+	
 	public void setParams(I_TemplateParams pParams) {
 		params = pParams;
 	}

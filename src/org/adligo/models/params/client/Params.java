@@ -76,6 +76,10 @@ public class Params implements I_MultipleParamsObject {
 		return createAndAddParam(name, value, params);
 	}
 
+	public Param addParam(String name, Boolean value, I_TemplateParams params) {
+		return createAndAddParam(name, value, params);
+	}
+	
 	Param createAndAddParam(String name, Object values, I_TemplateParams params) {
 		Param parm = new Param(name, values, params, null);
 		addParam(parm);
@@ -129,6 +133,10 @@ public class Params implements I_MultipleParamsObject {
 		return createAndAddParamOperator(name, value, operator);
 	}
 	
+	public Param addParam(String name, String operator, Boolean value ) {
+		return createAndAddParamOperator(name, value, operator);
+	}
+	
 	public Param addParam(String name, String [] operators, String value ) {
 		return createAndAddParamOperator(name, value, operators);
 	}
@@ -157,6 +165,9 @@ public class Params implements I_MultipleParamsObject {
 	}
 	
 	public Param addParam(String name, String [] operators, Date value ) {
+		return createAndAddParamOperator(name, value, operators);
+	}
+	public Param addParam(String name, String [] operators, Boolean value ) {
 		return createAndAddParamOperator(name, value, operators);
 	}
 	/**

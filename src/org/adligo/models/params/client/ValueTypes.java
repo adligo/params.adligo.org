@@ -13,4 +13,5 @@ public class ValueTypes {
 	public static final short FLOAT = 5;
 	public static final short DATE = 6;
 	public static final short TIMESTAMP = 7;
+	public static final short BOOLEAN = 8;
 }
