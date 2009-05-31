@@ -33,6 +33,9 @@ public class ParamDecorator implements I_TemplateParams {
 	I_TemplateParams delegate;
 	
 	public ParamDecorator(I_TemplateParams delegate) {
+		if (delegate == null) {
+			throw new NullPointerException("ParamDecorate can't have a null delegate");
+		}
 		this.delegate = delegate;
 	}
 	@Override

@@ -245,6 +245,66 @@ public class Params implements I_MultipleParamsObject {
 		addParam(parm);
 		return parm;
 	}
+	
+	public Param addParam(String name, I_Operators operators, String value ) {
+		Param parm = new Param(name,operators);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
+	}
+	
+	public Param addParam(String name, I_Operators operators) {
+		Param parm = new Param(name,operators);
+		addParam(parm);
+		return parm;
+	}
+	public Param addParam(String name, I_Operators operators, Integer value ) {
+		Param parm = new Param(name,operators);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
+	}
+
+	public Param addParam(String name, I_Operators operators, Short value ) {
+		Param parm = new Param(name,operators);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
+	}
+	
+	public Param addParam(String name, I_Operators operators, Long value ) {
+		Param parm = new Param(name,operators);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
+	}
+	
+	public Param addParam(String name, I_Operators operators, Double value ) {
+		Param parm = new Param(name,operators);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
+	}
+	
+	public Param addParam(String name, I_Operators operators, Float value ) {
+		Param parm = new Param(name,operators);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
+	}
+	
+	public Param addParam(String name, I_Operators operators, Date value ) {
+		Param parm = new Param(name,operators);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
+	}
+	public Param addParam(String name, I_Operators operators, Boolean value ) {
+		Param parm = new Param(name,operators);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
+	}
 	/**
 	 * Adds a I_TemplateParams to the vector of params
 	 */
