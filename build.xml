@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="." default="jar-all-params" name="params">
+<project basedir="." default="deploy" name="params">
 	<import file="${user.home}/conf/adligo/build.xml"/>
 	
 	  <target name="jar-all-params" >
