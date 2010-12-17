@@ -3,7 +3,6 @@ package org.adligo.models.params.client;
 /**
  * Description:  This is a utility class that holds static methods used for
  *                parseing xml.
- * Copyright:    GPL http://www.adligo.com/gpl.html
  * Company:      Adligo
  * @author       scott@adligo.com
  * @version 1.3

@@ -8,8 +8,6 @@ import org.adligo.i.util.client.ArrayCollection;
 import org.adligo.i.util.client.I_Factory;
 
 /**
- * Description: This class is simply used to hold information in a logical
- * fashion. Copyright: GPL http://www.adligo.com/gpl.html Company: Adligo
  * 
  * @author scott@adligo.com
  * @version 1.3

@@ -2,7 +2,6 @@ package org.adligo.models.params.client;
 
 /**
  * Description:  A generic object that can write itself to a xml file
- * Copyright:    GPL http://www.adligo.com/gpl.html
  * Company:      Adligo
  * @author       scott@adligo.com
  * @version 1.3

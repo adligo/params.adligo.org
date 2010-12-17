@@ -10,7 +10,6 @@ package org.adligo.models.params.client;
  * although I am going mostly GWT RPC with all java servers. The exception is
  * when I need a external api.
  * 
- * Copyright: GPL http://www.adligo.com/gpl.html Company: Adligo
  * 
  * @author scott@adligo.com
  * @version 1.3

@@ -4,10 +4,7 @@ import java.io.Serializable;
 
 /**
  * Description: This is the interface for any object that wants to be fed to the
- * TemplateParserEngine to be used as the data to fill the templates mold. This
- * class is (and all classes under the org.adligo namespace) are open-source
- * software which is protected by the GNU GENERAL PUBLIC LICENSE. Copyright: GPL
- * http://www.adligo.com/gpl.html Company: Adligo
+ * TemplateParserEngine to be used as the data to fill the templates mold. 
  * 
  * @author scott@adligo.com
  * @version 1.3

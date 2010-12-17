@@ -3,8 +3,7 @@ package org.adligo.models.params.client;
 /**
  * Title: Description: This is a extension to the I_TemplateParams Object it
  * adds the ability to add parameters to the Query Object and also manipulate
- * the parameters of the Query Object Copyright: GPL
- * http://www.adligo.com/gpl.html Company: Adligo
+ * the parameters of the Query Object
  * 
  * @author scott@adligo.com
  * @version 1.3

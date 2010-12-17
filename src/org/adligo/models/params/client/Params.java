@@ -5,7 +5,6 @@ package org.adligo.models.params.client;
  * Description: <p>This is a generic and reuseable implementation of the
  *              I_TemplateParams interface.  It relies on the TemplateParam
  *              class for storing the name, values and nested I_TemplateParams.
- * Copyright:    GPL http://www.adligo.com/gpl.html
  * Company:      Adligo
  * @author       scott@adligo.com
  * @version 1.3
