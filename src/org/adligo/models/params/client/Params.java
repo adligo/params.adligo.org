@@ -54,6 +54,13 @@ public class Params implements I_MultipleParamsObject {
 		return parm;
 	}
 
+	public Param addParam(String name, String value) {
+		Param parm = new Param(name);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
+	}
+		
 	public Param addParam(String name, Integer value, I_TemplateParams params) {
 		Param parm = new Param(name,params);
 		parm.setValue(value);
@@ -61,6 +68,13 @@ public class Params implements I_MultipleParamsObject {
 		return parm;
 	}
 
+	public Param addParam(String name, Integer value) {
+		Param parm = new Param(name);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
+	}
+	
 	public Param addParam(String name, Short value, I_TemplateParams params) {
 		Param parm = new Param(name,params);
 		parm.setValue(value);
@@ -68,6 +82,13 @@ public class Params implements I_MultipleParamsObject {
 		return parm;
 	}
 
+	public Param addParam(String name, Short value) {
+		Param parm = new Param(name);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
+	}
+	
 	public Param addParam(String name, Long value, I_TemplateParams params) {
 		Param parm = new Param(name,params);
 		parm.setValue(value);
@@ -75,6 +96,13 @@ public class Params implements I_MultipleParamsObject {
 		return parm;
 	}
 
+	public Param addParam(String name, Long value) {
+		Param parm = new Param(name);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
+	}
+	
 	public Param addParam(String name, Double value, I_TemplateParams params) {
 		Param parm = new Param(name,params);
 		parm.setValue(value);
@@ -82,6 +110,13 @@ public class Params implements I_MultipleParamsObject {
 		return parm;
 	}
 
+	public Param addParam(String name, Double value) {
+		Param parm = new Param(name);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
+	}
+	
 	public Param addParam(String name, Float value, I_TemplateParams params) {
 		Param parm = new Param(name,params);
 		parm.setValue(value);
@@ -89,6 +124,13 @@ public class Params implements I_MultipleParamsObject {
 		return parm;
 	}
 
+	public Param addParam(String name, Float value) {
+		Param parm = new Param(name);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
+	}
+	
 	public Param addParam(String name, Date value, I_TemplateParams params) {
 		Param parm = new Param(name,params);
 		parm.setValue(value);
@@ -96,6 +138,13 @@ public class Params implements I_MultipleParamsObject {
 		return parm;
 	}
 
+	public Param addParam(String name, Date value) {
+		Param parm = new Param(name);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
+	}
+	
 	public Param addParam(String name, Boolean value, I_TemplateParams params) {
 		Param parm = new Param(name,params);
 		parm.setValue(value);
@@ -103,7 +152,12 @@ public class Params implements I_MultipleParamsObject {
 		return parm;
 	}
 	
-	
+	public Param addParam(String name, Boolean value) {
+		Param parm = new Param(name);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
+	}	
 
 	/**
 	 * returns the parameter created
