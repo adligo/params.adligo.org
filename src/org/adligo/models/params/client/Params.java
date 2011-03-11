@@ -511,7 +511,7 @@ public class Params implements I_MultipleParamsObject {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Params to String \n");
 
-		I_Iterator it = paramsMap.getIterator();
+		I_Iterator it = paramsMap.getKeysIterator();
 		boolean first = true;
 		while (it.hasNext()) {
 			if (!first) {
@@ -557,9 +557,9 @@ public class Params implements I_MultipleParamsObject {
 		sb.lineFeed();
 		sb.addIndentLevel();
 
-		I_Iterator it = paramsMap.getIterator();
+		I_Iterator it = paramsMap.getValuesIterator();
 		while (it.hasNext()) {
-			I_OneOrN items = (I_OneOrN) paramsMap.get(it.next());
+			I_OneOrN items = (I_OneOrN) it.next();
 			for (int i = 0; i < items.size(); i++) {
 				((I_XML_Serilizable) items.get(i)).writeXML(sb);
 				if (log.isDebugEnabled()) {
