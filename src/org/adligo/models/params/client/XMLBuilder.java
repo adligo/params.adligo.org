@@ -63,5 +63,22 @@ public class XMLBuilder {
 	public void append(String p) {
 		buffer.append(p);
 	}
-
+	public void append(boolean p) {
+		buffer.append(p);
+	}
+	public void append(int p) {
+		buffer.append(p);
+	}
+	public void append(float p) {
+		buffer.append(p);
+	}
+	public void append(double p) {
+		buffer.append(p);
+	}
+	public void append(short p) {
+		buffer.append(p);
+	}
+	public void append(long p) {
+		buffer.append(p);
+	}
 }
