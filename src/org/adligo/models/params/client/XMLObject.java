@@ -70,4 +70,23 @@ public class XMLObject {
 	public static void setInstanceFactory(I_Factory instanceFactory) {
 		XMLObject.instanceFactory = instanceFactory;
 	}
+	
+	
+	public static ClassInfo getClassInfo(String sXmlChunk) {
+
+		if (sXmlChunk == null) {
+			log.fatal(" XMLObject.getClassInfo(String s) was passed a null string");
+			return null;
+		}
+		if (sXmlChunk.trim().length() == 0) {
+			log.fatal(" XMLObject.getClassInfo(String s) was passed a empty string");
+			return null;
+		}
+		int[] iaObjectHeader = Parser.getTagIndexs(sXmlChunk, OBJECT_HEADER, ">");
+		String sClass = Parser.getAttribute(iaObjectHeader, sXmlChunk, CLASS);
+		String sVersion = Parser.getAttribute(iaObjectHeader, sXmlChunk, VERSION);
+		
+		double d = Double.parseDouble(sVersion);
+		return new ClassInfo(sClass, d);
+	}
 }
