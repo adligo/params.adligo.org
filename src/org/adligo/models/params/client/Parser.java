@@ -250,6 +250,12 @@ public class Parser {
 		return s;
 	}
 
+	public static String getContent(String s, String sHeader, String sEnder) {
+		int[] iIndex = getTagIndexs(s, sHeader, sEnder);
+		int[] iHeaderIndex = getTagIndexs(s, sHeader, ">");
+		return s.substring(iHeaderIndex[1], iIndex[1] - sEnder.length());
+	}
+	
 	public static String escapeForXml(String in) {
 		StringBuffer sb = new StringBuffer();
 
