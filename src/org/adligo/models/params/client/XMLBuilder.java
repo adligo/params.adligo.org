@@ -12,8 +12,17 @@ public class XMLBuilder {
 	/**
 	 * defaults to dos line feed looks nice in eclipse console, and on dos, and
 	 * unix file systems
+	 * 
+	 * NOTE you can set the line feed to a empty string to remove it 
+	 * from the xml (page weight)
+	 * see clearLineFeedAndIndent
 	 */
 	private String lineFeed = DOS_LINE_FEED;
+	/**
+	 * note you can set the indent to empty string 
+	 * to remove it from the xml (page weight)
+	 * see clearLineFeedAndIndent
+	 */
 	private String indent = SPACE_INDENT;
 	private StringBuffer buffer = new StringBuffer();
 	private int indentLevel = 0;
@@ -80,5 +89,9 @@ public class XMLBuilder {
 	}
 	public void append(long p) {
 		buffer.append(p);
+	}
+	public void clearLineFeedAndIndent() {
+		setLineFeed(NO_LINE_FEED);
+		setIndent(NO_INDENT);
 	}
 }
