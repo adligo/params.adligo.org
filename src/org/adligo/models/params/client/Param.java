@@ -329,9 +329,8 @@ public class Param implements I_TemplateParams {
 	}
 
 	@Override
-	public String writeXML(XMLBuilder builder) {
+	public void writeXML(XMLBuilder builder) {
 		writeXML(builder, null);
-		return builder.getBuffer().toString();
 	}
 
 	public void writeXML(XMLBuilder sb, String name) {

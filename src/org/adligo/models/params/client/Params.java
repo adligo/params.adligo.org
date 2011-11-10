@@ -529,9 +529,8 @@ public class Params implements I_MultipleParamsObject {
 		return builder.getBuffer().toString();
 	}
 
-	public String writeXML(XMLBuilder sb) {
+	public void writeXML(XMLBuilder sb) {
 		writeXML(sb, "");
-		return sb.toString();
 	}
 
 	public void writeXML(XMLBuilder sb, String name) {

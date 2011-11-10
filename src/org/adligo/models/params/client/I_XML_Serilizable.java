@@ -41,7 +41,7 @@ public interface I_XML_Serilizable {
 	 *            buy it!</object> <object>Don Caballero: 'Don Caballero 2' is a
 	 *            great record you should buy it!</object> </object> </object>
 	 */
-	public String writeXML(XMLBuilder builder);
+	public void writeXML(XMLBuilder builder);
 
 	public void writeXML(XMLBuilder builder, String name);
 
