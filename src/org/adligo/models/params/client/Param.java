@@ -325,15 +325,15 @@ public class Param implements I_TemplateParams {
 	public String writeXML() {
 		XMLBuilder builder = new XMLBuilder();
 		writeXML(builder);
-		return builder.getBuffer().toString();
+		return builder.toXmlString();
 	}
 
 	@Override
-	public void writeXML(XMLBuilder builder) {
+	public void writeXML(I_XMLBuilder builder) {
 		writeXML(builder, null);
 	}
 
-	public void writeXML(XMLBuilder sb, String name) {
+	public void writeXML(I_XMLBuilder sb, String name) {
 		sb.indent();
 		sb.append(XMLObject.OBJECT_HEADER);
 		sb.append(" ");
@@ -405,7 +405,7 @@ public class Param implements I_TemplateParams {
 		return true;
 	}
 	
-	private void writeOperators(XMLBuilder sb) {
+	private void writeOperators(I_XMLBuilder sb) {
 		if (operators == null) {
 			return;
 		}
@@ -447,7 +447,7 @@ public class Param implements I_TemplateParams {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void writeValues(XMLBuilder sb) {
+	private void writeValues(I_XMLBuilder sb) {
 		if (values.size() == 0) {
 			return;
 		}

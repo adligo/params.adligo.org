@@ -1,7 +1,6 @@
 package org.adligo.models.params.client;
 
 import org.adligo.models.params.client.I_TemplateParams;
-import org.adligo.models.params.client.XMLBuilder;
 
 /**
  * this class can be used to 
@@ -89,12 +88,12 @@ public class ParamDecorator implements I_TemplateParams {
 	}
 
 	@Override
-	public void writeXML(XMLBuilder builder, String name) {
+	public void writeXML(I_XMLBuilder builder, String name) {
 		delegate.writeXML(builder, name);
 	}
 
 	@Override
-	public void writeXML(XMLBuilder builder) {
+	public void writeXML(I_XMLBuilder builder) {
 		delegate.writeXML(builder);
 	}
 	protected synchronized I_TemplateParams getDelegate() {

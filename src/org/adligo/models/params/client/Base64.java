@@ -41,6 +41,8 @@ public class Base64 {
         if (data.length() % 4 != 0)
             throw new IllegalArgumentException(LENGTH_MUST_BE_MULTIPLE_OF_4_WITH_PADDING);
 
+        throw new IllegalStateException("unimplemented method");
+        /*
         for (int i = 0; i < data.length();) {
             byte e0 = dtab[data.charAt(i++) & 0x7f];
             byte e1 = dtab[data.charAt(i++) & 0x7f];
@@ -61,7 +63,9 @@ public class Base64 {
             if (e3 != 64)
                 out.append(Character.toString((char) d2));
         }
+        
         return out.toString();
+        */
     }
     
     /**

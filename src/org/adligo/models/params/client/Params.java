@@ -526,14 +526,14 @@ public class Params implements I_MultipleParamsObject {
 	public String writeXML() {
 		XMLBuilder builder = new XMLBuilder();
 		writeXML(builder);
-		return builder.getBuffer().toString();
+		return builder.toXmlString();
 	}
 
-	public void writeXML(XMLBuilder sb) {
+	public void writeXML(I_XMLBuilder sb) {
 		writeXML(sb, "");
 	}
 
-	public void writeXML(XMLBuilder sb, String name) {
+	public void writeXML(I_XMLBuilder sb, String name) {
 		sb.indent();
 		sb.append(XMLObject.OBJECT_HEADER);
 		sb.append(" ");
