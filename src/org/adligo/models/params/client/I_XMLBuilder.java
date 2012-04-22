@@ -129,6 +129,11 @@ public interface I_XMLBuilder {
 	public abstract void append(long p);
 
 	/**
+	 * this will append a base64 encoding 
+	 * @param bytes
+	 */
+	public abstract void appendBase64(byte [] bytes);
+	/**
 	 * flush the current buffer to xml
 	 */
 	public String toXmlString();

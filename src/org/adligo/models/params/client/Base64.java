@@ -4,6 +4,8 @@ import java.io.UnsupportedEncodingException;
 
 import org.adligo.i.util.client.AppenderFactory;
 import org.adligo.i.util.client.I_Appender;
+import org.adligo.i.util.client.I_Map;
+import org.adligo.i.util.client.MapFactory;
 
 /**
  * 
@@ -11,10 +13,11 @@ import org.adligo.i.util.client.I_Appender;
  *
  */
 public class Base64 {
+	public static final String BASE64_DOES_NOT_ALLOW_USAGE_OF_THE_CHARACTER = "Base64 does not allow usage of the character ";
 	public static final String LENGTH_MUST_BE_MULTIPLE_OF_4_WITH_PADDING = "length must be multiple of 4 (with padding)";
 	//(RFC 2045)
     static final char [] BASE_64_CHARS = getBase64Chars();
-
+    static final I_Map CHAR_TO_INDEX = getBase64Index();
 
     private static char [] getBase64Chars() {
     	try {
@@ -34,39 +37,93 @@ public class Base64 {
 		}
     }
     
-    public static String decode(String data) {
-    	I_Appender out = AppenderFactory.create();
-        
-        
-        if (data.length() % 4 != 0)
-            throw new IllegalArgumentException(LENGTH_MUST_BE_MULTIPLE_OF_4_WITH_PADDING);
-
-        throw new IllegalStateException("unimplemented method");
-        /*
-        for (int i = 0; i < data.length();) {
-            byte e0 = dtab[data.charAt(i++) & 0x7f];
-            byte e1 = dtab[data.charAt(i++) & 0x7f];
-            byte e2 = dtab[data.charAt(i++) & 0x7f];
-            byte e3 = dtab[data.charAt(i++) & 0x7f];
-            
-            // Invalid characters in input
-            if (e0 == -1 || e1 == -1 || e2 == -1 || e3 == -1)
-                return "";
-            
-            byte d0 = (byte) ((e0 << 2) + ((e1 >>> 4) & 0x03));
-            byte d1 = (byte) ((e1 << 4) + ((e2 >>> 2) & 0x0f));
-            byte d2 = (byte) ((e2 << 6) + (e3 & 0x3f));
-            
-            out.append(Character.toString((char) d0));
-            if (e2 != 64)
-                out.append(Character.toString((char) d1));
-            if (e3 != 64)
-                out.append(Character.toString((char) d2));
-        }
-        
-        return out.toString();
-        */
+    private static I_Map getBase64Index() {
+    	I_Map toRet = MapFactory.create();
+    	for (int i = 0; i < BASE_64_CHARS.length; i++) {
+			toRet.put(BASE_64_CHARS[i], (Byte) (byte) i);
+		}
+    	return toRet;
     }
+    /**
+     * 
+     * @param s the Base64 character string only no spaces, or line feeds
+     *   
+     * @return
+     */
+    public static byte[] decode(String s) {
+
+
+    	if (s == null) {
+    		return new byte[] {};
+    	}
+    	if (s.length() < 4) {
+    		return new byte []{};
+    	}
+		// replace any incoming padding with a zero pad (the 'A' character is
+		// zero)
+    	String endPart = s.substring(s.length() - 3, s.length());
+    	int equalsSigns = 0;
+    	char [] endPartChars = endPart.toCharArray();
+    	for (int i = 0; i < endPartChars.length; i++) {
+			char c = endPartChars[i];
+			if (c == '=') {
+				equalsSigns++;
+			}
+		}
+
+		s = s.replaceAll("=", "A");
+		
+		int resLength = (int) Math.ceil(((float) (s.length()) / 4f) * 3f);
+		byte[] bufIn = new byte[resLength - equalsSigns];
+		int bufIn_i = 0;
+
+		// increment over the length of this encrypted string, four characters
+		// at a time
+		for (int c = 0; c < s.length(); c += 4) {
+
+			// each of these four characters represents a 6-bit index in the
+			// base64 characters list which, when concatenated, will give the
+			// 24-bit number for the original 3 characters
+			char aChar = s.charAt(c);
+			byte aByte = getIndexByteForChar(aChar);
+			char bChar = s.charAt(c + 1);
+			byte bByte = getIndexByteForChar(bChar); 
+			char cChar = s.charAt(c + 2);
+			int cByte = getIndexByteForChar(cChar);
+			char dChar = s.charAt(c + 3);
+			byte dByte = getIndexByteForChar(dChar);
+			
+			int n = (aByte << 18)
+					+ (bByte << 12)
+					+ (cByte << 6)
+					+ dByte;
+
+			// split the 24-bit number into the original three 8-bit (ASCII)
+			// characters
+
+			char c1 = (char) ((n >>> 16) & 0xFF);
+			char c2 = (char) ((n >>>8) & 0xFF);
+			char c3 = (char) (n & 0xFF);
+
+			bufIn[bufIn_i++] = (byte) c1;
+			if (bufIn.length > bufIn_i) {
+				bufIn[bufIn_i++] = (byte) c2;
+			}
+			if (bufIn.length > bufIn_i) {
+				bufIn[bufIn_i++] = (byte) c3;
+			}
+		}
+
+		return bufIn;
+	}
+
+	private static byte getIndexByteForChar(char aChar) {
+		Byte a = (Byte) CHAR_TO_INDEX.get(aChar);
+		if (a == null) {
+			throw new IllegalArgumentException(BASE64_DOES_NOT_ALLOW_USAGE_OF_THE_CHARACTER + aChar);
+		}
+		return (byte) a;
+	}
     
     /**
      * encode any string (UTF-8, ASCII, UTF-16 exc)
@@ -136,18 +193,18 @@ public class Base64 {
         if (lastByte != null) {
         	switch (oneTwoThree) {
         		case 1:
+        			//use the last 2 bits of the first byte in slots 2 and 3  with zeros on the right
         			byte lastTwoBits = (byte) (lastByte << 4 );
             		append(out, lastTwoBits);
         			//pad empty bytes for a 1 byte, 3 character sequence
         			out.append("==");
         			break;
         		case 2:
-        			//pad empty bytes for a 2 byte, 3 character sequence
-        			EightBit eb = new EightBit(lastByte);
+        			//use the last 4 bits of the second byte, padding with two zeros on the right
+        			byte padLastByte = (byte) (lastByte.byteValue() << 2);
+        			EightBit eb = new EightBit(padLastByte);
         			eb.setSlotZero(false);
         			eb.setSlotOne(false);
-        			eb.setSlotTwo(false);
-        			eb.setSlotThree(false);
         			append(out, eb);
         			out.append("=");
         			break;

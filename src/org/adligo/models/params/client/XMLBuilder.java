@@ -220,4 +220,10 @@ public class XMLBuilder implements I_XMLBuilder {
 	public String toXmlString() {
 		return buffer.toString();
 	}
+
+	@Override
+	public void appendBase64(byte[] bytes) {
+		String data = Base64.encode(bytes);
+		buffer.append(data);
+	}
 }
