@@ -9,6 +9,8 @@ package org.adligo.models.params.client;
  */
 import org.adligo.i.log.client.Log;
 import org.adligo.i.log.client.LogFactory;
+import org.adligo.i.util.client.AppenderFactory;
+import org.adligo.i.util.client.I_Appender;
 
 public class Parser {
 	private Parser() {
@@ -296,5 +298,115 @@ public class Parser {
 			String content) {
 		return getAttributeValue(total.substring(headerStartEnd[0],
 				headerStartEnd[1]), content);
+	}
+	
+	/**
+	 * returns TagInfo, currently is not meant to be compatible with 
+	 * cdata (use utf-8), binary may be Base64 encoded
+	 * assumes stripComments has been called (so there arn't any comments 
+	 * in the xml)
+	 * 
+	 * @param the xml to query
+	 * @param startIndex the first index to start from, 
+	 * 				to look for the next tag.
+	 * @return
+	 */
+	public static TagInfo getNextTagInfo(String xml, int startIndex) {
+		return getNextTagInfo(xml, startIndex, xml.length() -1 );
+	}
+	
+	public static TagInfo getNextTagInfo(String xml, int startIndex, int endIndex) {
+		char [] chars = xml.toCharArray();
+		
+		I_Appender sb = AppenderFactory.create();
+		String tagName = "";
+		boolean inTag = false;
+		int startHeaderIndex = -1;
+		int endHeaderIndex = -1;
+		for (int i = startIndex; i <= endIndex; i++) {
+			char c = chars[i];
+			if (inTag) {
+				if (c== '>') {
+					endHeaderIndex = i;
+					if (tagName.length() == 0) {
+						tagName = sb.toString();
+					}
+					break;
+				} else if (c == ' ') {
+					tagName = sb.toString();
+				} else if (c == '/') {
+					endHeaderIndex = i + 1;
+					int [] indexes = new int [] {
+							startHeaderIndex, endHeaderIndex};
+					tagName = sb.toString();
+					return new TagInfo(tagName, indexes, null);
+				} else {
+					sb.append(c);
+				}
+			} else if (c == '<') {
+				inTag = true;
+				startHeaderIndex = i;
+			}  
+		}
+		
+		sb = AppenderFactory.create();
+		inTag = false;
+		boolean inEndTag = false;
+		int startCloseTagIndex = -1;
+		int endCloseTagIndex = -1;
+		for (int i = endHeaderIndex + 1; i <= endIndex; i++) {
+			char c = chars[i];
+			if (inEndTag) {
+				if (c =='>') {
+					String thisTagsName = sb.toString();
+					if (tagName.equals(thisTagsName)) {
+						startCloseTagIndex = i - tagName.length() - 2;
+						endCloseTagIndex  = i;
+						break;
+					} else {
+						inEndTag = false;
+						inTag = false;
+						sb = AppenderFactory.create();
+					}
+				} else {
+					sb.append(c);
+				}
+			} else if (inTag) {
+				if (c == '/') {
+					inEndTag = true;
+				} 
+			} else if (c == '<') {
+				inTag = true;
+				startCloseTagIndex = i;
+			}  
+		}
+		int [] indexes = new int [] {
+				startHeaderIndex, endHeaderIndex};
+		if (endCloseTagIndex == -1) {
+			return new TagInfo(tagName, indexes, null);
+		}
+		int [] endIndexes = new int [] {
+				startCloseTagIndex, endCloseTagIndex};
+		return new TagInfo(tagName, indexes, endIndexes);
+	}
+	
+	/**
+	 * pull out the comments <!-- to -->
+	 * @return
+	 */
+	public static String stripComments(String xml) {
+		int start = xml.indexOf("<!--");
+		while (start != -1) {
+			int end = xml.indexOf("-->", start);
+			if (end == -1) {
+				end = xml.length() - 1;
+				xml = xml.substring(0, start);
+			} else {
+				xml = xml.substring(0, start) + 
+					xml.substring(end + 3, xml.length());
+			}
+			start = xml.indexOf("<!--");
+		}
+		return xml;
 	}
 }
