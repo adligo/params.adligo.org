@@ -137,4 +137,12 @@ public interface I_XMLBuilder {
 	 * flush the current buffer to xml
 	 */
 	public String toXmlString();
+	/**
+	 * append indent, then the start tag, content and end tag
+	 * and then a line feed
+	 * 
+	 * @param tagName
+	 * @param textContent does not clean/escape this for xml
+	 */
+	public void appendTagWithTextContent(String tagName, String textContent);
 }

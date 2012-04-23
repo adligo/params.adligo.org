@@ -409,4 +409,16 @@ public class Parser {
 		}
 		return xml;
 	}
+	
+	public static byte[] parseBytes(String base64) {
+		return Base64.decode(base64);
+	}
+	
+	public static String getTextContent(String xml, TagInfo info) {
+		int startText = info.getStartTagEndIndex() + 1;
+		int endText = info.getEndTagStartIndex();
+		String text = xml.substring(startText, endText);
+		return text;
+	}
+
 }
