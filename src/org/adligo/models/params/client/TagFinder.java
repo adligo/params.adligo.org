@@ -164,6 +164,11 @@ public class TagFinder {
 		if (beforeC == '/') {
 			currentTag.setHasEnder(false);
 		}
+		if (currentTag == null) {
+			//this is a one character tag header like <s/>
+			currentTag = new TagInfoMutant();
+			currentTag.setHeaderStart(i -2);
+		}
 		tagName = sb.toString();
 		currentTag.setTagName(tagName);
 		currentTag.setHeaderEnd(i);
