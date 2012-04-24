@@ -312,82 +312,9 @@ public class Parser {
 	 * @return
 	 */
 	public static TagInfo getNextTagInfo(String xml, int startIndex) {
-		return getNextTagInfo(xml, startIndex, xml.length() -1 );
-	}
-	
-	public static TagInfo getNextTagInfo(String xml, int startIndex, int endIndex) {
-		char [] chars = xml.toCharArray();
 		
-		I_Appender sb = AppenderFactory.create();
-		String tagName = "";
-		boolean inTag = false;
-		int startHeaderIndex = -1;
-		int endHeaderIndex = -1;
-		for (int i = startIndex; i <= endIndex; i++) {
-			char c = chars[i];
-			if (inTag) {
-				if (c== '>') {
-					endHeaderIndex = i;
-					if (tagName.length() == 0) {
-						tagName = sb.toString();
-					}
-					break;
-				} else if (c == ' ') {
-					tagName = sb.toString();
-				} else if (c == '/') {
-					endHeaderIndex = i + 1;
-					int [] indexes = new int [] {
-							startHeaderIndex, endHeaderIndex};
-					tagName = sb.toString();
-					return new TagInfo(tagName, indexes, null);
-				} else {
-					sb.append(c);
-				}
-			} else if (c == '<') {
-				inTag = true;
-				startHeaderIndex = i;
-			}  
-		}
-		
-		sb = AppenderFactory.create();
-		inTag = false;
-		boolean inEndTag = false;
-		int startCloseTagIndex = -1;
-		int endCloseTagIndex = -1;
-		for (int i = endHeaderIndex + 1; i <= endIndex; i++) {
-			char c = chars[i];
-			if (inEndTag) {
-				if (c =='>') {
-					String thisTagsName = sb.toString();
-					if (tagName.equals(thisTagsName)) {
-						startCloseTagIndex = i - tagName.length() - 2;
-						endCloseTagIndex  = i;
-						break;
-					} else {
-						inEndTag = false;
-						inTag = false;
-						sb = AppenderFactory.create();
-					}
-				} else {
-					sb.append(c);
-				}
-			} else if (inTag) {
-				if (c == '/') {
-					inEndTag = true;
-				} 
-			} else if (c == '<') {
-				inTag = true;
-				startCloseTagIndex = i;
-			}  
-		}
-		int [] indexes = new int [] {
-				startHeaderIndex, endHeaderIndex};
-		if (endCloseTagIndex == -1) {
-			return new TagInfo(tagName, indexes, null);
-		}
-		int [] endIndexes = new int [] {
-				startCloseTagIndex, endCloseTagIndex};
-		return new TagInfo(tagName, indexes, endIndexes);
+		TagFinder finder = new TagFinder(xml, startIndex);
+		return finder.getNextTag();
 	}
 	
 	/**
@@ -415,8 +342,11 @@ public class Parser {
 	}
 	
 	public static String getTextContent(String xml, TagInfo info) {
-		int startText = info.getStartTagEndIndex() + 1;
-		int endText = info.getEndTagStartIndex();
+		if (!info.hasEnder()) {
+			return "";
+		}
+		int startText = info.getHeaderEnd() + 1;
+		int endText = info.getEnderStart();
 		String text = xml.substring(startText, endText);
 		return text;
 	}
