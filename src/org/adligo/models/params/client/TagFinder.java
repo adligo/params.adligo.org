@@ -165,7 +165,7 @@ public class TagFinder {
 			currentTag.setHasEnder(false);
 		}
 		if (currentTag == null) {
-			//this is a one character tag header like <s/>
+			//this is a one character tag header like <s></s>
 			currentTag = new TagInfoMutant();
 			currentTag.setHeaderStart(i -2);
 		}
