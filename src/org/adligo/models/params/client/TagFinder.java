@@ -48,24 +48,9 @@ public class TagFinder {
 						}
 					} else if (inTagEnder) {
 						if (c == '>') {
-							tagName = sb.toString();
-							String parentTagName = currentParent.getTagName();
-							if (parentTagName.equals(tagName)) {
-								currentParent.setEnderStart(i - tagName.length()  - 2);
-								currentParent.setEnderEnd(i);
-								if (root == currentParent) {
-									break;
-								}
-								currentParent = currentParent.getParent();
-							} else {
-								recurseUpToTagMatch(i, currentParent);
+							if (processFinishedEndTag(i)) {
+								break;
 							}
-							currentTag = null;
-							inTag = false;
-							inTagHeader = false;
-							inTagEnder = false;
-							inTagHeaderText = false;
-							sb = AppenderFactory.create();
 						} else {
 							sb.append(c);
 						}
@@ -92,6 +77,28 @@ public class TagFinder {
 			return null;
 		}
 		return new TagInfo(root);
+	}
+
+	private boolean processFinishedEndTag(int i) {
+		tagName = sb.toString();
+		String parentTagName = currentParent.getTagName();
+		if (parentTagName.equals(tagName)) {
+			currentParent.setEnderStart(i - tagName.length()  - 2);
+			currentParent.setEnderEnd(i);
+			if (root == currentParent) {
+				return true;
+			}
+			currentParent = currentParent.getParent();
+		} else {
+			recurseUpToTagMatch(i, currentParent);
+		}
+		currentTag = null;
+		inTag = false;
+		inTagHeader = false;
+		inTagEnder = false;
+		inTagHeaderText = false;
+		sb = AppenderFactory.create();
+		return false;
 	}
 
 	private void recurseUpToTagMatch(int i, TagInfoMutant parent) {
