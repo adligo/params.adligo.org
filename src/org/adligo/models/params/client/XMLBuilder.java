@@ -82,6 +82,9 @@ public class XMLBuilder implements I_XMLBuilder {
 	@Override
 	public void removeIndentLevel() {
 		indentLevel--;
+		if (indentLevel < 0) {
+			indentLevel = 0;
+		}
 	}
 
 	/* (non-Javadoc)
@@ -148,9 +151,6 @@ public class XMLBuilder implements I_XMLBuilder {
 
 	@Override
 	public void appendStartTag(String tagName) {
-		for (int i = 0; i < indentLevel; i++) {
-			append(indent);
-		}
 		append("<");
 		append(tagName);
 	}
@@ -229,7 +229,6 @@ public class XMLBuilder implements I_XMLBuilder {
 
 	@Override
 	public void appendTagWithTextContent(String tagName, String textContent) {
-		indent();
 		appendStartTag(tagName);
 		buffer.append(">");
 		buffer.append(textContent);

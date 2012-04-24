@@ -28,7 +28,7 @@ public interface I_XMLBuilder {
 	
 	/**
 	 * this should append <tagName
-	 * after indenting with no space after the tag name!
+	 * with no space after the tag name!
 	 * 
 	 * @param tagName
 	 */
@@ -138,7 +138,7 @@ public interface I_XMLBuilder {
 	 */
 	public String toXmlString();
 	/**
-	 * append indent, then the start tag, content and end tag
+	 * append the start tag, content and end tag
 	 * and then a line feed
 	 * 
 	 * @param tagName
