@@ -16,7 +16,6 @@ public class TagFinder {
 	private boolean inTag = false;
 	private boolean inTagHeader = false;
 	private boolean inTagHeaderText = false;
-	private boolean inQuotes = false;
 	private boolean inTagEnder = false;
 	private TagInfoMutant root = null;
 	private TagInfoMutant currentParent = null;
@@ -37,41 +36,40 @@ public class TagFinder {
 		
 		for (int i = startIndex; i < xml.length(); i++) {
 			char c = chars[i];
-			if (c == '"') {
-				inQuotes = !inQuotes;
-			}
-			if (!inQuotes) {
-				if (inTag) {
-					if (inTagHeader) {
-						if (processTagHeader(i, c)) {
+			//removed check for in quotes, I may support CDATA at some point
+			// and would want to have a inCdata boolean
+			// the text <foo bar=">" />  is actually invalid xml according to the spec
+			// and should be replaced/escaped as <foo bar="&gt;" />
+			if (inTag) {
+				if (inTagHeader) {
+					if (processTagHeader(i, c)) {
+						break;
+					}
+				} else if (inTagEnder) {
+					if (c == '>') {
+						if (processFinishedEndTag(i)) {
 							break;
 						}
-					} else if (inTagEnder) {
-						if (c == '>') {
-							if (processFinishedEndTag(i)) {
-								break;
-							}
-						} else {
-							sb.append(c);
-						}
-					} else if (c == '/') {
-						inTagEnder = true;
 					} else {
 						sb.append(c);
-						inTagHeader = true;
 					}
-				} else if (c == '<') {
-					inTag = true;
-					if (root == null) {
-						root = new TagInfoMutant();
-						root.setHeaderStart(i);
-						currentTag = root;
-						inTagHeader = true;
-					} else {
-						currentTag = null;
-					}
-				} 
-			}
+				} else if (c == '/') {
+					inTagEnder = true;
+				} else {
+					sb.append(c);
+					inTagHeader = true;
+				}
+			} else if (c == '<') {
+				inTag = true;
+				if (root == null) {
+					root = new TagInfoMutant();
+					root.setHeaderStart(i);
+					currentTag = root;
+					inTagHeader = true;
+				} else {
+					currentTag = null;
+				}
+			} 
 		}
 		if (root == null) {
 			return null;
