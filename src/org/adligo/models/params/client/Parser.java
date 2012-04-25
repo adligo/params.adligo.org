@@ -350,5 +350,40 @@ public class Parser {
 		String text = xml.substring(startText, endText);
 		return text;
 	}
+	
+	/**
+	 * pull out the complete tagInfo's text including all header and ender tags
+	 * @param xml
+	 * @param childInfo
+	 * @return
+	 */
+	public static String substring(String xml, TagInfo childInfo) {
+		Integer start = null;
+		Integer end = null;
+		if (childInfo != null) {
+			if (childInfo.hasEnder()) {
+				start = childInfo.getHeaderStart();
+				end = childInfo.getEnderEnd();
+			} else {
+				start = childInfo.getHeaderStart();
+				end = childInfo.getHeaderEnd();
+			}
+		}
+		if (start == null || end == null) {
+			return "";
+		}
+		if (xml == null) {
+			return "";
+		}
+		if (start <= xml.length() - 1) {
+			return "";
+		}
+		if (end > xml.length() - 1 || end < 0) {
+			return "";
+		}
+		end = end + 1;
+		String subXml = xml.substring(start, end);
+		return subXml;
+	}
 
 }

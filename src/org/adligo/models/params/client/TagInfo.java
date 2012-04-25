@@ -34,19 +34,40 @@ public class TagInfo {
 		return mutant.getTagName();
 	}
 
-	public int getHeaderStart() {
+	/**
+	 * should never return null
+	 * the index of the header start or 0 in"<a></a>" or "<a/>"
+	 * 
+	 * @return
+	 */
+	public Integer getHeaderStart() {
 		return mutant.getHeaderStart();
 	}
-
-	public int getHeaderEnd() {
+	/**
+	 * should never return null
+	 * the index of the header end tag or 2 in"<a></a>" or 3 in "<a/>"
+	 * 
+	 * @return
+	 */
+	public Integer getHeaderEnd() {
 		return mutant.getHeaderEnd();
 	}
-
-	public int getEnderStart() {
+	/**
+	 * null if no ender tag ie (<a/>)
+	 * the index of the header start or 3 in"<a></a>" 
+	 * 
+	 * @return
+	 */
+	public Integer getEnderStart() {
 		return mutant.getEnderStart();
 	}
-
-	public int getEnderEnd() {
+	/**
+	 * null if no ender tag ie (<a/>)
+	 * the index of the header start or 6 in"<a></a>" 
+	 * 
+	 * @return
+	 */
+	public Integer getEnderEnd() {
 		return mutant.getEnderEnd();
 	}
 
@@ -57,6 +78,10 @@ public class TagInfo {
 		return children.getIterator();
 	}
 
+	/**
+	 * if a ender tag exists (<a></a> = true, <b/> = false, exc)
+	 * @return
+	 */
 	public boolean hasEnder() {
 		return mutant.hasEnder();
 	}

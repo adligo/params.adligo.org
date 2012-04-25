@@ -2,15 +2,17 @@ package org.adligo.models.params.client;
 
 import org.adligo.i.util.client.AppenderFactory;
 import org.adligo.i.util.client.ArrayCollection;
-import org.adligo.i.util.client.CollectionFactory;
 import org.adligo.i.util.client.I_Appender;
 import org.adligo.i.util.client.I_Iterator;
-import org.adligo.i.util.client.IteratorFactory;
+import org.adligo.i.util.client.StringUtils;
 
 public class TagInfoMutant {
+	public static final String TAG_INFO_REQUIRES_A_NON_EMPTY_NAME = "Tag Info requires a non empty name";
+	public static final String THE_ENDER_FLAG_SHOULD_MATCH_THE_FACT_THAT_THERE_ARE_ENDER_INTEGERS = "The ender flag should match the fact that there are ender integers";
+	public static final String TAG_INFO_INDEXES_MUST_BE_GREATER_THAN_OR_EQUAL_TO_ZERO = "TagInfo indexes must be greater than or equal to zero.";
 	public static final String THIS_TAG_DOES_NOT_HAVE_A_END_TAG_CHECK_HAS_END_TAG = "This tag does NOT have a end tag, check hasEndTag.";
 	public static final String THE_END_TAG_START_INDEX_MUST_BE_BEFORE_THE_END_TAG_END_INDEX = "The end tag start index must be before the end tag end index.";
-	public static final String THE_START_TAG_END_INDEX_MUST_BE_BEFORE_THE_END_TAT_START_INDEX = "The start tag end index must be before the end tat start index";
+	public static final String THE_START_TAG_END_INDEX_MUST_BE_BEFORE_THE_END_TAG_START_INDEX = "The start tag end index must be before the end tag start index";
 	public static final String THE_START_TAG_START_INDEX_MUST_BE_BEFORE_THE_START_TAG_END_INDEX = "The start tag start index must be before the start tag end index.";
 	public static final String TAG_INFO_REQUIRES_2_INDEXES = "Tag Info requires 2 indexes";
 	
@@ -45,32 +47,32 @@ public class TagInfoMutant {
 	public void setTagName(String tagName) {
 		this.tagName = tagName;
 	}
-	public int getHeaderStart() {
+	public Integer getHeaderStart() {
 		return headerStart;
 	}
 	public void setHeaderStart(int headerStart) {
 		this.headerStart = headerStart;
 	}
-	public int getHeaderEnd() {
+	public Integer getHeaderEnd() {
 		return headerEnd;
 	}
 	public void setHeaderEnd(int headerEnd) {
 		this.headerEnd = headerEnd;
 	}
 	
-	public int getEnderStart() {
+	public Integer getEnderStart() {
 		return enderStart;
 	}
 	public void setEnderStart(int enderStart) {
 		this.enderStart = enderStart;
 	}
-	public int getEnderEnd() {
+	public Integer getEnderEnd() {
 		return enderEnd;
 	}
 	public void setEnderEnd(int enderEnd) {
 		this.enderEnd = enderEnd;
 	}
-	public int getChildrenSize() {
+	public Integer getChildrenSize() {
 		if (children == null) {
 			return 0;
 		}
@@ -98,11 +100,21 @@ public class TagInfoMutant {
 	}
 	
 	public void validate() {
+		if (StringUtils.isEmpty(tagName)) {
+			throw new IllegalArgumentException(
+					TAG_INFO_REQUIRES_A_NON_EMPTY_NAME);
+		}
 		if (headerStart == null || headerEnd == null) {
 			throw new IllegalArgumentException(
 					TAG_INFO_REQUIRES_2_INDEXES);
 		}
-		if (headerStart >= headerEnd) {
+		if (headerStart < 0) {
+			throw new IllegalArgumentException(TAG_INFO_INDEXES_MUST_BE_GREATER_THAN_OR_EQUAL_TO_ZERO);
+		}
+		if (headerEnd < 0) {
+			throw new IllegalArgumentException(TAG_INFO_INDEXES_MUST_BE_GREATER_THAN_OR_EQUAL_TO_ZERO);
+		}
+		if (headerEnd <= headerStart ) {
 			throw new IllegalArgumentException(
 					THE_START_TAG_START_INDEX_MUST_BE_BEFORE_THE_START_TAG_END_INDEX);
 		}
@@ -111,13 +123,24 @@ public class TagInfoMutant {
 				throw new IllegalArgumentException(
 						TAG_INFO_REQUIRES_2_INDEXES);
 			}
+			if (enderStart < 0 ) {
+				throw new IllegalArgumentException(
+						TAG_INFO_INDEXES_MUST_BE_GREATER_THAN_OR_EQUAL_TO_ZERO);
+			}
+			if (enderEnd < 0 ) {
+				throw new IllegalArgumentException(
+						TAG_INFO_INDEXES_MUST_BE_GREATER_THAN_OR_EQUAL_TO_ZERO);
+			}
 			if (headerEnd >= enderStart) {
 				throw new IllegalArgumentException(
-						THE_START_TAG_END_INDEX_MUST_BE_BEFORE_THE_END_TAT_START_INDEX);
+						THE_START_TAG_END_INDEX_MUST_BE_BEFORE_THE_END_TAG_START_INDEX);
 			}
 			if (enderStart >= enderEnd) {
 				throw new IllegalArgumentException(
 						THE_END_TAG_START_INDEX_MUST_BE_BEFORE_THE_END_TAG_END_INDEX);
+			}
+			if (!hasEnder) {
+				throw new IllegalArgumentException(THE_ENDER_FLAG_SHOULD_MATCH_THE_FACT_THAT_THERE_ARE_ENDER_INTEGERS);
 			}
 		}
 	}
