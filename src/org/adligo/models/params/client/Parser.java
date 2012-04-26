@@ -385,5 +385,55 @@ public class Parser {
 		String subXml = xml.substring(start, end);
 		return subXml;
 	}
+	
+	public static TagAttribute getNextAttribute(TagInfo info, String xml, int whichAttribute) {
+		int start = info.getHeaderStart();
+		int end = info.getHeaderEnd();
+		String header = xml.substring(start, end + 1);
+		
+		char [] chars = header.toCharArray();
+		boolean inQuotes = false;
+		boolean firstSpace = false;
+		boolean nextSpace = false;
+		
+		int attrib = -1;
+		I_Appender keyBuf = AppenderFactory.create();
+		I_Appender valBuf = AppenderFactory.create();
+		for (int i = 0; i < chars.length; i++) {
+			char c = chars[i];
+			if (c == '"') {
+				inQuotes = !inQuotes;
+			} else {
+				if (!inQuotes) {
+					if (c == ' ') {
+						firstSpace = true;
+					} else {
+						if (firstSpace) {
+							if (nextSpace) {
+								if (c == '=') {
+									nextSpace = false;
+								} else if (attrib == whichAttribute) {
+									 keyBuf.append(c);
+								}
+							} else {
+								nextSpace = true;
+								attrib++;
+								if (attrib == whichAttribute) {
+									keyBuf.append(c);
+								}
+							}
+						}
+					} 
+				} else {
+					if (attrib == whichAttribute) {
+						valBuf.append(c);
+					}
+				}
+			}
+		}
+		String key = keyBuf.toString();
+		String value = valBuf.toString();
+		return new TagAttribute(key, value);
+	}
 
 }
