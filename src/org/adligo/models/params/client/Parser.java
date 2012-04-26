@@ -10,7 +10,9 @@ package org.adligo.models.params.client;
 import org.adligo.i.log.client.Log;
 import org.adligo.i.log.client.LogFactory;
 import org.adligo.i.util.client.AppenderFactory;
+import org.adligo.i.util.client.ArrayCollection;
 import org.adligo.i.util.client.I_Appender;
+import org.adligo.i.util.client.I_Iterator;
 
 public class Parser {
 	private Parser() {
@@ -386,7 +388,14 @@ public class Parser {
 		return subXml;
 	}
 	
-	public static TagAttribute getNextAttribute(TagInfo info, String xml, int whichAttribute) {
+	/**
+	 * returns a I_Iterator of TagAttributes
+	 * @param info
+	 * @param xml
+	 * @param whichAttribute
+	 * @return
+	 */
+	public static I_Iterator getAttributes(TagInfo info, String xml) {
 		int start = info.getHeaderStart();
 		int end = info.getHeaderEnd();
 		String header = xml.substring(start, end + 1);
@@ -396,12 +405,21 @@ public class Parser {
 		boolean firstSpace = false;
 		boolean nextSpace = false;
 		
-		int attrib = -1;
 		I_Appender keyBuf = AppenderFactory.create();
 		I_Appender valBuf = AppenderFactory.create();
+		ArrayCollection toRet = new ArrayCollection();
+		
 		for (int i = 0; i < chars.length; i++) {
 			char c = chars[i];
 			if (c == '"') {
+				if (inQuotes) {
+					String key = keyBuf.toString();
+					String value = valBuf.toString();
+					TagAttribute attrib = new TagAttribute(key, value);
+					toRet.add(attrib);
+					keyBuf = AppenderFactory.create();
+					valBuf = AppenderFactory.create();
+				}
 				inQuotes = !inQuotes;
 			} else {
 				if (!inQuotes) {
@@ -412,28 +430,21 @@ public class Parser {
 							if (nextSpace) {
 								if (c == '=') {
 									nextSpace = false;
-								} else if (attrib == whichAttribute) {
+								} else {
 									 keyBuf.append(c);
 								}
 							} else {
 								nextSpace = true;
-								attrib++;
-								if (attrib == whichAttribute) {
-									keyBuf.append(c);
-								}
+								keyBuf.append(c);
 							}
 						}
 					} 
 				} else {
-					if (attrib == whichAttribute) {
-						valBuf.append(c);
-					}
+					valBuf.append(c);
 				}
 			}
 		}
-		String key = keyBuf.toString();
-		String value = valBuf.toString();
-		return new TagAttribute(key, value);
+		return toRet.getIterator();
 	}
 
 }
