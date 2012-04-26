@@ -4,6 +4,7 @@ import org.adligo.i.util.client.AppenderFactory;
 import org.adligo.i.util.client.CollectionFactory;
 import org.adligo.i.util.client.I_Appender;
 import org.adligo.i.util.client.I_Collection;
+import org.adligo.i.util.client.StringUtils;
 
 public class TagFinder {
 	private String xml;
@@ -57,7 +58,10 @@ public class TagFinder {
 					inTagEnder = true;
 				} else {
 					sb.append(c);
+					currentTag = new TagInfoMutant();
+					currentTag.setHeaderStart(i - 1);
 					inTagHeader = true;
+					inTagHeaderText = true;
 				}
 			} else if (c == '<') {
 				inTag = true;
@@ -141,11 +145,8 @@ public class TagFinder {
 					return true;
 				}
 			} else {
-				if (currentTag == null) {
-					currentTag = new TagInfoMutant();
-					currentTag.setHeaderStart(i -2);
-				}
-				if (currentTag.getTagName() == null) {
+				String currentName = sb.toString();
+				if (StringUtils.isEmpty(currentName)) {
 					sb.append(c);
 					inTagHeaderText = true;
 				}
