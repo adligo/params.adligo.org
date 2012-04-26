@@ -234,4 +234,10 @@ public class XMLBuilder implements I_XMLBuilder {
 		buffer.append(textContent);
 		appendEndTag(tagName);
 	}
+
+	@Override
+	public void appendAttribute(String tagName, byte[] bytes) {
+		String data = Base64.encode(bytes);
+		appendAttribute(tagName, data);
+	}
 }

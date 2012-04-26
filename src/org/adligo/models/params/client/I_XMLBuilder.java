@@ -114,6 +114,13 @@ public interface I_XMLBuilder {
 	 */
 	public void appendAttribute(String tagName, boolean value);
 	
+	/**
+	 * appends a base64 attribute
+	 * @param tagName
+	 * @param value
+	 */
+	public void appendAttribute(String tagName, byte [] value);
+	
 	public abstract void append(String p);
 
 	public abstract void append(boolean p);
