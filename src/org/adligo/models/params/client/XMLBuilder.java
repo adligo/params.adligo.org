@@ -150,7 +150,7 @@ public class XMLBuilder implements I_XMLBuilder {
 	}
 
 	@Override
-	public void appendStartTag(String tagName) {
+	public void appendTagHeaderStart(String tagName) {
 		append("<");
 		append(tagName);
 	}
@@ -172,7 +172,7 @@ public class XMLBuilder implements I_XMLBuilder {
 	}
 
 	@Override
-	public void appendProperty(String propName, String value) {
+	public void appendAttribute(String propName, String value) {
 		append(" ");
 		append(propName);
 		append("=\"");
@@ -181,33 +181,33 @@ public class XMLBuilder implements I_XMLBuilder {
 	}
 
 	@Override
-	public void appendProperty(String tagName, boolean value) {
-		appendProperty(tagName, "" + value);
+	public void appendAttribute(String tagName, boolean value) {
+		appendAttribute(tagName, "" + value);
 	}
 	
 	@Override
-	public void appendProperty(String tagName, long value) {
-		appendProperty(tagName, "" + value);
+	public void appendAttribute(String tagName, long value) {
+		appendAttribute(tagName, "" + value);
 	}
 
 	@Override
-	public void appendProperty(String tagName, float value) {
-		appendProperty(tagName, "" + value);
+	public void appendAttribute(String tagName, float value) {
+		appendAttribute(tagName, "" + value);
 	}
 
 	@Override
-	public void appendProperty(String tagName, short value) {
-		appendProperty(tagName, "" + value);
+	public void appendAttribute(String tagName, short value) {
+		appendAttribute(tagName, "" + value);
 	}
 
 	@Override
-	public void appendProperty(String tagName, int value) {
-		appendProperty(tagName, "" + value);
+	public void appendAttribute(String tagName, int value) {
+		appendAttribute(tagName, "" + value);
 	}
 
 	@Override
-	public void appendProperty(String tagName, double value) {
-		appendProperty(tagName, "" + value);
+	public void appendAttribute(String tagName, double value) {
+		appendAttribute(tagName, "" + value);
 	}
 
 	@Override
@@ -229,7 +229,7 @@ public class XMLBuilder implements I_XMLBuilder {
 
 	@Override
 	public void appendTagWithTextContent(String tagName, String textContent) {
-		appendStartTag(tagName);
+		appendTagHeaderStart(tagName);
 		buffer.append(">");
 		buffer.append(textContent);
 		appendEndTag(tagName);

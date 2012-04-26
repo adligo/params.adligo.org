@@ -375,7 +375,7 @@ public class Parser {
 		if (xml == null) {
 			return "";
 		}
-		if (start <= xml.length() - 1) {
+		if (start > xml.length() - 1) {
 			return "";
 		}
 		if (end > xml.length() - 1 || end < 0) {

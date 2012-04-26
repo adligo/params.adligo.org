@@ -32,7 +32,7 @@ public interface I_XMLBuilder {
 	 * 
 	 * @param tagName
 	 */
-	public void appendStartTag(String tagName);
+	public void appendTagHeaderStart(String tagName);
 
 	/**
 	 * this should append >
@@ -64,7 +64,7 @@ public interface I_XMLBuilder {
 	 * @param propName
 	 * @param value
 	 */
-	public void appendProperty(String propName, String value);
+	public void appendAttribute(String propName, String value);
 	/**
 	 * append a space then the propertyName="value"
 	 * property are assumed to be well formed xml
@@ -72,7 +72,7 @@ public interface I_XMLBuilder {
 	 * @param propName
 	 * @param value
 	 */
-	public void appendProperty(String tagName, long value);
+	public void appendAttribute(String tagName, long value);
 	/**
 	 * append a space then the propertyName="value"
 	 * property are assumed to be well formed xml
@@ -80,7 +80,7 @@ public interface I_XMLBuilder {
 	 * @param propName
 	 * @param value
 	 */
-	public void appendProperty(String tagName, float value);
+	public void appendAttribute(String tagName, float value);
 	/**
 	 * append a space then the propertyName="value"
 	 * property are assumed to be well formed xml
@@ -88,7 +88,7 @@ public interface I_XMLBuilder {
 	 * @param propName
 	 * @param value
 	 */
-	public void appendProperty(String tagName, short value);
+	public void appendAttribute(String tagName, short value);
 	/**
 	 * append a space then the propertyName="value"
 	 * property are assumed to be well formed xml
@@ -96,7 +96,7 @@ public interface I_XMLBuilder {
 	 * @param propName
 	 * @param value
 	 */
-	public void appendProperty(String tagName, int value);
+	public void appendAttribute(String tagName, int value);
 	/**
 	 * append a space then the propertyName="value"
 	 * property are assumed to be well formed xml
@@ -104,7 +104,7 @@ public interface I_XMLBuilder {
 	 * @param propName
 	 * @param value
 	 */
-	public void appendProperty(String tagName, double value);
+	public void appendAttribute(String tagName, double value);
 	/**
 	 * append a space then the propertyName="value"
 	 * property are assumed to be well formed xml
@@ -112,7 +112,7 @@ public interface I_XMLBuilder {
 	 * @param propName
 	 * @param value
 	 */
-	public void appendProperty(String tagName, boolean value);
+	public void appendAttribute(String tagName, boolean value);
 	
 	public abstract void append(String p);
 
