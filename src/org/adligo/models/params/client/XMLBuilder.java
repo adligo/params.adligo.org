@@ -1,5 +1,7 @@
 package org.adligo.models.params.client;
 
+import java.io.UnsupportedEncodingException;
+
 import org.adligo.i.util.client.AppenderFactory;
 import org.adligo.i.util.client.I_Appender;
 
@@ -21,6 +23,7 @@ public class XMLBuilder implements I_XMLBuilder {
 	private String indent = SPACE_INDENT;
 	private I_Appender buffer = AppenderFactory.create();
 	private int indentLevel = 0;
+	private String charSet = "UTF-8";
 
 	/* (non-Javadoc)
 	 * @see org.adligo.models.params.client.I_XMLBuilder#getLineFeed()
@@ -64,7 +67,7 @@ public class XMLBuilder implements I_XMLBuilder {
 	@Override
 	public void indent() {
 		for (int i = 0; i < indentLevel; i++) {
-			buffer.append(indent);
+			buffer.append(toUtf8(indent));
 		}
 	}
 
@@ -92,7 +95,7 @@ public class XMLBuilder implements I_XMLBuilder {
 	 */
 	@Override
 	public void lineFeed() {
-		buffer.append(lineFeed);
+		buffer.append(toUtf8(lineFeed));
 	}
 
 	/* (non-Javadoc)
@@ -100,7 +103,7 @@ public class XMLBuilder implements I_XMLBuilder {
 	 */
 	@Override
 	public void append(String p) {
-		buffer.append(p);
+		buffer.append(toUtf8(p));
 	}
 	/* (non-Javadoc)
 	 * @see org.adligo.models.params.client.I_XMLBuilder#append(boolean)
@@ -224,14 +227,14 @@ public class XMLBuilder implements I_XMLBuilder {
 	@Override
 	public void appendBase64(byte[] bytes) {
 		String data = Base64.encode(bytes);
-		buffer.append(data);
+		buffer.append(toUtf8(data));
 	}
 
 	@Override
 	public void appendTagWithTextContent(String tagName, String textContent) {
 		appendTagHeaderStart(tagName);
 		buffer.append(">");
-		buffer.append(textContent);
+		buffer.append(toUtf8(textContent));
 		appendEndTag(tagName);
 	}
 
@@ -239,5 +242,26 @@ public class XMLBuilder implements I_XMLBuilder {
 	public void appendAttribute(String tagName, byte[] bytes) {
 		String data = Base64.encode(bytes);
 		appendAttribute(tagName, data);
+	}
+	
+	private String toUtf8(String p) {
+		try {
+			return new String(p
+				.getBytes(charSet));
+		} catch (UnsupportedEncodingException x) {
+			throw new IllegalStateException(x);
+		}
+	}
+
+	public String getCharSet() {
+		return charSet;
+	}
+
+	public void setCharSet(String charSet) {
+		if (buffer.toString().length() > 0) {
+			throw new IllegalStateException(
+					"The Charset may only be changed before building the xml document");
+		}
+		this.charSet = charSet;
 	}
 }
