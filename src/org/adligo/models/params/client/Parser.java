@@ -274,6 +274,8 @@ public class Parser {
 				sb.append("&gt;");
 			} else if (c == '"') {
 				sb.append("&quot;");
+			} else if (c == '\'') {
+				sb.append("&apos;");
 			} else {
 				sb.append(c);
 			}
@@ -286,6 +288,7 @@ public class Parser {
 		in = in.replaceAll("&lt;", "<");
 		in = in.replaceAll("&gt;", ">");
 		in = in.replaceAll("&quot;", new String(new char[] { '"' }));
+		in = in.replaceAll("&apos;", "'");
 		return in;
 	}
 
