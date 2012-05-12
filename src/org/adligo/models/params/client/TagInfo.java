@@ -24,9 +24,13 @@ public class TagInfo {
 		if (it.hasNext()) {
 			children = new ArrayCollection();
 		}
-		while (it.hasNext()) {
-			TagInfoMutant obj = (TagInfoMutant) it.next();
-			children.add(new TagInfo(obj));
+		try {
+			while (it.hasNext()) {
+				TagInfoMutant obj = (TagInfoMutant) it.next();
+				children.add(new TagInfo(obj));
+			}
+		} catch (IllegalArgumentException x) {
+			throw new IllegalArgumentException(x.getMessage() + mutant.getTagName() + "/", x);
 		}
 	}
 
@@ -86,5 +90,8 @@ public class TagInfo {
 		return mutant.hasEnder();
 	}
 	
+	public String toString() {
+		return mutant.toString(TagInfo.class);
+	}
 	
 }

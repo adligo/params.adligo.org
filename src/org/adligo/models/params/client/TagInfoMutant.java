@@ -39,6 +39,16 @@ public class TagInfoMutant {
 		enderStart = other.enderStart;
 		enderEnd = other.enderEnd;
 		hasEnder = other.hasEnder;
+		if (hasEnder) {
+			if (enderEnd == null) {
+				throw new IllegalArgumentException("This tag has a ender but the enderEnd is null " +
+						toString());
+			}
+			if (enderStart == null) {
+				throw new IllegalArgumentException("This tag has a ender but the enderStart is null" + 
+						toString());
+			}
+		}
 	}
 	
 	public String getTagName() {
@@ -146,6 +156,12 @@ public class TagInfoMutant {
 	}
 
 	public boolean hasEnder() {
+		if (enderEnd == null) {
+			return false;
+		}
+		if (enderStart == null) {
+			return false;
+		}
 		return hasEnder;
 	}
 
@@ -160,25 +176,14 @@ public class TagInfoMutant {
 	public void setParent(TagInfoMutant parent) {
 		this.parent = parent;
 	}
-	
+	@Override
 	public String toString() {
-		I_Appender out = AppenderFactory.create();
-		out.append("<");
-		out.append(tagName);
-		if (!hasEnder) {
-			out.append("/>");
-		} else {
-			out.append(">");
-			if (children != null) {
-				I_Iterator it = children.getIterator();
-				while (it.hasNext()) {
-					out.append(it.next());
-				}
-			}
-			out.append("</");
-			out.append(tagName);
-			out.append(">");
-		}
-		return out.toString();
+		return toString(TagInfoMutant.class);
+	}
+	
+	String toString(Class<?> clazz) {
+		return "" + clazz.getSimpleName() + " [tagName=" + tagName + ", headerStart="
+				+ headerStart + ", headerEnd=" + headerEnd + ", enderStart="
+				+ enderStart + ", enderEnd=" + enderEnd + " hasEnder=" + hasEnder + "]";
 	}
 }
