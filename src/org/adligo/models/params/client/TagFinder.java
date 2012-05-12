@@ -44,6 +44,7 @@ public class TagFinder {
 			if (!inQuotes) {
 				if (shouldProcessLessThan(c)) {
 					lastCharLessThan = true;
+					tagEnded();
 					currentTag =  new TagMutant();
 					currentTag.setStart(i);
 				} else {
@@ -89,11 +90,6 @@ public class TagFinder {
 	
 	private boolean shouldProcessLessThan(char c) {
 		if (c == '<') {
-			if (currentTag != null) {
-				if ( !"".equals(tagName)) {
-					return false;
-				}
-			} 
 			return true;
 		}
 		return false;
@@ -143,6 +139,7 @@ public class TagFinder {
 
 	private void tagEnded() {
 		currentTag = null;
+		sb = AppenderFactory.create();
 		tagName = "";
 	}
 
