@@ -2,7 +2,7 @@ package org.adligo.models.params.client;
 
 public class ParamsFactory {
 	
-	public static Params defaultById(long id) {
+	public static Params byId(long id) {
 		Params params = new Params();
 		params.addParam("default");
 		Params whereParams = new Params();
@@ -11,7 +11,7 @@ public class ParamsFactory {
 		return params;
 	}
 	
-	public static Params defaultById(int id) {
+	public static Params byId(int id) {
 		Params params = new Params();
 		params.addParam("default");
 		Params whereParams = new Params();
@@ -20,7 +20,7 @@ public class ParamsFactory {
 		return params;
 	}
 	
-	public static Params defaultById(String id) {
+	public static Params byId(String id) {
 		Params params = new Params();
 		params.addParam("default");
 		Params whereParams = new Params();
