@@ -47,24 +47,42 @@ public class ParamsFactory {
 	 * @param params
 	 * @return
 	 */
-	public static int getOffset(I_TemplateParams params) {
+	public static void getLimitOffset(I_TemplateParams params, I_LimitOffset lo) {
 		if (params.getNextParam(OFFSET)) {
 			Object []  objs = params.getValues();
 			if (objs == null) {
-				throw new IllegalArgumentException("Didn't find " + OFFSET + " parameter");
+				return;
 			}
 			if (objs.length < 1) {
-				throw new IllegalArgumentException("Didn't find " + OFFSET + " parameter");
+				return;
 			}
 			Object obj = objs[0];
 			try {
-				int toRet = (Integer) obj;
-				return toRet;
+				int offset = (Integer) obj;
+				lo.setOffset(offset);
+				I_TemplateParams childParams = params.getNestedParams();
+				if (childParams != null) {
+					if (childParams.getNextParam(NUM_ROWS)) {
+						objs = childParams.getValues();
+						if (objs == null) {
+							return;
+						}
+						if (objs.length < 1) {
+							return;
+						}
+						obj = objs[0];
+						try {
+							int limit = (Integer) obj;
+							lo.setLimit(limit);
+						} catch (ClassCastException x) {
+							return;
+						}
+					}
+				}
 			} catch (ClassCastException x) {
-				throw new IllegalArgumentException("Didn't find " + OFFSET + " parameter");
+				return;
 			}
-		} else {
-			throw new IllegalArgumentException("Didn't find " + OFFSET + " parameter");
 		}
 	}
+	
 }
