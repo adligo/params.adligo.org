@@ -43,6 +43,8 @@ public class Params implements I_MultipleParamsObject {
 	public Params() {
 	}
 
+	//TODO create copy constructor
+	
 	/**
 	 * This creates a Param object using the parameters and adds it to the
 	 * Collection of Param objects.
