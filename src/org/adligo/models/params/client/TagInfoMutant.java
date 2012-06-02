@@ -33,7 +33,7 @@ public class TagInfoMutant {
 	
 	public TagInfoMutant(TagInfoMutant other) {
 		other.validate();
-		tagName = other.tagName;
+		setTagName(other.tagName);
 		headerStart = other.headerStart;
 		headerEnd = other.headerEnd;
 		enderStart = other.enderStart;
@@ -55,7 +55,17 @@ public class TagInfoMutant {
 		return tagName;
 	}
 	public void setTagName(String tagName) {
-		this.tagName = tagName;
+		char [] chars = tagName.toCharArray();
+		I_Appender appender = AppenderFactory.create();
+		for (int i = 0; i < chars.length; i++) {
+			char c = chars[i];
+			if (Character.isWhitespace(c)) {
+				//do nothing
+			} else {
+				appender.append(c);
+			}
+		}
+		this.tagName = appender.toString();
 	}
 	public Integer getHeaderStart() {
 		return headerStart;
