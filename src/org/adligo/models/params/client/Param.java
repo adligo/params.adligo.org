@@ -1,5 +1,7 @@
 package org.adligo.models.params.client;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 
 import org.adligo.i.log.client.Log;
@@ -27,7 +29,7 @@ public class Param implements I_TemplateParams {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 16L;
 	public static final String PARAMS = "params";
 	public static final String OPERATORS = "operators";
 	public static final String VALUES = "values";
@@ -36,7 +38,7 @@ public class Param implements I_TemplateParams {
 	 * this version number represents the xml format and should be incremented
 	 * only if the format changes
 	 */
-	public static final String CLASS_VERSION = new String("1.5");
+	public static final String CLASS_VERSION = new String("1.6");
 	private String name;
 	private ArrayCollection values = new ArrayCollection(5);
 	private ArrayCollection valueTypes = new ArrayCollection(5);
@@ -90,6 +92,16 @@ public class Param implements I_TemplateParams {
 		valueTypes.add(ValueTypes.STRING);
 	}
 
+	public Param(String pName, BigDecimal value, I_TemplateParams pParams) {
+		this(pName, (Object) value, pParams, null);
+		valueTypes.add(ValueTypes.BIG_DECIMAL);
+	}
+	
+	public Param(String pName, BigInteger value, I_TemplateParams pParams) {
+		this(pName, (Object) value, pParams, null);
+		valueTypes.add(ValueTypes.BIG_INTEGER);
+	}
+	
 	public Param(String pName, Integer value, I_TemplateParams pParams) {
 		this(pName, (Object) value, pParams, null);
 		valueTypes.add(ValueTypes.INTEGER);
@@ -163,6 +175,14 @@ public class Param implements I_TemplateParams {
 		this(pName, (Object) value, null, new Operators(operator));
 		valueTypes.add(ValueTypes.BOOLEAN);
 	}
+	public Param(String pName, String operator, BigDecimal value) {
+		this(pName, value, null, new Operators(operator));
+		valueTypes.add(ValueTypes.BIG_DECIMAL);
+	}
+	public Param(String pName, String operator, BigInteger value) {
+		this(pName, value, null, new Operators(operator));
+		valueTypes.add(ValueTypes.BIG_INTEGER);
+	}
 	
 	public void setParent(I_TemplateParams p) {
 		parent = p;
@@ -176,11 +196,26 @@ public class Param implements I_TemplateParams {
 		name = s;
 	}
 
-	void setValue(Object p) {
+	public void clearValue() {
 		values.clear();
 		valueTypes.clear();
+	}
+	
+	public void setValue(Object p) {
+		clearValue();
 		values.add(p);
 	}
+	
+	public void setValue(BigDecimal p) {
+		setValue((Object) p);
+		valueTypes.add(ValueTypes.BIG_DECIMAL);
+	}
+	
+	public void setValue(BigInteger p) {
+		setValue((Object) p);
+		valueTypes.add(ValueTypes.BIG_INTEGER);
+	}
+	
 	public void setValue(String p) {
 		setValue((Object) p);
 		valueTypes.add(ValueTypes.STRING);
@@ -259,6 +294,16 @@ public class Param implements I_TemplateParams {
 	public void addValue(Boolean p) {
 		values.add(p);
 		valueTypes.add(ValueTypes.BOOLEAN);
+	}
+
+	public void addValue(BigDecimal p) {
+		values.add(p);
+		valueTypes.add(ValueTypes.BIG_DECIMAL);
+	}
+	
+	public void addValue(BigInteger p) {
+		values.add(p);
+		valueTypes.add(ValueTypes.BIG_INTEGER);
 	}
 	
 	public void setParams(I_TemplateParams pParams) {
@@ -600,6 +645,7 @@ public class Param implements I_TemplateParams {
 		return new Operators(toRet);
 	}
 
+	@SuppressWarnings("unused")
 	private void parseValues(String valueList) {
 		if (log.isDebugEnabled()) {
 			log.debug("parseValues:\n" + valueList + "\nEnd parseValues:");
@@ -635,29 +681,68 @@ public class Param implements I_TemplateParams {
 			valueList = valueList.substring(iItemEnder
 					+ XMLObject.OBJECT_ENDER.length(), valueList.length());
 			values.add(toAdd);
-			if (toAdd instanceof String) {
+			/**
+			 * GWT breaks on instance of operator
+			 */
+			try {
+				String foo = (String) toAdd;
 				valueTypes.add(ValueTypes.STRING);
+			} catch (ClassCastException cce) {
+				//eat
 			}
-			if (toAdd instanceof Integer) {
+			try {
+				Integer foo = (Integer) toAdd;
 				valueTypes.add(ValueTypes.INTEGER);
+			} catch (ClassCastException cce) {
+				//eat
 			}
-			if (toAdd instanceof Long) {
+			try {
+				Long foo = (Long) toAdd;
 				valueTypes.add(ValueTypes.LONG);
+			} catch (ClassCastException cce) {
+				//eat
 			}
-			if (toAdd instanceof Short) {
+			try {
+				Short foo = (Short) toAdd;
 				valueTypes.add(ValueTypes.SHORT);
+			} catch (ClassCastException cce) {
+				//eat
 			}
-			if (toAdd instanceof Double) {
+			try {
+				Double foo = (Double) toAdd;
 				valueTypes.add(ValueTypes.DOUBLE);
+			} catch (ClassCastException cce) {
+				//eat
 			}
-			if (toAdd instanceof Float) {
+			try {
+				Float foo = (Float) toAdd;
 				valueTypes.add(ValueTypes.FLOAT);
+			} catch (ClassCastException cce) {
+				//eat
 			}
-			if (toAdd instanceof Date) {
+			try {
+				Date foo = (Date) toAdd;
 				valueTypes.add(ValueTypes.DATE);
+			} catch (ClassCastException cce) {
+				//eat
 			}
-			if (toAdd instanceof Boolean) {
+			try {
+				Boolean foo = (Boolean) toAdd;
 				valueTypes.add(ValueTypes.BOOLEAN);
+			} catch (ClassCastException cce) {
+				//eat
+			}
+			try {
+				BigDecimal foo = (BigDecimal) toAdd;
+				valueTypes.add(ValueTypes.BIG_DECIMAL);
+			} catch (ClassCastException cce) {
+				//eat
+			}
+			try {
+				BigInteger foo = (BigInteger) toAdd;
+				valueTypes.add(ValueTypes.BIG_INTEGER);
+			} catch (ClassCastException cce) {
+				//eat
 			}
 		}
 	}

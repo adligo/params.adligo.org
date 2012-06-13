@@ -10,6 +10,8 @@ package org.adligo.models.params.client;
  * @version 1.3
  */
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 
 import org.adligo.i.log.client.Log;
@@ -23,14 +25,14 @@ public class Params implements I_MultipleParamsObject {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 16L;
 
 	static final Log log = LogFactory.getLog(Params.class);
 	/**
 	 * this version number represents the xml format and should be incremented
 	 * only if the format changes
 	 */
-	public static final String CLASS_VERSION = new String("1.5");
+	public static final String CLASS_VERSION = new String("1.6");
 	private I_Map // String, I_OneOrN
 	paramsMap = MapFactory.create();// holds TemplateParam objects
 	private I_OneOrN m_currentGroup = null;
@@ -193,6 +195,18 @@ public class Params implements I_MultipleParamsObject {
 		addParam(parm);
 		return parm;
 	}
+	
+	public Param addParam(String name, String operator, BigDecimal value ) {
+		Param parm = new Param(name,operator, value);
+		addParam(parm);
+		return parm;
+	}
+	public Param addParam(String name, String operator, BigInteger value ) {
+		Param parm = new Param(name,operator, value);
+		addParam(parm);
+		return parm;
+	}
+	
 	public Param addParam(String name, String operator, String value ) {
 		Param parm = new Param(name,operator, value);
 		addParam(parm);
@@ -355,6 +369,20 @@ public class Params implements I_MultipleParamsObject {
 		return parm;
 	}
 	public Param addParam(String name, I_Operators operators, Boolean value ) {
+		Param parm = new Param(name,operators);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
+	}
+	
+	public Param addParam(String name, I_Operators operators, BigDecimal value ) {
+		Param parm = new Param(name,operators);
+		parm.setValue(value);
+		addParam(parm);
+		return parm;
+	}
+	
+	public Param addParam(String name, I_Operators operators, BigInteger value ) {
 		Param parm = new Param(name,operators);
 		parm.setValue(value);
 		addParam(parm);

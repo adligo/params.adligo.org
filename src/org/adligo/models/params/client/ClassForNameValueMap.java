@@ -1,5 +1,6 @@
 package org.adligo.models.params.client;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import org.adligo.i.log.client.Log;
@@ -19,6 +20,9 @@ public class ClassForNameValueMap implements I_Factory {
 	public static final String DATE_SHORT_NAME = "Date";
 	public static final String STRING_SHORT_NAME = "String";
 	public static final String BOOLEAN_SHORT_NAME = "Boolean";
+	public static final String BIG_DECIMAL_SHORT_NAME = "BigDecimal";
+	public static final String BIG_INTEGER_SHORT_NAME = "BigInteger";
+	
 	
 	@SuppressWarnings("deprecation")
 	@Override
@@ -58,6 +62,10 @@ public class ClassForNameValueMap implements I_Factory {
 			toRet = new Date(timestamp);
 		} else if (BOOLEAN_SHORT_NAME.equals(clazz)){
 			toRet = new Boolean(content);
+		} else if (BIG_DECIMAL_SHORT_NAME.equals(clazz)){
+			toRet = new BigDecimal(content);
+		} else if (BIG_INTEGER_SHORT_NAME.equals(clazz)){
+			toRet = new BigDecimal(content);
 		} else {
 			// defaults to String
 			toRet = content;

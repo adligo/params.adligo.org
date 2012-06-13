@@ -14,4 +14,6 @@ public class ValueTypes {
 	public static final short DATE = 6;
 	public static final short TIMESTAMP = 7;
 	public static final short BOOLEAN = 8;
+	public static final short BIG_DECIMAL = 9;
+	public static final short BIG_INTEGER = 10;
 }
