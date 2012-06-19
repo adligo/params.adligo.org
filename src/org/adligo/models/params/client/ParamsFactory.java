@@ -5,6 +5,7 @@ public class ParamsFactory {
 	public static final String ID = "id";
 	public static final String WHERE = "where";
 	public static final String DEFAULT = "default";
+	public static final String ORDER_BY = "orderBy";
 	/**
 	 * top level param for the SQL-98 OFFSET clause
 	 */
