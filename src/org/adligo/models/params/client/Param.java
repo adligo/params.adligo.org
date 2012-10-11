@@ -8,6 +8,7 @@ import org.adligo.i.log.client.Log;
 import org.adligo.i.log.client.LogFactory;
 import org.adligo.i.util.client.ArrayCollection;
 import org.adligo.i.util.client.I_Factory;
+import org.adligo.i.util.client.I_Iterator;
 
 /**
  * 
@@ -354,14 +355,31 @@ public class Param implements I_TemplateParams {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
+		sb.append("[");
 		sb.append(name);
-		sb.append(" , [values=");
-		sb.append(values);
-		sb.append(" , operators=");
+		sb.append(" values=\"");
+		I_Iterator it = values.getIterator();
+		boolean first = true;
+		while (it.hasNext()) {
+			Object o = it.next();
+			if (!first) {
+				sb.append(",");
+			}
+			sb.append(o);
+			first = false;
+		}
+		sb.append("\" ");
 		sb.append(operators);
-		sb.append("] ");
+		
 		if (params != null) {
+			sb.append("] ");
+			
 			sb.append(params.toString());
+			sb.append("[/");
+			sb.append(name);
+			sb.append("]");
+		} else {
+			sb.append("\\]");
 		}
 		return sb.toString();
 	}

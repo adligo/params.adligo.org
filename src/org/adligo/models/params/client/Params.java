@@ -539,16 +539,19 @@ public class Params implements I_MultipleParamsObject {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Params to String \n");
+		sb.append(Params.class.getName());
+		sb.append("[\n");
 
-		I_Iterator it = paramsMap.getKeysIterator();
+		I_Iterator it = paramsMap.getValuesIterator();
 		boolean first = true;
 		while (it.hasNext()) {
 			if (!first) {
-				sb.append(",");
+				sb.append(",\n");
 			}
-			sb.append(it.next());
+			Object val = it.next();
+			sb.append(val);
 		}
+		sb.append("\n]");
 		return sb.toString();
 	}
 

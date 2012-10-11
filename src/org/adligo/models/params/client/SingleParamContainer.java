@@ -43,4 +43,9 @@ public class SingleParamContainer implements I_OneOrN {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "" + item;
+	}
+
 }

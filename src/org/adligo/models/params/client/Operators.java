@@ -44,7 +44,7 @@ public class Operators implements I_Operators {
 	
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append("Operators [values=[");
+		sb.append("operators=\"");
 		if (values != null) {
 			for (int i = 0; i < values.length; i++) {
 				if (i != 0) {
@@ -53,7 +53,7 @@ public class Operators implements I_Operators {
 				sb.append(values[i]);
 			}
 		}
-		sb.append("]]");
+		sb.append("\"");
 		return sb.toString();
 	}
 	

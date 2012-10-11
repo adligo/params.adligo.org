@@ -1,6 +1,7 @@
 package org.adligo.models.params.client;
 
 public class ParamsFactory {
+	public static final String SUM = "sum";
 	public static final String COUNT = "count";
 	public static final String ID = "id";
 	public static final String WHERE = "where";
