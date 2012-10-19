@@ -2,6 +2,7 @@ package org.adligo.models.params.client;
 
 import org.adligo.i.util.client.AppenderFactory;
 import org.adligo.i.util.client.ArrayCollection;
+import org.adligo.i.util.client.ClassUtils;
 import org.adligo.i.util.client.I_Appender;
 import org.adligo.i.util.client.I_Iterator;
 import org.adligo.i.util.client.StringUtils;
@@ -192,7 +193,7 @@ public class TagInfoMutant {
 	}
 	
 	String toString(Class<?> clazz) {
-		return "" + clazz.getSimpleName() + " [tagName=" + tagName + ", headerStart="
+		return "" + ClassUtils.getClassShortName(clazz) + " [tagName=" + tagName + ", headerStart="
 				+ headerStart + ", headerEnd=" + headerEnd + ", enderStart="
 				+ enderStart + ", enderEnd=" + enderEnd + " hasEnder=" + hasEnder + "]";
 	}
