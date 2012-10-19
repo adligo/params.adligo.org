@@ -15,7 +15,7 @@ public class TagAttribute {
 		I_Appender appender = AppenderFactory.create();
 		for (int i = 0; i < chars.length; i++) {
 			char c = chars[i];
-			if (Character.isWhitespace(c)) {
+			if (isWhitespace(c)) {
 				//do nothing
 			} else {
 				appender.append(c);
@@ -23,6 +23,29 @@ public class TagAttribute {
 		}
 		this.name = appender.toString();
 		this.value = value;
+	}
+	/**
+	 * Character.isWhitespace(char c) 
+	 * is not available in GWT
+	 * @param c
+	 * @return
+	 */
+	public static boolean isWhitespace(char c) {
+		if (c == ' ') {
+			return true;
+		}
+		//tab
+		if (c == '\t') {
+			return true;
+		}
+		//new lines
+		if (c == '\n') {
+			return true;
+		}
+		if (c == '\r') {
+			return true;
+		}
+		return false;
 	}
 
 	public String getName() {

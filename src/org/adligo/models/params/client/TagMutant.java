@@ -1,5 +1,6 @@
 package org.adligo.models.params.client;
 
+import org.adligo.i.util.client.ClassUtils;
 import org.adligo.i.util.client.StringUtils;
 
 public class TagMutant {
@@ -49,7 +50,7 @@ public class TagMutant {
 	}
 	
 	public String toString(Class<?> clazz) {
-		return "" + clazz.getSimpleName() + " [start=" + start + ", name=" + name + ", end=" + end
+		return "" + ClassUtils.getClassName(clazz) + " [start=" + start + ", name=" + name + ", end=" + end
 				+ ", selfEnding=" + selfEnding + "]";
 	}
 	

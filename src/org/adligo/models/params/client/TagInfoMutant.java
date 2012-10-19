@@ -59,7 +59,7 @@ public class TagInfoMutant {
 		I_Appender appender = AppenderFactory.create();
 		for (int i = 0; i < chars.length; i++) {
 			char c = chars[i];
-			if (Character.isWhitespace(c)) {
+			if (TagAttribute.isWhitespace(c)) {
 				//do nothing
 			} else {
 				appender.append(c);
