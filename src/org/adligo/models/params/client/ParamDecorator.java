@@ -49,7 +49,11 @@ public class ParamDecorator implements I_TemplateParams {
 
 	@Override
 	public I_TemplateParams getNestedParams() {
-		return new ParamDecorator(delegate.getNestedParams());
+		I_TemplateParams itp = delegate.getNestedParams();
+		if (itp == null) {
+			return null;
+		}
+		return new ParamDecorator(itp);
 	}
 
 	@Override

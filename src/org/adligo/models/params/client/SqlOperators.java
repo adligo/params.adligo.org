@@ -26,4 +26,6 @@ public class SqlOperators {
 	public static final I_Operators NOT_EQUALS = new Operators(new String [] {" <> "});
 	public static final I_Operators IS_NULL = new Operators(new String [] {" IS NULL "});
 	public static final I_Operators IS_NOT_NULL = new Operators(new String [] {" NOT IS NULL "});
+	public static final I_Operators ASCENDING = new Operators(" ASC ");
+	public static final I_Operators DESCENDING = new Operators(" DESC ");
 }

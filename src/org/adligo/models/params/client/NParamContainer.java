@@ -23,4 +23,9 @@ public class NParamContainer implements I_OneOrN {
 	public void removeItem(I_TemplateParams item) {
 		items.remove(item);
 	}
+
+	@Override
+	public String toString() {
+		return "NParamContainer [items=" + items + "]";
+	}
 }
