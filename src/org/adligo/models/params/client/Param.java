@@ -352,6 +352,9 @@ public class Param implements I_TemplateParams {
 		this.operators = new Operators(operator);
 	}
 
+	public void setOperator(I_Operators p) {
+		this.operators = p;
+	}
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
