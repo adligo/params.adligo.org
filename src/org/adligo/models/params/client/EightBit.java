@@ -18,6 +18,10 @@ public class EightBit {
 		this((byte) b);
 	}
 	
+	public EightBit(short b) {
+		this((byte) b);
+	}
+	
 	public EightBit(String onesAndZeros) {
 		clean();
 		char [] cs = onesAndZeros.toCharArray();
