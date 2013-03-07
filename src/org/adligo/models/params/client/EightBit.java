@@ -19,6 +19,7 @@ public class EightBit {
 	}
 	
 	public EightBit(String onesAndZeros) {
+		clean();
 		char [] cs = onesAndZeros.toCharArray();
 		for (int i = 0; i < 8 - cs.length; i++) {
 			bits[i] = false;
