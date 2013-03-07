@@ -17,6 +17,22 @@ public class EightBit {
 	public EightBit(int b) {
 		this((byte) b);
 	}
+	
+	public EightBit(String onesAndZeros) {
+		char [] cs = onesAndZeros.toCharArray();
+		for (int i = 0; i < 8 - cs.length; i++) {
+			bits[i] = false;
+		}
+		for (int i = 8 - cs.length; i < cs.length; i++) {
+			char c = cs[i];
+			if (c == '0') {
+				bits[i] = false;
+			} else {
+				bits[i] = true;
+			}
+		}
+	}
+	
 	public EightBit(Byte b) {
 		this(b.byteValue());
 	}
@@ -94,7 +110,7 @@ public class EightBit {
 		}
 		return result;
 	}
-	
+
 	private void toBooleans(byte bigB) {
 		int result = unsign(bigB);
 		if (result >= 128) {
