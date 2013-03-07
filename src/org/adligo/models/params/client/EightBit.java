@@ -116,6 +116,19 @@ public class EightBit {
 		return result;
 	}
 
+	public String toOnesAndZeros() {
+		char [] chars = new char[8];
+		for (int i = 0; i < chars.length; i++) {
+			boolean bit = bits[i];
+			if (bit) {
+				chars[i] = '1';
+			} else {
+				chars[i] = '0';
+			}
+		}
+		return new String(chars);
+	}
+	
 	private void toBooleans(byte bigB) {
 		int result = unsign(bigB);
 		if (result >= 128) {
