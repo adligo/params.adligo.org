@@ -28,8 +28,12 @@ public class EightBit {
 		for (int i = 0; i < 8 - cs.length; i++) {
 			bits[i] = false;
 		}
-		for (int i = 8 - cs.length; i < cs.length; i++) {
-			char c = cs[i];
+		for (int i = 8 - cs.length; i < 8; i++) {
+			int ic = i;
+			if (cs.length < 8) {
+				ic = i - cs.length;
+			}
+			char c = cs[ic];
 			if (c == '0') {
 				bits[i] = false;
 			} else {
