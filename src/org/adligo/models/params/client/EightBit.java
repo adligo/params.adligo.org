@@ -231,4 +231,14 @@ public class EightBit {
 		
 		return out.toString();
 	}
+	
+	public byte toByte() {
+		String ozs = toOnesAndZeros();
+		byte b = (byte) Integer.parseInt(ozs, 2);
+		return b;
+	}
+	
+	public char toCharAsciiUtf8() {
+		return (char) toByte();
+	}
 }
