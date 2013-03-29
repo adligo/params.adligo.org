@@ -319,6 +319,12 @@ public class Parser {
 	public static TagInfo getNextTagInfo(String xml, int startIndex) {
 		
 		TagFinder finder = new TagFinder(xml, startIndex);
+		if (log.isDebugEnabled()) {
+			String searchSTring = "<>";
+			if (xml.contains(searchSTring)) {
+				log.debug("found search string " + searchSTring + " for breakpoint");
+			}
+		}
 		return finder.getNextTag();
 	}
 	

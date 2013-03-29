@@ -42,7 +42,7 @@ public class TagFinder {
 				inQuotes = !inQuotes;
 			}
 			if (!inQuotes) {
-				if (shouldProcessLessThan(c)) {
+				if (c == '<') {
 					lastCharLessThan = true;
 					tagEnded();
 					currentTag =  new TagMutant();
@@ -51,8 +51,10 @@ public class TagFinder {
 					if (lastCharLessThan) {
 						lastCharLessThan = false;
 						headerOrEnder = true;
-						
-						if (isWhitespace(c)) {
+						if (c == '>') {
+							currentTag = null;
+							headerOrEnder = false;
+						} else if (isWhitespace(c)) {
 							sb = AppenderFactory.create();
 						} else if (isCarrot(c)) {
 							sb = AppenderFactory.create();
@@ -88,13 +90,13 @@ public class TagFinder {
 		return matcher.getRoot();
 	}
 	
-	private boolean shouldProcessLessThan(char c) {
-		if (c == '<') {
-			return true;
-		}
-		return false;
-	}
+	
 
+	/**
+	 * @param i
+	 * @param c
+	 * @return true if the tag header ended
+	 */
 	private boolean processTagHeader(int i, char c) {
 		if ("".equals(tagName)) {
 			if (checkForEndOfHeader(i, c)) {
@@ -102,7 +104,14 @@ public class TagFinder {
 					return true;
 				}
 			} else if (isWhitespace(c)) {
-				setTagName();
+				String nm = sb.toString();
+				if (nm.length() == 0) {
+					//its a <> which is text, not a tag header at all
+					currentTag = null;
+					return true;
+				} else {
+					setTagName();
+				}
 			} else {
 				if ("".equals(tagName)) {
 					sb.append(c);
@@ -137,7 +146,11 @@ public class TagFinder {
 		return false;
 	}
 
+	
 	private void tagEnded() {
+		if ("".equals(tagName)) {
+			headerOrEnder = false;
+		}
 		currentTag = null;
 		sb = AppenderFactory.create();
 		tagName = "";
