@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="deploy" name="params">
-	<import file="${user.home}/conf/adligo/build.xml"/>
+	<import file="${user.home}/conf/adligo/jse-build.xml"/>
 	
-	  <target name="jar-all-params" >
-			<ant antfile="build.xml" inheritAll="false" target="jar"/>
-	  	<!--
-			<ant antfile="j2me-build.xml" inheritAll="false" target="jar"/>
-	  	-->
-			<ant antfile="gwt-build.xml" inheritAll="false" target="gwt-jar"/>
-	  </target>
 </project>
