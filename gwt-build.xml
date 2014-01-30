@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="." default="gwt-jar" name="gwt-params">
+<project basedir="." default="gwt_jar" name="gwt-params">
     <import file="${user.home}/conf/adligo/gwt-build.xml"/>
 </project>
