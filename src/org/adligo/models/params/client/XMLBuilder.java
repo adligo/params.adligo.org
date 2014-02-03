@@ -28,7 +28,6 @@ public class XMLBuilder implements I_XMLBuilder {
 	/* (non-Javadoc)
 	 * @see org.adligo.models.params.client.I_XMLBuilder#getLineFeed()
 	 */
-	@Override
 	public String getLineFeed() {
 		// throw npe if null
 		return lineFeed;
@@ -37,7 +36,6 @@ public class XMLBuilder implements I_XMLBuilder {
 	/* (non-Javadoc)
 	 * @see org.adligo.models.params.client.I_XMLBuilder#setLineFeed(java.lang.String)
 	 */
-	@Override
 	public void setLineFeed(String lineFeed) {
 		lineFeed.hashCode();
 		this.lineFeed = lineFeed;
@@ -46,7 +44,6 @@ public class XMLBuilder implements I_XMLBuilder {
 	/* (non-Javadoc)
 	 * @see org.adligo.models.params.client.I_XMLBuilder#getIndent()
 	 */
-	@Override
 	public String getIndent() {
 		return indent;
 	}
@@ -54,7 +51,6 @@ public class XMLBuilder implements I_XMLBuilder {
 	/* (non-Javadoc)
 	 * @see org.adligo.models.params.client.I_XMLBuilder#setIndent(java.lang.String)
 	 */
-	@Override
 	public void setIndent(String indent) {
 		// throw npe if null
 		indent.hashCode();
@@ -64,7 +60,6 @@ public class XMLBuilder implements I_XMLBuilder {
 	/* (non-Javadoc)
 	 * @see org.adligo.models.params.client.I_XMLBuilder#indent()
 	 */
-	@Override
 	public void indent() {
 		for (int i = 0; i < indentLevel; i++) {
 			buffer.append(toUtf8(indent));
@@ -74,7 +69,6 @@ public class XMLBuilder implements I_XMLBuilder {
 	/* (non-Javadoc)
 	 * @see org.adligo.models.params.client.I_XMLBuilder#addIndentLevel()
 	 */
-	@Override
 	public void addIndentLevel() {
 		indentLevel++;
 	}
@@ -82,7 +76,6 @@ public class XMLBuilder implements I_XMLBuilder {
 	/* (non-Javadoc)
 	 * @see org.adligo.models.params.client.I_XMLBuilder#removeIndentLevel()
 	 */
-	@Override
 	public void removeIndentLevel() {
 		indentLevel--;
 		if (indentLevel < 0) {
@@ -93,7 +86,6 @@ public class XMLBuilder implements I_XMLBuilder {
 	/* (non-Javadoc)
 	 * @see org.adligo.models.params.client.I_XMLBuilder#lineFeed()
 	 */
-	@Override
 	public void lineFeed() {
 		buffer.append(toUtf8(lineFeed));
 	}
@@ -101,49 +93,42 @@ public class XMLBuilder implements I_XMLBuilder {
 	/* (non-Javadoc)
 	 * @see org.adligo.models.params.client.I_XMLBuilder#append(java.lang.String)
 	 */
-	@Override
 	public void append(String p) {
 		buffer.append(toUtf8(p));
 	}
 	/* (non-Javadoc)
 	 * @see org.adligo.models.params.client.I_XMLBuilder#append(boolean)
 	 */
-	@Override
 	public void append(boolean p) {
 		buffer.append(p);
 	}
 	/* (non-Javadoc)
 	 * @see org.adligo.models.params.client.I_XMLBuilder#append(int)
 	 */
-	@Override
 	public void append(int p) {
 		buffer.append(p);
 	}
 	/* (non-Javadoc)
 	 * @see org.adligo.models.params.client.I_XMLBuilder#append(float)
 	 */
-	@Override
 	public void append(float p) {
 		buffer.append(p);
 	}
 	/* (non-Javadoc)
 	 * @see org.adligo.models.params.client.I_XMLBuilder#append(double)
 	 */
-	@Override
 	public void append(double p) {
 		buffer.append(p);
 	}
 	/* (non-Javadoc)
 	 * @see org.adligo.models.params.client.I_XMLBuilder#append(short)
 	 */
-	@Override
 	public void append(short p) {
 		buffer.append(p);
 	}
 	/* (non-Javadoc)
 	 * @see org.adligo.models.params.client.I_XMLBuilder#append(long)
 	 */
-	@Override
 	public void append(long p) {
 		buffer.append(p);
 	}
@@ -152,13 +137,11 @@ public class XMLBuilder implements I_XMLBuilder {
 		setIndent(NO_INDENT);
 	}
 
-	@Override
 	public void appendTagHeaderStart(String tagName) {
 		append("<");
 		append(tagName);
 	}
 
-	@Override
 	public void appendTagHeaderEnd(boolean addFeed) {
 		append(">");
 		if (addFeed) {
@@ -166,7 +149,6 @@ public class XMLBuilder implements I_XMLBuilder {
 		}
 	}
 
-	@Override
 	public void appendEndTag(String tagName) {
 		append("</");
 		append(tagName);
@@ -174,7 +156,6 @@ public class XMLBuilder implements I_XMLBuilder {
 		append(lineFeed);
 	}
 
-	@Override
 	public void appendAttribute(String propName, String value) {
 		append(" ");
 		append(propName);
@@ -183,54 +164,44 @@ public class XMLBuilder implements I_XMLBuilder {
 		append("\"");
 	}
 
-	@Override
 	public void appendAttribute(String tagName, boolean value) {
 		appendAttribute(tagName, "" + value);
 	}
 	
-	@Override
 	public void appendAttribute(String tagName, long value) {
 		appendAttribute(tagName, "" + value);
 	}
 
-	@Override
 	public void appendAttribute(String tagName, float value) {
 		appendAttribute(tagName, "" + value);
 	}
 
-	@Override
 	public void appendAttribute(String tagName, short value) {
 		appendAttribute(tagName, "" + value);
 	}
 
-	@Override
 	public void appendAttribute(String tagName, int value) {
 		appendAttribute(tagName, "" + value);
 	}
 
-	@Override
 	public void appendAttribute(String tagName, double value) {
 		appendAttribute(tagName, "" + value);
 	}
 
-	@Override
 	public void appendTagHeaderEndNoChildren() {
 		append("/>");
 		append(lineFeed);
 	}
 
-	@Override
 	public String toXmlString() {
 		return buffer.toString();
 	}
 
-	@Override
 	public void appendBase64(byte[] bytes) {
 		String data = Base64.encode(bytes);
 		buffer.append(toUtf8(data));
 	}
 
-	@Override
 	public void appendTagWithTextContent(String tagName, String textContent) {
 		appendTagHeaderStart(tagName);
 		buffer.append(">");
@@ -238,7 +209,6 @@ public class XMLBuilder implements I_XMLBuilder {
 		appendEndTag(tagName);
 	}
 
-	@Override
 	public void appendAttribute(String tagName, byte[] bytes) {
 		String data = Base64.encode(bytes);
 		appendAttribute(tagName, data);
@@ -249,7 +219,7 @@ public class XMLBuilder implements I_XMLBuilder {
 			return new String(p
 				.getBytes(charSet));
 		} catch (UnsupportedEncodingException x) {
-			throw new IllegalStateException(x);
+			throw new IllegalArgumentException(x.getMessage());
 		}
 	}
 

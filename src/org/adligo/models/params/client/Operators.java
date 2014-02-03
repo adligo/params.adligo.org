@@ -1,6 +1,5 @@
 package org.adligo.models.params.client;
 
-import java.util.Arrays;
 
 public class Operators implements I_Operators {
 	private String [] values;
@@ -17,18 +16,22 @@ public class Operators implements I_Operators {
 		return values;
 	}
 
-	@Override
+	
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		// this next line is the reason for this
 		// whole class why is hashCode not implemented 
 		// in the String[] class?
-		result = prime * result + Arrays.hashCode(values);
+		result = prime * result + values.hashCode();
+		for (int i =0; i < values.length; i++) {
+			if (values[i] != null) {
+				result = result + values[i].hashCode();
+			}
+		}
 		return result;
 	}
 
-	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -37,8 +40,20 @@ public class Operators implements I_Operators {
 		if (getClass() != obj.getClass())
 			return false;
 		Operators other = (Operators) obj;
-		if (!Arrays.equals(values, other.values))
+		if (values.length != other.values.length) {
 			return false;
+		}
+		for (int i =0; i < values.length; i++) {
+			if (values[i] != null) {
+				if (other.values[i] == null) {
+					return false;
+				} else if ( !values[i].equals(other.values[i])) {
+					return false;
+				}
+			} else if (other.values[i] != null) {
+				return false;
+			} 
+		}
 		return true;
 	}
 	

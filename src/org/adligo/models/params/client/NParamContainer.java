@@ -24,7 +24,6 @@ public class NParamContainer implements I_OneOrN {
 		items.remove(item);
 	}
 
-	@Override
 	public String toString() {
 		return "NParamContainer [items=" + items + "]";
 	}

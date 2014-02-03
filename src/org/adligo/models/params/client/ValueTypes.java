@@ -5,15 +5,15 @@ package org.adligo.models.params.client;
  *
  */
 public class ValueTypes {
-	public static final short STRING = 0;
-	public static final short LONG = 1;
-	public static final short INTEGER = 2;
-	public static final short SHORT = 3;
-	public static final short DOUBLE = 4;
-	public static final short FLOAT = 5;
-	public static final short DATE = 6;
-	public static final short TIMESTAMP = 7;
-	public static final short BOOLEAN = 8;
-	public static final short BIG_DECIMAL = 9;
-	public static final short BIG_INTEGER = 10;
+	public static final Short STRING = new Short((short) 0);
+	public static final Short LONG = new Short((short) 1);
+	public static final Short INTEGER = new Short((short) 2);
+	public static final Short SHORT = new Short((short) 3);
+	public static final Short DOUBLE = new Short((short) 4);
+	public static final Short FLOAT = new Short((short) 5);
+	public static final Short DATE = new Short((short) 6);
+	public static final Short TIMESTAMP = new Short((short) 7);
+	public static final Short BOOLEAN = new Short((short) 8);
+	public static final Short BIG_DECIMAL = new Short((short) 9);
+	public static final Short BIG_INTEGER = new Short((short) 10);
 }

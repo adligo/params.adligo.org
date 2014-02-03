@@ -19,10 +19,10 @@ public class TagInfoMutant {
 	
 	
 	private String tagName;
-	private Integer headerStart;
-	private Integer headerEnd;
-	private Integer enderStart;
-	private Integer enderEnd;
+	private int headerStart;
+	private int headerEnd;
+	private int enderStart;
+	private int enderEnd;
 	private boolean hasEnder = true;
 	/**
 	 * a collection of TagInfoMutants
@@ -41,11 +41,11 @@ public class TagInfoMutant {
 		enderEnd = other.enderEnd;
 		hasEnder = other.hasEnder;
 		if (hasEnder) {
-			if (enderEnd == null) {
+			if (enderEnd == -1) {
 				throw new IllegalArgumentException("This tag has a ender but the enderEnd is null " +
 						toString());
 			}
-			if (enderStart == null) {
+			if (enderStart == -1) {
 				throw new IllegalArgumentException("This tag has a ender but the enderStart is null" + 
 						toString());
 			}
@@ -68,32 +68,32 @@ public class TagInfoMutant {
 		}
 		this.tagName = appender.toString();
 	}
-	public Integer getHeaderStart() {
+	public int getHeaderStart() {
 		return headerStart;
 	}
 	public void setHeaderStart(int headerStart) {
 		this.headerStart = headerStart;
 	}
-	public Integer getHeaderEnd() {
+	public int getHeaderEnd() {
 		return headerEnd;
 	}
 	public void setHeaderEnd(int headerEnd) {
 		this.headerEnd = headerEnd;
 	}
 	
-	public Integer getEnderStart() {
+	public int getEnderStart() {
 		return enderStart;
 	}
 	public void setEnderStart(int enderStart) {
 		this.enderStart = enderStart;
 	}
-	public Integer getEnderEnd() {
+	public int getEnderEnd() {
 		return enderEnd;
 	}
 	public void setEnderEnd(int enderEnd) {
 		this.enderEnd = enderEnd;
 	}
-	public Integer getChildrenSize() {
+	public int getChildrenSize() {
 		if (children == null) {
 			return 0;
 		}
@@ -125,7 +125,7 @@ public class TagInfoMutant {
 			throw new IllegalArgumentException(
 					TAG_INFO_REQUIRES_A_NON_EMPTY_NAME);
 		}
-		if (headerStart == null || headerEnd == null) {
+		if (headerStart == -1 || headerEnd == -1) {
 			throw new IllegalArgumentException(
 					TAG_INFO_REQUIRES_2_INDEXES);
 		}
@@ -139,8 +139,8 @@ public class TagInfoMutant {
 			throw new IllegalArgumentException(
 					THE_START_TAG_START_INDEX_MUST_BE_BEFORE_THE_START_TAG_END_INDEX);
 		}
-		if (enderStart != null || enderEnd != null) {
-			if (enderStart == null || enderEnd == null) {
+		if (enderStart != -1 || enderEnd != -1) {
+			if (enderStart == -1 || enderEnd == -1) {
 				throw new IllegalArgumentException(
 						TAG_INFO_REQUIRES_2_INDEXES);
 			}
@@ -167,10 +167,10 @@ public class TagInfoMutant {
 	}
 
 	public boolean hasEnder() {
-		if (enderEnd == null) {
+		if (enderEnd == -1) {
 			return false;
 		}
-		if (enderStart == null) {
+		if (enderStart == -1) {
 			return false;
 		}
 		return hasEnder;
@@ -187,12 +187,17 @@ public class TagInfoMutant {
 	public void setParent(TagInfoMutant parent) {
 		this.parent = parent;
 	}
-	@Override
+	
 	public String toString() {
 		return toString(TagInfoMutant.class);
 	}
 	
-	String toString(Class<?> clazz) {
+	/**
+	 * Note no generics or annotations for jme compaitibility
+	 * @param clazz
+	 * @return
+	 */
+	String toString(Class clazz) {
 		return "" + ClassUtils.getClassShortName(clazz) + " [tagName=" + tagName + ", headerStart="
 				+ headerStart + ", headerEnd=" + headerEnd + ", enderStart="
 				+ enderStart + ", enderEnd=" + enderEnd + " hasEnder=" + hasEnder + "]";

@@ -10,10 +10,6 @@ package org.adligo.models.params.client;
  * although I am going mostly GWT RPC with all java servers. The exception is
  * when I need a external api.
  * 
- *    @deprecated the xml_io project is replacing this class with 
- *    a similar concept, but greatly compressed xml that may be interpreted by 
- *    java and non Java languages. Expected removal 1/1/2020
- * 
  * @author scott@adligo.com
  * @version 1.3
  */

@@ -1,16 +1,20 @@
 package org.adligo.models.params.client;
 
 import java.io.Serializable;
-
 /**
  * Description: This is the interface for any object that wants to be fed to the
  * TemplateParserEngine to be used as the data to fill the templates mold. 
+ * 
+ * NOTE to make this compatible with jme I couldn't use Serializable
+ * so if you want to Serialize instances of this class 
+ * use read and write xml from I_XML_Serilizable
+ * 
  * 
  * @author scott@adligo.com
  * @version 1.3
  */
 
-public interface I_TemplateParams extends Serializable, I_XML_Serilizable {
+public interface I_TemplateParams extends  I_XML_Serilizable {
 	/**
 	 * This should return true if there is a param with the name = s or false if
 	 * there isn't. Also this method should set up the I_TemplateParams

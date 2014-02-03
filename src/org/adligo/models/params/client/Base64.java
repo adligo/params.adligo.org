@@ -32,16 +32,14 @@ public class Base64 {
 			}
 	    	return toRet;
     	} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new RuntimeException(e);
+			throw new RuntimeException(e.getMessage());
 		}
     }
     
     private static I_Map getBase64Index() {
     	I_Map toRet = MapFactory.create();
     	for (int i = 0; i < BASE_64_CHARS.length; i++) {
-			toRet.put(BASE_64_CHARS[i], (Byte) (byte) i);
+			toRet.put(new Character(BASE_64_CHARS[i]), new Byte((byte) i));
 		}
     	return toRet;
     }
@@ -72,7 +70,7 @@ public class Base64 {
 			}
 		}
 
-		s = s.replaceAll("=", "A");
+		s = Parser.replaceAll(s, "=", "A");
 		
 		int resLength = (int) Math.ceil(((float) (s.length()) / 4f) * 3f);
 		byte[] bufIn = new byte[resLength - equalsSigns];
@@ -119,11 +117,11 @@ public class Base64 {
 	}
 
 	private static byte getIndexByteForChar(char aChar) {
-		Byte a = (Byte) CHAR_TO_INDEX.get(aChar);
+		Byte a = (Byte) CHAR_TO_INDEX.get(new Character(aChar));
 		if (a == null) {
 			throw new IllegalArgumentException(BASE64_DOES_NOT_ALLOW_USAGE_OF_THE_CHARACTER + aChar);
 		}
-		return (byte) a;
+		return a.byteValue();
 	}
     
     /**
@@ -168,7 +166,7 @@ public class Base64 {
         			byte leftB = (byte) (b >> 4);
         			EightBit eb = new EightBit(leftB);
         			//put the left 4 bytes from the old byte
-        			eb.copy(lastByte, 4);
+        			eb.copy(lastByte.byteValue(), (byte) 4);
         			//wipe the left side for 6 bits
         			eb.setSlotZero(false);
         			eb.setSlotOne(false);
@@ -178,7 +176,7 @@ public class Base64 {
         			//pad empty bytes for a 2 byte, 3 character sequence
         			byte left2 = (byte) (b >> 6);
         			EightBit eb3 = new EightBit(left2);
-        			eb3.copy(lastByte, 6);
+        			eb3.copy(lastByte.byteValue(), (byte) 6);
         			eb3.setSlotZero(false);
         			eb3.setSlotOne(false);		
         			append(out, eb3);
@@ -189,13 +187,13 @@ public class Base64 {
         			break;
         	}
     		
-        	lastByte = b;
+        	lastByte = new Byte(b);
 		}
         if (lastByte != null) {
         	switch (oneTwoThree) {
         		case 1:
         			//use the last 2 bits of the first byte in slots 2 and 3  with zeros on the right
-        			byte lastTwoBits = (byte) (lastByte << 4 );
+        			byte lastTwoBits = (byte) (lastByte.byteValue() << 4 );
             		append(out, lastTwoBits);
         			//pad empty bytes for a 1 byte, 3 character sequence
         			out.append("==");

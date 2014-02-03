@@ -37,17 +37,15 @@ public class ParamDecorator implements I_TemplateParams {
 		}
 		this.delegate = delegate;
 	}
-	@Override
+	
 	public void First() {
 		delegate.First();
 	}
 
-	@Override
 	public String getName() {
 		return delegate.getName();
 	}
 
-	@Override
 	public I_TemplateParams getNestedParams() {
 		I_TemplateParams itp = delegate.getNestedParams();
 		if (itp == null) {
@@ -56,47 +54,38 @@ public class ParamDecorator implements I_TemplateParams {
 		return new ParamDecorator(itp);
 	}
 
-	@Override
 	public boolean getNextParam(String s) {
 		return delegate.getNextParam(s);
 	}
 
-	@Override
 	public I_Operators getOperators() {
 		return delegate.getOperators();
 	}
 
-	@Override
 	public Object[] getValues() {
 		return delegate.getValues();
 	}
 
-	@Override
 	public String getClassVersion() {
 		return delegate.getClassVersion();
 	}
 	
-	@Override
 	public void readXML(String s, String name) {
 		delegate.readXML(s, name);
 	}
 
-	@Override
 	public void readXML(String s) {
 		delegate.readXML(s);
 	}
 
-	@Override
 	public String writeXML() {
 		return delegate.writeXML();
 	}
 
-	@Override
 	public void writeXML(I_XMLBuilder builder, String name) {
 		delegate.writeXML(builder, name);
 	}
 
-	@Override
 	public void writeXML(I_XMLBuilder builder) {
 		delegate.writeXML(builder);
 	}
@@ -106,7 +95,6 @@ public class ParamDecorator implements I_TemplateParams {
 	protected synchronized void setDelegate(I_TemplateParams delegate) {
 		this.delegate = delegate;
 	}
-	@Override
 	public short[] getValueTypes() {
 		return delegate.getValueTypes();
 	}

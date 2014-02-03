@@ -74,7 +74,7 @@ public class TagMatcher {
 			return null;
 		}
 		if (root.hasEnder()) {
-			if (root.getEnderEnd() == null || root.getEnderStart() == null) {
+			if (root.getEnderEnd() == -1 || root.getEnderStart() == -1) {
 				root.setHasEnder(false);
 			}
 		}

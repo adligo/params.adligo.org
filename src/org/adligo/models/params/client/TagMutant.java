@@ -4,9 +4,9 @@ import org.adligo.i.util.client.ClassUtils;
 import org.adligo.i.util.client.StringUtils;
 
 public class TagMutant {
-	private Integer start;
+	private int start;
 	private String name;
-	private Integer end;
+	private int end;
 	private boolean selfEnding = false;
 	
 	public TagMutant() {}
@@ -17,7 +17,7 @@ public class TagMutant {
 		setEnd(other.end);
 		selfEnding = other.selfEnding;
 	}
-	public Integer getStart() {
+	public int getStart() {
 		return start;
 	}
 	public void setStart(int start) {
@@ -32,7 +32,7 @@ public class TagMutant {
 		}
 		this.name = name;
 	}
-	public Integer getEnd() {
+	public int getEnd() {
 		return end;
 	}
 	public void setEnd(int end) {
@@ -49,7 +49,13 @@ public class TagMutant {
 		return toString(TagMutant.class);
 	}
 	
-	public String toString(Class<?> clazz) {
+	/**
+	 * Note no generics or annotations for jme compatibility
+	 * 
+	 * @param clazz
+	 * @return
+	 */
+	public String toString(Class clazz) {
 		return "" + ClassUtils.getClassName(clazz) + " [start=" + start + ", name=" + name + ", end=" + end
 				+ ", selfEnding=" + selfEnding + "]";
 	}

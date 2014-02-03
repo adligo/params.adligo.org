@@ -7,7 +7,7 @@ public class Tag {
 		mutant = new TagMutant(other);
 	}
 
-	public Integer getStart() {
+	public int getStart() {
 		return mutant.getStart();
 	}
 
@@ -15,7 +15,7 @@ public class Tag {
 		return mutant.getName();
 	}
 
-	public Integer getEnd() {
+	public int getEnd() {
 		return mutant.getEnd();
 	}
 

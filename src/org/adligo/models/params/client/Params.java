@@ -10,8 +10,6 @@ package org.adligo.models.params.client;
  * @version 1.3
  */
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 
 import org.adligo.i.log.client.Log;
@@ -65,70 +63,70 @@ public class Params implements I_MultipleParamsObject {
 		return parm;
 	}
 		
-	public Param addParam(String name, Integer value, I_TemplateParams params) {
+	public Param addParam(String name, int value, I_TemplateParams params) {
 		Param parm = new Param(name,params);
 		parm.setValue(value);
 		addParam(parm);
 		return parm;
 	}
 
-	public Param addParam(String name, Integer value) {
+	public Param addParam(String name, int value) {
 		Param parm = new Param(name);
 		parm.setValue(value);
 		addParam(parm);
 		return parm;
 	}
 	
-	public Param addParam(String name, Short value, I_TemplateParams params) {
+	public Param addParam(String name, short value, I_TemplateParams params) {
 		Param parm = new Param(name,params);
 		parm.setValue(value);
 		addParam(parm);
 		return parm;
 	}
 
-	public Param addParam(String name, Short value) {
+	public Param addParam(String name, short value) {
 		Param parm = new Param(name);
 		parm.setValue(value);
 		addParam(parm);
 		return parm;
 	}
 	
-	public Param addParam(String name, Long value, I_TemplateParams params) {
+	public Param addParam(String name, long value, I_TemplateParams params) {
 		Param parm = new Param(name,params);
 		parm.setValue(value);
 		addParam(parm);
 		return parm;
 	}
 
-	public Param addParam(String name, Long value) {
+	public Param addParam(String name, long value) {
 		Param parm = new Param(name);
 		parm.setValue(value);
 		addParam(parm);
 		return parm;
 	}
 	
-	public Param addParam(String name, Double value, I_TemplateParams params) {
+	public Param addParam(String name, double value, I_TemplateParams params) {
 		Param parm = new Param(name,params);
 		parm.setValue(value);
 		addParam(parm);
 		return parm;
 	}
 
-	public Param addParam(String name, Double value) {
+	public Param addParam(String name, double value) {
 		Param parm = new Param(name);
 		parm.setValue(value);
 		addParam(parm);
 		return parm;
 	}
 	
-	public Param addParam(String name, Float value, I_TemplateParams params) {
+	public Param addParam(String name, float value, I_TemplateParams params) {
 		Param parm = new Param(name,params);
 		parm.setValue(value);
 		addParam(parm);
 		return parm;
 	}
 
-	public Param addParam(String name, Float value) {
+	public Param addParam(String name, float value) {
 		Param parm = new Param(name);
 		parm.setValue(value);
 		addParam(parm);
@@ -149,14 +147,14 @@ public class Params implements I_MultipleParamsObject {
 		return parm;
 	}
 	
-	public Param addParam(String name, Boolean value, I_TemplateParams params) {
+	public Param addParam(String name, boolean value, I_TemplateParams params) {
 		Param parm = new Param(name,params);
 		parm.setValue(value);
 		addParam(parm);
 		return parm;
 	}
 	
-	public Param addParam(String name, Boolean value) {
+	public Param addParam(String name, boolean value) {
 		Param parm = new Param(name);
 		parm.setValue(value);
 		addParam(parm);
@@ -196,48 +194,37 @@ public class Params implements I_MultipleParamsObject {
 		return parm;
 	}
 	
-	public Param addParam(String name, String operator, BigDecimal value ) {
-		Param parm = new Param(name,operator, value);
-		addParam(parm);
-		return parm;
-	}
-	public Param addParam(String name, String operator, BigInteger value ) {
-		Param parm = new Param(name,operator, value);
-		addParam(parm);
-		return parm;
-	}
-	
 	public Param addParam(String name, String operator, String value ) {
 		Param parm = new Param(name,operator, value);
 		addParam(parm);
 		return parm;
 	}
 	
-	public Param addParam(String name, String operator, Integer value ) {
+	public Param addParam(String name, String operator, int value ) {
 		Param parm = new Param(name,operator, value);
 		addParam(parm);
 		return parm;
 	}
 
-	public Param addParam(String name, String operator, Short value ) {
+	public Param addParam(String name, String operator, short value ) {
 		Param parm = new Param(name,operator, value);
 		addParam(parm);
 		return parm;
 	}
 	
-	public Param addParam(String name, String operator, Long value ) {
+	public Param addParam(String name, String operator, long value ) {
 		Param parm = new Param(name,operator, value);
 		addParam(parm);
 		return parm;
 	}
 	
-	public Param addParam(String name, String operator, Double value ) {
+	public Param addParam(String name, String operator, double value ) {
 		Param parm = new Param(name,operator, value);
 		addParam(parm);
 		return parm;
 	}
 	
-	public Param addParam(String name, String operator, Float value ) {
+	public Param addParam(String name, String operator, float value ) {
 		Param parm = new Param(name,operator, value);
 		addParam(parm);
 		return parm;
@@ -249,7 +236,7 @@ public class Params implements I_MultipleParamsObject {
 		return parm;
 	}
 	
-	public Param addParam(String name, String operator, Boolean value ) {
+	public Param addParam(String name, String operator, boolean value ) {
 		Param parm = new Param(name,operator, value);
 		addParam(parm);
 		return parm;
@@ -267,35 +254,35 @@ public class Params implements I_MultipleParamsObject {
 		addParam(parm);
 		return parm;
 	}
-	public Param addParam(String name, String [] operators, Integer value ) {
+	public Param addParam(String name, String [] operators, int value ) {
 		Param parm = new Param(name,new Operators(operators));
 		parm.setValue(value);
 		addParam(parm);
 		return parm;
 	}
 
-	public Param addParam(String name, String [] operators, Short value ) {
+	public Param addParam(String name, String [] operators, short value ) {
 		Param parm = new Param(name,new Operators(operators));
 		parm.setValue(value);
 		addParam(parm);
 		return parm;
 	}
 	
-	public Param addParam(String name, String [] operators, Long value ) {
+	public Param addParam(String name, String [] operators, long value ) {
 		Param parm = new Param(name,new Operators(operators));
 		parm.setValue(value);
 		addParam(parm);
 		return parm;
 	}
 	
-	public Param addParam(String name, String [] operators, Double value ) {
+	public Param addParam(String name, String [] operators, double value ) {
 		Param parm = new Param(name,new Operators(operators));
 		parm.setValue(value);
 		addParam(parm);
 		return parm;
 	}
 	
-	public Param addParam(String name, String [] operators, Float value ) {
+	public Param addParam(String name, String [] operators, float value ) {
 		Param parm = new Param(name,new Operators(operators));
 		parm.setValue(value);
 		addParam(parm);
@@ -308,7 +295,7 @@ public class Params implements I_MultipleParamsObject {
 		addParam(parm);
 		return parm;
 	}
-	public Param addParam(String name, String [] operators, Boolean value ) {
+	public Param addParam(String name, String [] operators, boolean value ) {
 		Param parm = new Param(name,new Operators(operators));
 		parm.setValue(value);
 		addParam(parm);
@@ -322,40 +309,54 @@ public class Params implements I_MultipleParamsObject {
 		return parm;
 	}
 	
+	public Param addParamBigDecimal(String name, I_Operators operators, String value ) {
+		Param parm = new Param(name,operators);
+		parm.setValueBigDecimal(value);
+		addParam(parm);
+		return parm;
+	}
+	
+	public Param addParamBigInteger(String name, I_Operators operators, String value ) {
+		Param parm = new Param(name,operators);
+		parm.setValueBigInteger(value);
+		addParam(parm);
+		return parm;
+	}
+	
 	public Param addParam(String name, I_Operators operators) {
 		Param parm = new Param(name,operators);
 		addParam(parm);
 		return parm;
 	}
-	public Param addParam(String name, I_Operators operators, Integer value ) {
+	public Param addParam(String name, I_Operators operators, int value ) {
 		Param parm = new Param(name,operators);
 		parm.setValue(value);
 		addParam(parm);
 		return parm;
 	}
 
-	public Param addParam(String name, I_Operators operators, Short value ) {
+	public Param addParam(String name, I_Operators operators, short value ) {
 		Param parm = new Param(name,operators);
 		parm.setValue(value);
 		addParam(parm);
 		return parm;
 	}
 	
-	public Param addParam(String name, I_Operators operators, Long value ) {
+	public Param addParam(String name, I_Operators operators, long value ) {
 		Param parm = new Param(name,operators);
 		parm.setValue(value);
 		addParam(parm);
 		return parm;
 	}
 	
-	public Param addParam(String name, I_Operators operators, Double value ) {
+	public Param addParam(String name, I_Operators operators, double value ) {
 		Param parm = new Param(name,operators);
 		parm.setValue(value);
 		addParam(parm);
 		return parm;
 	}
 	
-	public Param addParam(String name, I_Operators operators, Float value ) {
+	public Param addParam(String name, I_Operators operators, float value ) {
 		Param parm = new Param(name,operators);
 		parm.setValue(value);
 		addParam(parm);
@@ -368,26 +369,13 @@ public class Params implements I_MultipleParamsObject {
 		addParam(parm);
 		return parm;
 	}
-	public Param addParam(String name, I_Operators operators, Boolean value ) {
+	public Param addParam(String name, I_Operators operators, boolean value ) {
 		Param parm = new Param(name,operators);
 		parm.setValue(value);
 		addParam(parm);
 		return parm;
 	}
 	
-	public Param addParam(String name, I_Operators operators, BigDecimal value ) {
-		Param parm = new Param(name,operators);
-		parm.setValue(value);
-		addParam(parm);
-		return parm;
-	}
-	
-	public Param addParam(String name, I_Operators operators, BigInteger value ) {
-		Param parm = new Param(name,operators);
-		parm.setValue(value);
-		addParam(parm);
-		return parm;
-	}
 	/**
 	 * Adds a I_TemplateParams to the vector of params
 	 */
@@ -536,9 +524,8 @@ public class Params implements I_MultipleParamsObject {
 		}
 	}
 
-	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
+		StringBuffer sb = new StringBuffer();
 		sb.append(Params.class.getName());
 		sb.append("[\n");
 
@@ -707,7 +694,6 @@ public class Params implements I_MultipleParamsObject {
 		}
 	}
 
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -716,7 +702,6 @@ public class Params implements I_MultipleParamsObject {
 		return result;
 	}
 
-	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -733,7 +718,6 @@ public class Params implements I_MultipleParamsObject {
 		return true;
 	}
 
-	@Override
 	public short[] getValueTypes() {
 		return this.param.getValueTypes();
 	}

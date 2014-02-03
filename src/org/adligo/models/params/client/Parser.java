@@ -284,11 +284,25 @@ public class Parser {
 	}
 
 	public static String unescapeFromXml(String in) {
-		in = in.replaceAll("&amp;", "&");
-		in = in.replaceAll("&lt;", "<");
-		in = in.replaceAll("&gt;", ">");
-		in = in.replaceAll("&quot;", new String(new char[] { '"' }));
-		in = in.replaceAll("&apos;", "'");
+		in = replaceAll(in, "&amp;", "&");
+		in = replaceAll(in, "&lt;", "<");
+		in = replaceAll(in, "&gt;", ">");
+		in = replaceAll(in, "&quot;", new String(new char[] { '"' }));
+		in = replaceAll(in, "&apos;", "'");
+		return in;
+	}
+	
+	public static String replaceAll(String in, String key, String value) {
+		int index = in.indexOf(key);
+		while (index != -1) {
+			StringBuffer sb = new StringBuffer();
+			String start = in.substring(0, index);
+			sb.append(start);
+			sb.append(value);
+			String end = in.substring(index + key.length(), in.length());
+			sb.append(end);
+			in = sb.toString();
+		}
 		return in;
 	}
 
@@ -321,7 +335,7 @@ public class Parser {
 		TagFinder finder = new TagFinder(xml, startIndex);
 		if (log.isDebugEnabled()) {
 			String searchSTring = "<>";
-			if (xml.contains(searchSTring)) {
+			if (xml.indexOf(searchSTring) != -1) {
 				log.debug("found search string " + searchSTring + " for breakpoint");
 			}
 		}
@@ -369,8 +383,8 @@ public class Parser {
 	 * @return
 	 */
 	public static String substring(String xml, TagInfo childInfo) {
-		Integer start = null;
-		Integer end = null;
+		int start = -1;
+		int end = -1;
 		if (childInfo != null) {
 			if (childInfo.hasEnder()) {
 				start = childInfo.getHeaderStart();
@@ -380,7 +394,7 @@ public class Parser {
 				end = childInfo.getHeaderEnd();
 			}
 		}
-		if (start == null || end == null) {
+		if (start == -1 || end == -1) {
 			return "";
 		}
 		if (xml == null) {

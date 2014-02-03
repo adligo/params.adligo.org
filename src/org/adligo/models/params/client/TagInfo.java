@@ -30,7 +30,11 @@ public class TagInfo {
 				children.add(new TagInfo(obj));
 			}
 		} catch (IllegalArgumentException x) {
-			throw new IllegalArgumentException(x.getMessage() + mutant.getTagName() + "/", x);
+			/**
+			 * note older version of IllegalArgumentException
+			 * doesn't allow exception chaning
+			 */
+			throw new IllegalArgumentException(x.getMessage() + mutant.getTagName() + "/");
 		}
 	}
 
@@ -44,7 +48,7 @@ public class TagInfo {
 	 * 
 	 * @return
 	 */
-	public Integer getHeaderStart() {
+	public int getHeaderStart() {
 		return mutant.getHeaderStart();
 	}
 	/**
@@ -53,7 +57,7 @@ public class TagInfo {
 	 * 
 	 * @return
 	 */
-	public Integer getHeaderEnd() {
+	public int getHeaderEnd() {
 		return mutant.getHeaderEnd();
 	}
 	/**
@@ -62,7 +66,7 @@ public class TagInfo {
 	 * 
 	 * @return
 	 */
-	public Integer getEnderStart() {
+	public int getEnderStart() {
 		return mutant.getEnderStart();
 	}
 	/**
@@ -71,7 +75,7 @@ public class TagInfo {
 	 * 
 	 * @return
 	 */
-	public Integer getEnderEnd() {
+	public int getEnderEnd() {
 		return mutant.getEnderEnd();
 	}
 

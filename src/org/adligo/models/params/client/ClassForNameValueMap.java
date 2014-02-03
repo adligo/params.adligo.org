@@ -1,11 +1,9 @@
 package org.adligo.models.params.client;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import org.adligo.i.log.client.Log;
 import org.adligo.i.log.client.LogFactory;
-import org.adligo.i.util.client.ClassUtils;
 import org.adligo.i.util.client.I_Factory;
 
 public class ClassForNameValueMap implements I_Factory {
@@ -24,8 +22,6 @@ public class ClassForNameValueMap implements I_Factory {
 	public static final String BIG_INTEGER_SHORT_NAME = "BigInteger";
 	
 	
-	@SuppressWarnings("deprecation")
-	@Override
 	public Object createNew(Object p) {
 		ValueConstructionParams in = (ValueConstructionParams) p;
 		String clazz = in.getClazz();
@@ -35,15 +31,15 @@ public class ClassForNameValueMap implements I_Factory {
 		if (XMLObject.NULL.equals(content)) {
 			return null;
 		} else if (INTEGER_SHORT_NAME.equals(clazz)) {
-			toRet = new Integer(content);
+			toRet = new Integer(Integer.parseInt(content));
 		} else if (DOUBLE_SHORT_NAME.equals(clazz)) {
-			toRet = new Double(content);
+			toRet = new Double(Double.parseDouble(content));
 		} else if (FLOAT_SHORT_NAME.equals(clazz)) {
-			toRet = new Float(content);
+			toRet = new Float(Float.parseFloat(content));
 		} else if (SHORT_SHORT_NAME.equals(clazz)) {
-			toRet = new Short(content);
+			toRet = new Short(Short.parseShort(content));
 		} else if (LONG_SHORT_NAME.equals(clazz)) {
-			toRet = new Long(content);
+			toRet = new Long(Long.parseLong(content));
 		} else if (DATE_SHORT_NAME.equals(clazz)) {
 			//write date and read dates as longs,
 			// for better (easier interop with other languages)
@@ -58,14 +54,14 @@ public class ClassForNameValueMap implements I_Factory {
 			// The Triassic period (about 230 million years ago)
 			// is about as far back as things go, unless your
 			// a geologist
-			Long timestamp = new Long(content);
+			long timestamp = Long.parseLong(content);
 			toRet = new Date(timestamp);
 		} else if (BOOLEAN_SHORT_NAME.equals(clazz)){
-			toRet = new Boolean(content);
-		} else if (BIG_DECIMAL_SHORT_NAME.equals(clazz)){
-			toRet = new BigDecimal(content);
-		} else if (BIG_INTEGER_SHORT_NAME.equals(clazz)){
-			toRet = new BigDecimal(content);
+			if ("true".equals(content)) {
+				return Boolean.TRUE;
+			} else {
+				return Boolean.FALSE;
+			}
 		} else {
 			// defaults to String
 			toRet = content;

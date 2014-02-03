@@ -1,7 +1,5 @@
 package org.adligo.models.params.client;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 
 import org.adligo.i.log.client.Log;
@@ -93,78 +91,38 @@ public class Param implements I_TemplateParams {
 		valueTypes.add(ValueTypes.STRING);
 	}
 
-	public Param(String pName, BigDecimal value, I_TemplateParams pParams) {
-		this(pName, (Object) value, pParams, null);
-		valueTypes.add(ValueTypes.BIG_DECIMAL);
-	}
-	
-	public Param(String pName, BigInteger value, I_TemplateParams pParams) {
-		this(pName, (Object) value, pParams, null);
-		valueTypes.add(ValueTypes.BIG_INTEGER);
-	}
-	
-	public Param(String pName, Integer value, I_TemplateParams pParams) {
-		this(pName, (Object) value, pParams, null);
-		valueTypes.add(ValueTypes.INTEGER);
-	}
-
-	public Param(String pName, Short value, I_TemplateParams pParams) {
-		this(pName, (Object) value, pParams, null);
-		valueTypes.add(ValueTypes.SHORT);
-	}
-
-	public Param(String pName, Long value, I_TemplateParams pParams) {
-		this(pName, (Object) value, pParams, null);
-		valueTypes.add(ValueTypes.LONG);
-	}
-
-	public Param(String pName, Double value, I_TemplateParams pParams) {
-		this(pName, (Object) value, pParams, null);
+	public Param(String pName, double value, I_TemplateParams pParams) {
+		this(pName, new Double(value), pParams, null);
 		valueTypes.add(ValueTypes.DOUBLE);
-	}
-
-	public Param(String pName, Float value, I_TemplateParams pParams) {
-		this(pName, (Object) value, pParams, null);
-		valueTypes.add(ValueTypes.FLOAT);
-	}
-
-	public Param(String pName, Date value, I_TemplateParams pParams) {
-		this(pName, (Object) value, pParams, null);
-		valueTypes.add(ValueTypes.DATE);
-	}
-
-	public Param(String pName, Boolean value, I_TemplateParams pParams) {
-		this(pName, (Object) value, pParams, null);
-		valueTypes.add(ValueTypes.BOOLEAN);
 	}
 	
 	public Param(String pName, String operator, String value) {
-		this(pName, (Object) value, null,new Operators(operator));
+		this(pName, value, null,new Operators(operator));
 		valueTypes.add(ValueTypes.STRING);
 	}
 
-	public Param(String pName, String operator, Integer value) {
-		this(pName, (Object) value, null, new Operators(operator));
+	public Param(String pName, String operator, int value) {
+		this(pName, new Integer(value), null, new Operators(operator));
 		valueTypes.add(ValueTypes.INTEGER);
 	}
 	
-	public Param(String pName, String operator, Short value) {
-		this(pName, (Object) value, null, new Operators(operator));
+	public Param(String pName, String operator, short value) {
+		this(pName, new Short(value), null, new Operators(operator));
 		valueTypes.add(ValueTypes.SHORT);
 	}
 	
-	public Param(String pName, String operator, Long value) {
-		this(pName, (Object) value, null, new Operators(operator));
+	public Param(String pName, String operator, long value) {
+		this(pName, new Long(value), null, new Operators(operator));
 		valueTypes.add(ValueTypes.LONG);
 	}
 	
-	public Param(String pName, String operator, Double value) {
-		this(pName, (Object) value, null, new Operators(operator));
+	public Param(String pName, String operator, double value) {
+		this(pName, new Double(value), null, new Operators(operator));
 		valueTypes.add(ValueTypes.DOUBLE);
 	}
 	
-	public Param(String pName, String operator, Float value) {
-		this(pName, (Object) value, null, new Operators(operator));
+	public Param(String pName, String operator, float value) {
+		this(pName, new Float(value), null, new Operators(operator));
 		valueTypes.add(ValueTypes.FLOAT);
 	}
 	
@@ -172,17 +130,9 @@ public class Param implements I_TemplateParams {
 		this(pName, (Object) value, null, new Operators(operator));
 		valueTypes.add(ValueTypes.DATE);
 	}
-	public Param(String pName, String operator, Boolean value) {
-		this(pName, (Object) value, null, new Operators(operator));
+	public Param(String pName, String operator, boolean value) {
+		this(pName, new Boolean(value), null, new Operators(operator));
 		valueTypes.add(ValueTypes.BOOLEAN);
-	}
-	public Param(String pName, String operator, BigDecimal value) {
-		this(pName, value, null, new Operators(operator));
-		valueTypes.add(ValueTypes.BIG_DECIMAL);
-	}
-	public Param(String pName, String operator, BigInteger value) {
-		this(pName, value, null, new Operators(operator));
-		valueTypes.add(ValueTypes.BIG_INTEGER);
 	}
 	
 	public void setParent(I_TemplateParams p) {
@@ -202,109 +152,103 @@ public class Param implements I_TemplateParams {
 		valueTypes.clear();
 	}
 	
-	public void setValue(Object p) {
+	private void setObjectValue(Object p) {
 		clearValue();
 		values.add(p);
 	}
 	
-	public void setValue(BigDecimal p) {
-		setValue((Object) p);
-		valueTypes.add(ValueTypes.BIG_DECIMAL);
-	}
-	
-	public void setValue(BigInteger p) {
-		setValue((Object) p);
-		valueTypes.add(ValueTypes.BIG_INTEGER);
-	}
-	
 	public void setValue(String p) {
-		setValue((Object) p);
+		setObjectValue( p);
 		valueTypes.add(ValueTypes.STRING);
 	}
 
-	public void setValue(Integer p) {
-		setValue((Object) p);
+	public void setValue(int p) {
+		setObjectValue(new Integer(p));
 		valueTypes.add(ValueTypes.INTEGER);
 	}
 
-	public void setValue(Short p) {
-		setValue((Object) p);
+	public void setValue(short p) {
+		setObjectValue(new Short(p));
 		valueTypes.add(ValueTypes.SHORT);
 	}
 
-	public void setValue(Long p) {
-		setValue((Object) p);
+	public void setValue(long p) {
+		setObjectValue(new Long(p));
 		valueTypes.add(ValueTypes.LONG);
 	}
 
-	public void setValue(Double p) {
-		setValue((Object) p);
+	public void setValue(double p) {
+		setObjectValue(new Double(p));
 		valueTypes.add(ValueTypes.DOUBLE);
 	}
 
-	public void setValue(Float p) {
-		setValue((Object) p);
+	public void setValue(float p) {
+		setObjectValue(new Float(p));
 		valueTypes.add(ValueTypes.FLOAT);
 	}
 
 	public void setValue(Date p) {
-		setValue((Object) p);
+		setObjectValue( p);
 		valueTypes.add(ValueTypes.DATE);
 	}
 
-	public void setValue(Boolean p) {
-		setValue((Object) p);
+	public void setValue(boolean p) {
+		setObjectValue(new Boolean(p));
 		valueTypes.add(ValueTypes.BOOLEAN);
 	}
 	
+	public void setValueBigDecimal(String p) {
+		setObjectValue( p);
+		valueTypes.add(ValueTypes.BIG_DECIMAL);
+	}
+	
+	public void setValueBigInteger(String p) {
+		setObjectValue( p);
+		valueTypes.add(ValueTypes.BIG_INTEGER);
+	}
 	public void addValue(String p) {
 		values.add(p);
 		valueTypes.add(ValueTypes.STRING);
 	}
 
-	public void addValue(Integer p) {
+	public void addValueBigDecimal(String p) {
 		values.add(p);
-		valueTypes.add(ValueTypes.INTEGER);
+		valueTypes.add(ValueTypes.BIG_DECIMAL);
 	}
-
-	public void addValue(Short p) {
+	
+	public void addValueBigInteger(String p) {
 		values.add(p);
-		valueTypes.add(ValueTypes.SHORT);
+		valueTypes.add(ValueTypes.BIG_INTEGER);
 	}
-
-	public void addValue(Long p) {
-		values.add(p);
-		valueTypes.add(ValueTypes.LONG);
-	}
-
-	public void addValue(Double p) {
-		values.add(p);
-		valueTypes.add(ValueTypes.DOUBLE);
-	}
-
-	public void addValue(Float p) {
-		values.add(p);
-		valueTypes.add(ValueTypes.FLOAT);
-	}
-
+	
 	public void addValue(Date p) {
 		values.add(p);
 		valueTypes.add(ValueTypes.DATE);
 	}
 
-	public void addValue(Boolean p) {
-		values.add(p);
-		valueTypes.add(ValueTypes.BOOLEAN);
-	}
-
-	public void addValue(BigDecimal p) {
-		values.add(p);
-		valueTypes.add(ValueTypes.BIG_DECIMAL);
+	public void addValue(int p) {
+		values.add(new Integer(p));
+		valueTypes.add(ValueTypes.DATE);
 	}
 	
-	public void addValue(BigInteger p) {
-		values.add(p);
-		valueTypes.add(ValueTypes.BIG_INTEGER);
+	public void addValue(long p) {
+		values.add(new Long(p));
+		valueTypes.add(ValueTypes.DATE);
+	}
+	
+	public void addValue(float p) {
+		values.add(new Float(p));
+		valueTypes.add(ValueTypes.DATE);
+	}
+	
+	public void addValue(double p) {
+		values.add(new Double(p));
+		valueTypes.add(ValueTypes.DATE);
+	}
+	
+	public void addValue(boolean p) {
+		values.add(new Boolean(p));
+		valueTypes.add(ValueTypes.DATE);
 	}
 	
 	public void setParams(I_TemplateParams pParams) {
@@ -355,7 +299,7 @@ public class Param implements I_TemplateParams {
 	public void setOperator(I_Operators p) {
 		this.operators = p;
 	}
-	@Override
+	
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		sb.append("[");
@@ -394,7 +338,6 @@ public class Param implements I_TemplateParams {
 		return builder.toXmlString();
 	}
 
-	@Override
 	public void writeXML(I_XMLBuilder builder) {
 		writeXML(builder, null);
 	}
@@ -512,7 +455,6 @@ public class Param implements I_TemplateParams {
 		sb.lineFeed();
 	}
 
-	@SuppressWarnings("unchecked")
 	private void writeValues(I_XMLBuilder sb) {
 		if (values.size() == 0) {
 			return;
@@ -666,7 +608,10 @@ public class Param implements I_TemplateParams {
 		return new Operators(toRet);
 	}
 
-	@SuppressWarnings("unused")
+	/**
+	 * Note no generics or annotations for jme compatibility
+	 * @param valueList
+	 */
 	private void parseValues(String valueList) {
 		if (log.isDebugEnabled()) {
 			log.debug("parseValues:\n" + valueList + "\nEnd parseValues:");
@@ -753,18 +698,6 @@ public class Param implements I_TemplateParams {
 			} catch (ClassCastException cce) {
 				//eat
 			}
-			try {
-				BigDecimal foo = (BigDecimal) toAdd;
-				valueTypes.add(ValueTypes.BIG_DECIMAL);
-			} catch (ClassCastException cce) {
-				//eat
-			}
-			try {
-				BigInteger foo = (BigInteger) toAdd;
-				valueTypes.add(ValueTypes.BIG_INTEGER);
-			} catch (ClassCastException cce) {
-				//eat
-			}
 		}
 	}
 
@@ -804,15 +737,15 @@ public class Param implements I_TemplateParams {
 			I_Factory class_short_name_value_map) {
 		CLASS_SHORT_NAME_VALUE_MAP = class_short_name_value_map;
 	}
-	@Override
+	
 	public short[] getValueTypes() {
 		short [] toRet = new short[valueTypes.size()];
 		for (int i = 0; i < toRet.length; i++) {
-			toRet[i] = (Short) valueTypes.get(i);
+			toRet[i] = ((Short) valueTypes.get(i)).shortValue();
 		}
 		return toRet;
 	}
-	@Override
+	
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -825,7 +758,7 @@ public class Param implements I_TemplateParams {
 		result = prime * result + ((values == null) ? 0 : values.hashCode());
 		return result;
 	}
-	@Override
+	
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;

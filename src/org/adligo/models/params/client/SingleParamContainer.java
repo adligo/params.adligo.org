@@ -18,7 +18,6 @@ public class SingleParamContainer implements I_OneOrN {
 		this.item = item;
 	}
 
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -26,7 +25,6 @@ public class SingleParamContainer implements I_OneOrN {
 		return result;
 	}
 
-	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -43,7 +41,6 @@ public class SingleParamContainer implements I_OneOrN {
 		return true;
 	}
 
-	@Override
 	public String toString() {
 		return "" + item;
 	}

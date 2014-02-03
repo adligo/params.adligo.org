@@ -61,7 +61,7 @@ public class ParamsFactory {
 			}
 			Object obj = objs[0];
 			try {
-				int offset = (Integer) obj;
+				int offset = ((Integer) obj).intValue();
 				lo.setOffset(offset);
 				I_TemplateParams childParams = params.getNestedParams();
 				if (childParams != null) {
@@ -75,7 +75,7 @@ public class ParamsFactory {
 						}
 						obj = objs[0];
 						try {
-							int limit = (Integer) obj;
+							int limit = ((Integer) obj).intValue();
 							lo.setLimit(limit);
 						} catch (ClassCastException x) {
 							return;
