@@ -231,24 +231,29 @@ public class Param implements I_TemplateParams {
 		valueTypes.add(ValueTypes.DATE);
 	}
 
+	public void addValue(short p) {
+		values.add(new Short(p));
+		valueTypes.add(ValueTypes.SHORT);
+	}
+	
 	public void addValue(int p) {
 		values.add(new Integer(p));
-		valueTypes.add(ValueTypes.DATE);
+		valueTypes.add(ValueTypes.INTEGER);
 	}
 	
 	public void addValue(long p) {
 		values.add(new Long(p));
-		valueTypes.add(ValueTypes.DATE);
+		valueTypes.add(ValueTypes.LONG);
 	}
 	
 	public void addValue(float p) {
 		values.add(new Float(p));
-		valueTypes.add(ValueTypes.DATE);
+		valueTypes.add(ValueTypes.FLOAT);
 	}
 	
 	public void addValue(double p) {
 		values.add(new Double(p));
-		valueTypes.add(ValueTypes.DATE);
+		valueTypes.add(ValueTypes.DOUBLE);
 	}
 	
 	public void addValue(boolean p) {
