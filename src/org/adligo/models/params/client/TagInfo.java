@@ -24,17 +24,18 @@ public class TagInfo {
 		if (it.hasNext()) {
 			children = new ArrayCollection();
 		}
+		TagInfoMutant child = null;
 		try {
 			while (it.hasNext()) {
-				TagInfoMutant obj = (TagInfoMutant) it.next();
-				children.add(new TagInfo(obj));
+				child = (TagInfoMutant) it.next();
+				children.add(new TagInfo(child));
 			}
 		} catch (IllegalArgumentException x) {
 			/**
 			 * note older version of IllegalArgumentException
 			 * doesn't allow exception chaning
 			 */
-			throw new IllegalArgumentException(x.getMessage() + mutant.getTagName() + "/");
+			throw new IllegalArgumentException(x.getMessage() + other + "/" + child);
 		}
 	}
 

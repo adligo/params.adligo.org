@@ -3,14 +3,13 @@ package org.adligo.models.params.client;
 import java.util.Date;
 
 import org.adligo.i.util.client.ClassUtils;
-import org.adligo.i.util.client.I_Factory;
 
-public class ClassShortNameValueMap implements I_Factory {
+public class ClassShortNameValueMap {
 
 	/**
 	 * Note no generics or annotations for jme compatibility
 	 */
-	public Object createNew(Object o) {
+	public String getClassFor(Object o, ValueType vt) {
 			if (o == null) {
 				return XMLObject.NULL;
 			}
@@ -28,14 +27,16 @@ public class ClassShortNameValueMap implements I_Factory {
 				return ClassForNameValueMap.LONG_SHORT_NAME;
 			} else if (ClassUtils.getClassName(Date.class).equals(clazz)) {
 				return ClassForNameValueMap.DATE_SHORT_NAME;
-			} else if (ClassUtils.getClassName(String.class).equals(clazz)) {
-				return ClassForNameValueMap.STRING_SHORT_NAME;
 			} else if (ClassUtils.getClassName(Boolean.class).equals(clazz)) {
 				return ClassForNameValueMap.BOOLEAN_SHORT_NAME;
+			} else {
+				if (vt == ValueTypes.BIG_DECIMAL) {
+					return ClassForNameValueMap.BIG_DECIMAL_SHORT_NAME;
+				} else if (vt == ValueTypes.BIG_INTEGER) {
+					return ClassForNameValueMap.BIG_INTEGER_SHORT_NAME;
+				} else {
+					return ClassForNameValueMap.STRING_SHORT_NAME;
+				} 
 			} 
-			
-			// allow for sub classing to create new types
-			return null;
-			
 		}
 }

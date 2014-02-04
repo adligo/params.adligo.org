@@ -302,6 +302,7 @@ public class Parser {
 			String end = in.substring(index + key.length(), in.length());
 			sb.append(end);
 			in = sb.toString();
+			index = in.indexOf(key);
 		}
 		return in;
 	}

@@ -21,7 +21,6 @@ public class ClassForNameValueMap implements I_Factory {
 	public static final String BIG_DECIMAL_SHORT_NAME = "BigDecimal";
 	public static final String BIG_INTEGER_SHORT_NAME = "BigInteger";
 	
-	
 	public Object createNew(Object p) {
 		ValueConstructionParams in = (ValueConstructionParams) p;
 		String clazz = in.getClazz();
@@ -62,6 +61,10 @@ public class ClassForNameValueMap implements I_Factory {
 			} else {
 				return Boolean.FALSE;
 			}
+		} else if (BIG_DECIMAL_SHORT_NAME.equals(clazz)){
+			toRet = content;
+		} else if (BIG_INTEGER_SHORT_NAME.equals(clazz)){
+			toRet = content;
 		} else {
 			// defaults to String
 			toRet = content;

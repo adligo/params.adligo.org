@@ -30,7 +30,7 @@ public class Params implements I_MultipleParamsObject {
 	 * this version number represents the xml format and should be incremented
 	 * only if the format changes
 	 */
-	public static final String CLASS_VERSION = new String("1.6");
+	public static final String CLASS_VERSION = new String("1.7");
 	private I_Map // String, I_OneOrN
 	paramsMap = MapFactory.create();// holds TemplateParam objects
 	private I_OneOrN m_currentGroup = null;
@@ -718,7 +718,7 @@ public class Params implements I_MultipleParamsObject {
 		return true;
 	}
 
-	public short[] getValueTypes() {
+	public ValueType[] getValueTypes() {
 		return this.param.getValueTypes();
 	}
 }

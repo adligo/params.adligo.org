@@ -43,7 +43,7 @@ public interface I_TemplateParams extends  I_XML_Serilizable {
 	 * by calling instance of
 	 * @return
 	 */
-	public short[] getValueTypes();
+	public ValueType[] getValueTypes();
 	/**
 	 * This should return the I_TemplateParams nested inside the current param.
 	 * This should return null if there are no nested I_TemplateParams

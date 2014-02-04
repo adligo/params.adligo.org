@@ -5,7 +5,6 @@ import java.util.Date;
 import org.adligo.i.log.client.Log;
 import org.adligo.i.log.client.LogFactory;
 import org.adligo.i.util.client.ArrayCollection;
-import org.adligo.i.util.client.I_Factory;
 import org.adligo.i.util.client.I_Iterator;
 
 /**
@@ -16,8 +15,8 @@ import org.adligo.i.util.client.I_Iterator;
 
 public class Param implements I_TemplateParams {
 	static final Log log = LogFactory.getLog(Param.class);
-	private static I_Factory CLASS_FOR_NAME_VALUE_MAP = new ClassForNameValueMap();
-	private static I_Factory CLASS_SHORT_NAME_VALUE_MAP = new ClassShortNameValueMap();
+	private static ClassForNameValueMap CLASS_FOR_NAME_VALUE_MAP = new ClassForNameValueMap();
+	private static ClassShortNameValueMap CLASS_SHORT_NAME_VALUE_MAP = new ClassShortNameValueMap();
 	
 	/**
 	 * standard name of where clause 
@@ -37,10 +36,16 @@ public class Param implements I_TemplateParams {
 	 * this version number represents the xml format and should be incremented
 	 * only if the format changes
 	 */
-	public static final String CLASS_VERSION = new String("1.6");
+	public static final String CLASS_VERSION = new String("1.7");
 	private String name;
-	private ArrayCollection values = new ArrayCollection(5);
-	private ArrayCollection valueTypes = new ArrayCollection(5);
+	/**
+	 * the instances of the various objects ie Integers, Booleans exc
+	 */
+	private ArrayCollection values = new ArrayCollection(2);
+	/**
+	 * The types of the various objects ie instance of ValueType
+	 */
+	private ArrayCollection valueTypes = new ArrayCollection(2);
 	
 	private I_TemplateParams params;
 	private boolean bAlreadyGotMe = false;
@@ -248,7 +253,7 @@ public class Param implements I_TemplateParams {
 	
 	public void addValue(boolean p) {
 		values.add(new Boolean(p));
-		valueTypes.add(ValueTypes.DATE);
+		valueTypes.add(ValueTypes.BOOLEAN);
 	}
 	
 	public void setParams(I_TemplateParams pParams) {
@@ -473,12 +478,13 @@ public class Param implements I_TemplateParams {
 			sb.indent();
 
 			Object o = values.get(i);
-
+			ValueType vt = (ValueType) valueTypes.get(i);
+			
 			sb.append(XMLObject.OBJECT_HEADER);
 			sb.append(" ");
 			sb.append(XMLObject.CLASS);
 			sb.append("=\"");
-			sb.append((String) CLASS_SHORT_NAME_VALUE_MAP.createNew(o));
+			sb.append((String) CLASS_SHORT_NAME_VALUE_MAP.getClassFor(o, vt));
 			sb.append("\">");
 			// implicit to string or null
 			if (o == null) {
@@ -647,57 +653,28 @@ public class Param implements I_TemplateParams {
 			valueList = valueList.substring(iItemEnder
 					+ XMLObject.OBJECT_ENDER.length(), valueList.length());
 			values.add(toAdd);
-			/**
-			 * GWT breaks on instance of operator
-			 */
-			try {
-				String foo = (String) toAdd;
+			
+			if (ValueTypes.STRING.getName().equals(clazz)) {
 				valueTypes.add(ValueTypes.STRING);
-			} catch (ClassCastException cce) {
-				//eat
-			}
-			try {
-				Integer foo = (Integer) toAdd;
+			} else if (ValueTypes.INTEGER.getName().equals(clazz)) {
 				valueTypes.add(ValueTypes.INTEGER);
-			} catch (ClassCastException cce) {
-				//eat
-			}
-			try {
-				Long foo = (Long) toAdd;
+			} else if (ValueTypes.LONG.getName().equals(clazz)) {
 				valueTypes.add(ValueTypes.LONG);
-			} catch (ClassCastException cce) {
-				//eat
-			}
-			try {
-				Short foo = (Short) toAdd;
+			} else if (ValueTypes.SHORT.getName().equals(clazz)) {
 				valueTypes.add(ValueTypes.SHORT);
-			} catch (ClassCastException cce) {
-				//eat
-			}
-			try {
-				Double foo = (Double) toAdd;
+			} else if (ValueTypes.DOUBLE.getName().equals(clazz)) {
 				valueTypes.add(ValueTypes.DOUBLE);
-			} catch (ClassCastException cce) {
-				//eat
-			}
-			try {
-				Float foo = (Float) toAdd;
+			} else if (ValueTypes.FLOAT.getName().equals(clazz)) {
 				valueTypes.add(ValueTypes.FLOAT);
-			} catch (ClassCastException cce) {
-				//eat
-			}
-			try {
-				Date foo = (Date) toAdd;
+			} else if (ValueTypes.DATE.getName().equals(clazz)) {
 				valueTypes.add(ValueTypes.DATE);
-			} catch (ClassCastException cce) {
-				//eat
-			}
-			try {
-				Boolean foo = (Boolean) toAdd;
+			} else if (ValueTypes.BOOLEAN.getName().equals(clazz)) {
 				valueTypes.add(ValueTypes.BOOLEAN);
-			} catch (ClassCastException cce) {
-				//eat
-			}
+			} else if (ValueTypes.BIG_DECIMAL.getName().equals(clazz)) {
+				valueTypes.add(ValueTypes.BIG_DECIMAL);
+			} else if (ValueTypes.BIG_INTEGER.getName().equals(clazz)) {
+				valueTypes.add(ValueTypes.BIG_INTEGER);
+			} 
 		}
 	}
 
@@ -714,34 +691,10 @@ public class Param implements I_TemplateParams {
 
 	/*************************************** END I_XML_Serilizable ***************************************************/
 
-	public static synchronized I_Factory getCLASS_FOR_NAME_VALUE_MAP() {
-		return CLASS_FOR_NAME_VALUE_MAP;
-	}
-
-	/**
-	 * allows you to pass in your own map if you need some special parameter
-	 * types
-	 * 
-	 * @param class_for_name_value_map
-	 */
-	public static synchronized void setCLASS_FOR_NAME_VALUE_MAP(
-			I_Factory class_for_name_value_map) {
-		CLASS_FOR_NAME_VALUE_MAP = class_for_name_value_map;
-	}
-
-	
-	public static synchronized I_Factory getCLASS_SHORT_NAME_VALUE_MAP() {
-		return CLASS_SHORT_NAME_VALUE_MAP;
-	}
-	public static synchronized void setCLASS_SHORT_NAME_VALUE_MAP(
-			I_Factory class_short_name_value_map) {
-		CLASS_SHORT_NAME_VALUE_MAP = class_short_name_value_map;
-	}
-	
-	public short[] getValueTypes() {
-		short [] toRet = new short[valueTypes.size()];
+	public ValueType[] getValueTypes() {
+		ValueType [] toRet = new ValueType[valueTypes.size()];
 		for (int i = 0; i < toRet.length; i++) {
-			toRet[i] = ((Short) valueTypes.get(i)).shortValue();
+			toRet[i] = (ValueType) valueTypes.get(i);
 		}
 		return toRet;
 	}

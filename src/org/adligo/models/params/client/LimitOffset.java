@@ -1,8 +1,8 @@
 package org.adligo.models.params.client;
 
 public class LimitOffset implements I_LimitOffset {
-	private int limit;
-	private int offset;
+	private int limit = -1;
+	private int offset = -1;
 	
 	public void setLimit(int p) {
 		limit = p;
