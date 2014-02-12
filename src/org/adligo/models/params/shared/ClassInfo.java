@@ -9,11 +9,11 @@ public class ClassInfo {
 		version = p_version;
 	}
 	
-	String getName() {
+	public String getName() {
 		return name;
 	}
 	
-	double getVersion() {
+	public double getVersion() {
 		return version;
 	}
 	
