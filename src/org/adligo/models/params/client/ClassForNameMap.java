@@ -1,6 +1,6 @@
 package org.adligo.models.params.client;
 
-import org.adligo.i.util.client.I_Factory;
+import org.adligo.i.util.shared.I_Factory;
 
 public class ClassForNameMap implements I_Factory {
 	/**

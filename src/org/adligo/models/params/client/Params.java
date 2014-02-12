@@ -12,12 +12,12 @@ package org.adligo.models.params.client;
 
 import java.util.Date;
 
-import org.adligo.i.log.client.Log;
-import org.adligo.i.log.client.LogFactory;
-import org.adligo.i.util.client.I_Iterator;
-import org.adligo.i.util.client.I_Map;
-import org.adligo.i.util.client.MapFactory;
-import org.adligo.i.util.client.StringUtils;
+import org.adligo.i.log.shared.Log;
+import org.adligo.i.log.shared.LogFactory;
+import org.adligo.i.util.shared.I_Iterator;
+import org.adligo.i.util.shared.I_Map;
+import org.adligo.i.util.shared.MapFactory;
+import org.adligo.i.util.shared.StringUtils;
 
 public class Params implements I_MultipleParamsObject {
 	/**

@@ -1,8 +1,8 @@
 package org.adligo.models.params.client;
 
-import org.adligo.i.util.client.ArrayCollection;
-import org.adligo.i.util.client.CollectionFactory;
-import org.adligo.i.util.client.I_Iterator;
+import org.adligo.i.util.shared.ArrayCollection;
+import org.adligo.i.util.shared.CollectionFactory;
+import org.adligo.i.util.shared.I_Iterator;
 
 public class TagInfo {
 	public static final String THIS_TAG_DOES_NOT_HAVE_A_END_TAG_CHECK_HAS_END_TAG = "This tag does NOT have a end tag, check hasEndTag.";

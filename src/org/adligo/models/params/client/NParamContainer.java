@@ -1,6 +1,6 @@
 package org.adligo.models.params.client;
 
-import org.adligo.i.util.client.ArrayCollection;
+import org.adligo.i.util.shared.ArrayCollection;
 
 public class NParamContainer implements I_OneOrN {
 	private ArrayCollection items = new ArrayCollection();

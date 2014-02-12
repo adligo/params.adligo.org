@@ -2,8 +2,8 @@ package org.adligo.models.params.client;
 
 import java.io.UnsupportedEncodingException;
 
-import org.adligo.i.util.client.AppenderFactory;
-import org.adligo.i.util.client.I_Appender;
+import org.adligo.i.util.shared.AppenderFactory;
+import org.adligo.i.util.shared.I_Appender;
 
 public class XMLBuilder implements I_XMLBuilder {
 	/**

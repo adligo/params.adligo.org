@@ -2,7 +2,7 @@ package org.adligo.models.params.client;
 
 import java.util.Date;
 
-import org.adligo.i.util.client.ClassUtils;
+import org.adligo.i.util.shared.ClassUtils;
 
 public class ClassShortNameValueMap {
 

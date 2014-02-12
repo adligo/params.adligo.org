@@ -1,10 +1,10 @@
 package org.adligo.models.params.client;
 
-import org.adligo.i.util.client.AppenderFactory;
-import org.adligo.i.util.client.CollectionFactory;
-import org.adligo.i.util.client.I_Appender;
-import org.adligo.i.util.client.I_Collection;
-import org.adligo.i.util.client.StringUtils;
+import org.adligo.i.util.shared.AppenderFactory;
+import org.adligo.i.util.shared.CollectionFactory;
+import org.adligo.i.util.shared.I_Appender;
+import org.adligo.i.util.shared.I_Collection;
+import org.adligo.i.util.shared.StringUtils;
 
 public class TagFinder {
 	private String xml;

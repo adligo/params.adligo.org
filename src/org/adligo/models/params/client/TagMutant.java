@@ -1,7 +1,7 @@
 package org.adligo.models.params.client;
 
-import org.adligo.i.util.client.ClassUtils;
-import org.adligo.i.util.client.StringUtils;
+import org.adligo.i.util.shared.ClassUtils;
+import org.adligo.i.util.shared.StringUtils;
 
 public class TagMutant {
 	private int start;

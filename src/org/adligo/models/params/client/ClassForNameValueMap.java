@@ -2,9 +2,9 @@ package org.adligo.models.params.client;
 
 import java.util.Date;
 
-import org.adligo.i.log.client.Log;
-import org.adligo.i.log.client.LogFactory;
-import org.adligo.i.util.client.I_Factory;
+import org.adligo.i.log.shared.Log;
+import org.adligo.i.log.shared.LogFactory;
+import org.adligo.i.util.shared.I_Factory;
 
 public class ClassForNameValueMap implements I_Factory {
 	private static final Log log = LogFactory

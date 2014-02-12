@@ -7,12 +7,12 @@ package org.adligo.models.params.client;
  * @author       scott@adligo.com
  * @version 1.3
  */
-import org.adligo.i.log.client.Log;
-import org.adligo.i.log.client.LogFactory;
-import org.adligo.i.util.client.AppenderFactory;
-import org.adligo.i.util.client.ArrayCollection;
-import org.adligo.i.util.client.I_Appender;
-import org.adligo.i.util.client.I_Iterator;
+import org.adligo.i.log.shared.Log;
+import org.adligo.i.log.shared.LogFactory;
+import org.adligo.i.util.shared.AppenderFactory;
+import org.adligo.i.util.shared.ArrayCollection;
+import org.adligo.i.util.shared.I_Appender;
+import org.adligo.i.util.shared.I_Iterator;
 
 public class Parser {
 	private Parser() {
