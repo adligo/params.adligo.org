@@ -3,9 +3,6 @@ package org.adligo.models.params.shared;
 /**
  * Description:  A generic object that can write itself to a xml file
  * 
- * @deprecated the xml_io project is replacing this class with 
- *    a similar concept, but greatly compressed xml that may be interpreted by 
- *    java and non Java languages.  Expected removal 1/1/2020
  *    
  * Company:      Adligo
  * @author       scott@adligo.com
