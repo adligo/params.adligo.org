@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="." default="deploy" name="params">
+<project basedir="." default="jar" name="params">
 	<import file="${user.home}/conf/adligo/builds/gwt-build.xml"/>
 	
 </project>
