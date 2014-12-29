@@ -2,10 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/i_log"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/i_util"/>
-	
-<classpathentry kind="var" path="MVN_REPO/com/google/gwt/gwt-user/2.5.0/gwt-user-2.5.0.jar"/>
-			
+	<classpathentry combineaccessrules="false" kind="src" path="/i_log.adligo.org"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/i_util.adligo.org"/>
+	<classpathentry kind="var" path="MVN_REPO/com/google/gwt/gwt-user/2.5.0/gwt-user-2.5.0.jar"/>
 	<classpathentry kind="output" path="classes_e"/>
 </classpath>
