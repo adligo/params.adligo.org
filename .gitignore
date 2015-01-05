@@ -1,6 +1,8 @@
-classes_e/
-classes/
-bin/
+/bin/
+/build/
+/classes/
+/classes_e/
+
 params*.jar
 tmp*/
 params.jad
